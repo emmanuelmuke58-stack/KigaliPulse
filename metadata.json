@@ -1,0 +1,6 @@
+{
+  "name": "KigaliPulse",
+  "description": "Discover what is happening in Kigali, Rwanda. Find concerts, tech summits, nightlife, business networking, sports, and cultural experiences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
