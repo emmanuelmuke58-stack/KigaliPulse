@@ -267,19 +267,6 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             </div>
           </div>
 
-          <div className="pt-8 border-t border-slate-100 mt-8">
-            <button
-              type="button"
-              onClick={async () => {
-                await fetch('/api/auth/logout', { method: 'POST' });
-                window.location.reload();
-              }}
-              className="w-full py-4 text-red-600 font-bold text-sm hover:bg-red-50 rounded-2xl transition-all active:scale-[0.98] border border-red-100"
-            >
-              Sign Out from KigaliPulse
-            </button>
-          </div>
-
         </form>
 
       </div>
