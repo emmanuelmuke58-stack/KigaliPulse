@@ -5,6 +5,8 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // GitHub Pages serves this project from /KigaliPulse/, not the domain root.
+    base: '/KigaliPulse/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
