@@ -39,11 +39,28 @@ interface AdminSystemProps {
 
 export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) => {
   // 1. Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem('kigali_admin_auth') === 'true';
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthChecking, setIsAuthChecking] = useState<boolean>(true);
+  const [currentUser, setCurrentUser] = useState<EnterpriseUser | null>(null);
 
-  const [currentUser, setCurrentUser] = useState<EnterpriseUser>(INITIAL_ADMIN_USERS[0]);
+  // Initial session check on mount
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          const data = await response.json();
+          setCurrentUser(data.user);
+          setIsAuthenticated(true);
+        }
+      } catch (err) {
+        console.error('Session check failed:', err);
+      } finally {
+        setIsAuthChecking(false);
+      }
+    };
+    checkSession();
+  }, []);
 
   // 2. Navigation State
   const [activeTab, setActiveTab] = useState<AdminNavigationTab>('dashboard');
@@ -152,7 +169,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
   const handleLoginSuccess = (user: EnterpriseUser) => {
     setIsAuthenticated(true);
     setCurrentUser(user);
-    localStorage.setItem('kigali_admin_auth', 'true');
     addToast('success', 'Authenticated Successfully', `Welcome back, ${user.name}. Session token active.`);
 
     // Log the event
@@ -181,9 +197,14 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
       confirmLabel: 'Sign Out',
       variant: 'danger',
       iconType: 'logout',
-      action: () => {
+      action: async () => {
+        try {
+          await fetch('/api/auth/logout', { method: 'POST' });
+        } catch (err) {
+          console.error('Logout failed:', err);
+        }
         setIsAuthenticated(false);
-        localStorage.removeItem('kigali_admin_auth');
+        setCurrentUser(null);
         setConfirmModal((prev) => ({ ...prev, isOpen: false }));
         addToast('info', 'Logged Out', 'You have been safely signed out.');
       },
@@ -211,6 +232,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
 
     setUsers((prev) => [created, ...prev]);
 
+    if (!currentUser) return;
+
     // Log the audit event
     const newLog: EnterpriseActivityLog = {
       id: `log-${Date.now()}`,
@@ -236,6 +259,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     if (selectedUserForDetails && selectedUserForDetails.id === updatedUser.id) {
       setSelectedUserForDetails(updatedUser);
     }
+
+    if (!currentUser) return;
 
     const editLog: EnterpriseActivityLog = {
       id: `log-${Date.now()}`,
@@ -272,6 +297,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
         }
         setConfirmModal((prev) => ({ ...prev, isOpen: false }));
 
+        if (!currentUser) return;
+
         const delLog: EnterpriseActivityLog = {
           id: `log-${Date.now()}`,
           dateTime: 'Just now',
@@ -301,6 +328,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     if (selectedUserForDetails && selectedUserForDetails.id === userId) {
       setSelectedUserForDetails({ ...selectedUserForDetails, status });
     }
+
+    if (!currentUser) return;
 
     const log: EnterpriseActivityLog = {
       id: `log-${Date.now()}`,
@@ -354,13 +383,24 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
+  // IF CHECKING AUTH -> RENDER LOADING SPINNER
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+          <p className="text-slate-500 font-bold text-sm tracking-widest uppercase">Verifying Security Session...</p>
+        </div>
+      </div>
+    );
+  }
+
   // IF NOT AUTHENTICATED -> RENDER AUTH SCREENS (Login, Forgot, Reset, etc.)
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !currentUser) {
     return (
       <AdminAuth
         onLoginSuccess={handleLoginSuccess}
         onExitToPublic={onExitToPublicSite}
-        initialUser={currentUser}
       />
     );
   }

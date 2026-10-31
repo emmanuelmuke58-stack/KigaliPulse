@@ -1027,15 +1027,15 @@ export const INITIAL_AUDIT_LOGS: AuditLogItem[] = [
 ];
 
 export const CURRENT_USER: UserProfile = {
-  name: 'Emmanuel Mukamana',
-  email: 'emmanuel@kigalipulse.rw',
-  phone: '+250 788 345 678',
-  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-  role: 'organizer', // attendee | organizer | admin
-  preferredCategories: ['music', 'tech', 'food', 'sports'],
-  preferredNeighborhoods: ['Kimihurura', 'Kacyiru', 'Remera'],
-  savedEventIds: ['evt-1', 'evt-2', 'evt-3'],
-  followedOrganizerIds: ['org-1', 'org-2', 'org-3'],
+  name: 'Guest User',
+  email: '',
+  phone: '',
+  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  role: 'attendee', // attendee | organizer | admin
+  preferredCategories: [],
+  preferredNeighborhoods: [],
+  savedEventIds: [],
+  followedOrganizerIds: [],
   notifications: [
     {
       id: 'notif-1',
