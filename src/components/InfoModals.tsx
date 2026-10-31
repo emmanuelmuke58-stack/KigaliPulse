@@ -13,16 +13,16 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-0 sm:p-6"
     >
-      <div className="relative bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 sm:p-8 space-y-6 text-slate-800 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative bg-white sm:rounded-3xl max-w-2xl w-full h-full sm:h-auto sm:max-h-[85vh] overflow-y-auto shadow-2xl border-t sm:border border-slate-200 p-6 sm:p-8 space-y-6 text-slate-800 animate-in fade-in slide-in-from-bottom sm:zoom-in-95 duration-300 pt-[calc(1rem+env(safe-area-inset-top))] sm:pt-8">
         
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-slate-100"
+          className="fixed sm:absolute top-4 right-4 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>

@@ -654,29 +654,36 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
       {/* MOBILE FILTER BOTTOM SHEET */}
       {mobileFilterOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex justify-end">
-          <div className="bg-white w-full max-w-sm h-full p-6 overflow-y-auto space-y-6 shadow-2xl flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between border-b pb-4 mb-4">
-                <h3 className="font-bold text-base text-slate-900">Filters</h3>
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-end sm:justify-center">
+          <div className="bg-white w-full sm:max-w-md max-h-[90vh] rounded-t-3xl p-6 overflow-y-auto shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-300">
+            <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 shrink-0" />
+            
+            <div className="flex-1 overflow-y-auto">
+              <div className="flex items-center justify-between border-b pb-4 mb-6">
+                <h3 className="font-bold text-lg text-slate-900">Filters</h3>
                 <button
                   type="button"
                   onClick={() => setMobileFilterOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-800"
+                  className="p-2 rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
                 >
                   ✕
                 </button>
               </div>
-              {filterSidebarContent}
+              
+              <div className="pb-8">
+                {filterSidebarContent}
+              </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setMobileFilterOpen(false)}
-              className="w-full py-3 bg-emerald-600 text-white font-bold text-xs rounded-xl shadow-md"
-            >
-              Apply Filters ({sortedEvents.length} Events)
-            </button>
+            <div className="pt-4 pb-[env(safe-area-inset-bottom)] shrink-0">
+              <button
+                type="button"
+                onClick={() => setMobileFilterOpen(false)}
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] transition-all text-white font-bold text-sm rounded-2xl shadow-lg"
+              >
+                Apply Filters ({sortedEvents.length} Events)
+              </button>
+            </div>
           </div>
         </div>
       )}

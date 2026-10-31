@@ -178,16 +178,16 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 py-4 space-y-2 shadow-lg animate-in slide-in-from-top-2 duration-150">
-          <div className="grid grid-cols-2 gap-2 pb-2 border-b border-slate-100">
+        <div className="md:hidden border-t border-slate-200 bg-white px-4 py-6 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-200">
+          <div className="grid grid-cols-2 gap-3 pb-3 border-b border-slate-100">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 type="button"
                 onClick={() => handleNavClick(link.id)}
-                className={`text-left px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
+                className={`text-left px-4 py-3 rounded-2xl text-sm font-semibold transition-all active:scale-[0.97] ${
                   currentView === link.id
-                    ? 'bg-emerald-50 text-emerald-800 font-bold'
+                    ? 'bg-emerald-50 text-emerald-800'
                     : 'text-slate-700 hover:bg-slate-50'
                 }`}
               >
@@ -196,18 +196,18 @@ export const Header: React.FC<HeaderProps> = ({
             ))}
           </div>
 
-          <div className="pt-2 flex items-center justify-between gap-2">
+          <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
             <button
               type="button"
               onClick={() => handleNavClick('organizer-dashboard')}
-              className="flex-1 py-2 text-center text-xs font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
+              className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
             >
               Organizer Hub
             </button>
             <button
               type="button"
               onClick={() => handleNavClick('admin-dashboard')}
-              className="flex-1 py-2 text-center text-xs font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
+              className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
             >
               Admin Moderation
             </button>
@@ -216,7 +216,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('create')}
-            className="w-full mt-2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full mt-3 py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2 transition-all shadow-md"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Submit New Event</span>

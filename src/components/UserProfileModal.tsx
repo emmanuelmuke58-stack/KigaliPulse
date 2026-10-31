@@ -76,12 +76,12 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 md:p-6"
     >
-      <div className="relative bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 text-slate-800 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative bg-white sm:rounded-3xl max-w-2xl w-full h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto shadow-2xl border-t sm:border border-slate-200 text-slate-800 animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300">
         
         {/* Header */}
-        <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+        <div className="p-6 border-b border-slate-100 flex items-center justify-between pt-[calc(1rem+env(safe-area-inset-top))] sm:pt-6">
           <div className="flex items-center gap-3">
             <img
               src={currentUser.avatar}
@@ -100,94 +100,92 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Close profile"
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-800"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Portal Switching Shortcuts */}
-        <div className="px-6 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-xs font-semibold gap-2 flex-wrap">
-          <span className="text-slate-500">Quick Navigation:</span>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                onOpenSavedDrawer();
-              }}
-              className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-emerald-600 text-slate-700"
-            >
-              Saved Events ({currentUser.savedEventIds.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                onOpenOrganizerPortal();
-              }}
-              className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-emerald-600 text-slate-700"
-            >
-              Organizer Hub
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                onOpenAdminPortal();
-              }}
-              className="px-2.5 py-1 rounded-lg bg-red-50 text-red-700 border border-red-200 hover:bg-red-100"
-            >
-              Admin Moderation
-            </button>
-          </div>
+        <div className="px-6 py-4 bg-slate-50 border-b border-slate-100 flex flex-wrap items-center gap-2">
+          <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold w-full mb-1">Quick Links</span>
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onOpenSavedDrawer();
+            }}
+            className="min-h-[44px] px-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-600 text-slate-700 text-xs font-bold transition-all shadow-sm active:scale-[0.98]"
+          >
+            Saved ({currentUser.savedEventIds.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onOpenOrganizerPortal();
+            }}
+            className="min-h-[44px] px-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-600 text-slate-700 text-xs font-bold transition-all shadow-sm active:scale-[0.98]"
+          >
+            Organizer Hub
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onOpenAdminPortal();
+            }}
+            className="min-h-[44px] px-4 rounded-xl bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 text-xs font-bold transition-all shadow-sm active:scale-[0.98]"
+          >
+            Admin Panel
+          </button>
         </div>
 
         {/* Profile Settings Form */}
-        <form onSubmit={handleSave} className="p-6 space-y-6 text-xs">
+        <form onSubmit={handleSave} className="p-6 space-y-8 text-xs pb-[calc(6rem+env(safe-area-inset-bottom))]">
           
           <div className="space-y-4">
             <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
               Account Details
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Full Name</label>
+                <label className="block font-bold text-slate-700 mb-1.5">Full Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 font-medium"
+                  className="w-full min-h-[48px] px-4 rounded-xl border border-slate-200 bg-slate-50 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Email Address</label>
+                <label className="block font-bold text-slate-700 mb-1.5">Email Address</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 font-medium"
+                  className="w-full min-h-[48px] px-4 rounded-xl border border-slate-200 bg-slate-50 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Phone (MTN/Airtel)</label>
+                <label className="block font-bold text-slate-700 mb-1.5">Phone (MTN/Airtel)</label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 font-medium"
+                  className="w-full min-h-[48px] px-4 rounded-xl border border-slate-200 bg-slate-50 font-medium focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Active Role</label>
+                <label className="block font-bold text-slate-700 mb-1.5">Active Role</label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value as any)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 font-semibold cursor-pointer"
+                  className="w-full min-h-[48px] px-4 rounded-xl border border-slate-200 bg-slate-50 font-semibold cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all outline-none"
                 >
                   <option value="attendee">Attendee / Visitor</option>
                   <option value="organizer">Event Organizer</option>
@@ -198,9 +196,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           </div>
 
           {/* Preferred Categories */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
-              Preferred Event Categories (Personalized recommendations)
+              Event Interests
             </h3>
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((cat) => {
@@ -210,9 +208,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     key={cat.id}
                     type="button"
                     onClick={() => handleToggleCat(cat.id)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-semibold transition-colors ${
+                    className={`min-h-[44px] px-4 py-2 rounded-xl border text-xs font-bold transition-all active:scale-[0.98] ${
                       isChecked
-                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
                         : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
@@ -224,9 +222,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           </div>
 
           {/* Preferred Neighborhoods */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
-              Frequent Kigali Neighborhoods
+              Kigali Locations
             </h3>
             <div className="flex flex-wrap gap-2">
               {KIGALI_NEIGHBORHOODS.map((hood) => {
@@ -236,9 +234,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     key={hood.name}
                     type="button"
                     onClick={() => handleToggleHood(hood.name)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-semibold transition-colors ${
+                    className={`min-h-[44px] px-4 py-2 rounded-xl border text-xs font-bold transition-all active:scale-[0.98] ${
                       isChecked
-                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm'
+                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
                         : 'border-slate-200 text-slate-700 hover:bg-slate-50'
                     }`}
                   >
@@ -249,34 +247,24 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             </div>
           </div>
 
-          {/* Followed Hosts */}
-          <div className="space-y-2">
-            <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
-              Followed Organizers ({currentUser.followedOrganizerIds.length})
-            </h3>
-            <div className="flex items-center gap-3">
-              {ORGANIZERS.filter((o) => currentUser.followedOrganizerIds.includes(o.id)).map((org) => (
-                <div key={org.id} className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border">
-                  <img src={org.image} alt={org.name} className="w-6 h-6 rounded-lg object-cover" />
-                  <span className="font-bold text-slate-800">{org.name}</span>
-                </div>
-              ))}
+          {/* Floating Save Button on Mobile */}
+          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-slate-100 sm:relative sm:p-0 sm:bg-transparent sm:border-0 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-0 z-30">
+            <div className="max-w-2xl mx-auto flex items-center justify-between">
+              {savedSuccess ? (
+                <span className="text-emerald-700 font-bold flex items-center gap-1 text-xs">
+                  <CheckCircle className="w-4 h-4" /> Profile Updated!
+                </span>
+              ) : (
+                <span className="hidden sm:inline text-slate-400">Manage your Kigali experience</span>
+              )}
+              <button
+                type="submit"
+                className="w-full sm:w-auto min-h-[48px] px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+              >
+                <Save className="w-4 h-4" />
+                <span>Save All Changes</span>
+              </button>
             </div>
-          </div>
-
-          <div className="pt-4 border-t flex items-center justify-between">
-            {savedSuccess && (
-              <span className="text-emerald-700 font-bold flex items-center gap-1">
-                <CheckCircle className="w-4 h-4" /> Preferences saved!
-              </span>
-            )}
-            <button
-              type="submit"
-              className="ml-auto px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-colors flex items-center gap-1.5"
-            >
-              <Save className="w-4 h-4" />
-              <span>Save Profile Updates</span>
-            </button>
           </div>
 
         </form>

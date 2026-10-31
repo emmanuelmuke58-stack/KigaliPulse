@@ -183,15 +183,15 @@ export const VenueDetailModal: React.FC<{
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 md:p-6"
     >
-      <div className="relative bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 text-slate-800 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative bg-white sm:rounded-3xl max-w-3xl w-full h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto shadow-2xl border-t sm:border border-slate-200 text-slate-800 animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300">
         
         <button
           type="button"
           onClick={onClose}
           aria-label="Close venue modal"
-          className="absolute top-4 right-4 z-30 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md transition-colors"
+          className="fixed sm:absolute top-4 right-4 z-40 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md transition-colors shadow-lg"
         >
           ✕
         </button>
@@ -211,7 +211,7 @@ export const VenueDetailModal: React.FC<{
           </div>
         </div>
 
-        <div className="p-6 sm:p-8 space-y-6">
+        <div className="p-6 sm:p-8 space-y-6 pb-24 sm:pb-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50 text-xs">
             <div>
               <span className="text-slate-400 font-medium">Capacity</span>
@@ -265,7 +265,7 @@ export const VenueDetailModal: React.FC<{
               href={venue.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-emerald-700 hover:underline font-semibold flex items-center gap-1.5"
+              className="min-h-[44px] inline-flex items-center text-emerald-700 hover:underline font-semibold gap-1.5"
             >
               <Globe className="w-3.5 h-3.5" />
               <span>Official Website</span>
@@ -274,12 +274,30 @@ export const VenueDetailModal: React.FC<{
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
+              className="min-h-[44px] px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
             >
               Close View
             </button>
           </div>
         </div>
+
+        {/* Mobile Sticky Footer with Safe Area */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 pb-[calc(1rem+env(safe-area-inset-bottom))] flex gap-3 shadow-lg z-30">
+          <a
+            href={`tel:${venue.phone}`}
+            className="flex-1 min-h-[48px] rounded-xl bg-slate-100 text-slate-900 font-bold text-sm flex items-center justify-center gap-2"
+          >
+            <Phone className="w-4 h-4" />
+            <span>Call Venue</span>
+          </a>
+          <button
+            onClick={onClose}
+            className="flex-1 min-h-[48px] rounded-xl bg-emerald-600 text-white font-bold text-sm"
+          >
+            Back to List
+          </button>
+        </div>
+
       </div>
     </div>
   );

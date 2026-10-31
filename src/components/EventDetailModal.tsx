@@ -133,16 +133,16 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 md:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 md:p-6"
     >
-      <div className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200/90 text-slate-800 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative bg-white sm:rounded-3xl max-w-4xl w-full h-full sm:h-auto sm:max-h-[92vh] overflow-y-auto shadow-2xl border-t sm:border border-slate-200/90 text-slate-800 animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300">
         
         {/* Sticky Close Trigger */}
         <button
           type="button"
           onClick={onClose}
           aria-label="Close event modal"
-          className="absolute top-4 right-4 z-30 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md transition-colors"
+          className="fixed sm:absolute top-4 right-4 z-40 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md transition-colors shadow-lg"
         >
           <X className="w-5 h-5" />
         </button>
@@ -226,7 +226,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
               href={event.externalTicketUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 text-center"
+              className="flex-1 min-h-[48px] py-3 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 text-center"
             >
               <span>Get Tickets / Register</span>
               <ExternalLink className="w-4 h-4" />
@@ -236,7 +236,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={(e) => onToggleSave(e, event.id)}
-              className={`min-h-[44px] px-5 py-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-colors ${
+              className={`min-h-[48px] px-5 py-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-colors ${
                 isSaved
                   ? 'bg-amber-500 border-amber-500 text-white'
                   : 'border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'
@@ -250,7 +250,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={shareWhatsApp}
-              className="min-h-[44px] px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+              className="min-h-[48px] px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
               title="Share on WhatsApp (Rwanda's favorite messenger)"
             >
               <Share2 className="w-4 h-4" />
@@ -276,28 +276,28 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={shareWhatsApp}
-              className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium"
+              className="min-h-[44px] px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium"
             >
               WhatsApp
             </button>
             <button
               type="button"
               onClick={shareX}
-              className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium"
+              className="min-h-[44px] px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium"
             >
               X / Twitter
             </button>
             <button
               type="button"
               onClick={shareLinkedIn}
-              className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium"
+              className="min-h-[44px] px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium"
             >
               LinkedIn
             </button>
             <button
               type="button"
               onClick={handleCopyLink}
-              className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium flex items-center gap-1.5"
+              className="min-h-[44px] px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium flex items-center gap-1.5"
             >
               {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
               <span>{copiedLink ? 'Copied URL!' : 'Copy Link'}</span>
@@ -305,7 +305,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
 
           {/* Description & Details Body */}
-          <div className="space-y-6 pt-4 border-t border-slate-100">
+          <div className="space-y-6 pt-4 border-t border-slate-100 pb-20 md:pb-0">
             
             {/* About Section */}
             <div className="space-y-2">
@@ -433,7 +433,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onSelectOrganizer(event.organizerId)}
-                  className="px-4 py-2 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-colors"
+                  className="min-h-[44px] px-4 py-2 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-colors"
                 >
                   View Host Profile
                 </button>
@@ -482,10 +482,10 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
         </div>
 
         {/* Sticky Mobile Bottom Bar: Get Tickets / Register (15% cap) */}
-        <div className="md:hidden sticky bottom-0 z-30 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center justify-between gap-3 shadow-lg">
+        <div className="md:hidden sticky bottom-0 z-30 px-5 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center justify-between gap-4 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
           <div>
-            <span className="text-[10px] text-slate-400 block font-bold uppercase">Admission</span>
-            <span className="text-sm font-extrabold text-slate-900 tabular-nums">
+            <span className="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">Admission</span>
+            <span className="text-base font-extrabold text-slate-900 tabular-nums">
               {event.priceDisplay}
             </span>
           </div>
@@ -494,10 +494,10 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             href={event.externalTicketUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow"
+            className="flex-1 min-h-[48px] px-6 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition-transform"
           >
             <span>Get Tickets</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <ExternalLink className="w-4 h-4" />
           </a>
         </div>
 

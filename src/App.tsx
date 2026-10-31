@@ -381,7 +381,7 @@ export default function App() {
       />
 
       {/* 2. Main View Routing */}
-      <main className="flex-1">
+      <main className="flex-1 pb-20 md:pb-0">
         
         {/* HOMEPAGE VIEW */}
         {currentView === 'home' && (

@@ -53,15 +53,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         {/* Main Display Headline */}
-        <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] max-w-4xl mx-auto text-balance">
+        <h1 className="font-display text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] max-w-4xl mx-auto text-balance">
           Discover What’s Happening in{' '}
           <span className="text-emerald-400 underline decoration-emerald-500/40 underline-offset-8">
             Kigali
           </span>
         </h1>
 
-        <p className="text-slate-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Find concerts, nightlife, business events, workshops, sports, food experiences, conferences and more — all in one place.
+        <p className="text-slate-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed px-2">
+          Find concerts, nightlife, business events, workshops, sports, food experiences, and more — all in one place.
         </p>
 
         {/* Large Multi-Field Search Bar */}
