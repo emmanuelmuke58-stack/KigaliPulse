@@ -136,10 +136,10 @@ export const CompactHeaderEventSlider: React.FC<CompactHeaderEventSliderProps> =
       ref={sliderContainerRef}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="bg-slate-900 border-b border-slate-800 text-white select-none transition-colors duration-200"
+      className="bg-slate-900 border-b border-slate-800 text-white select-none transition-colors duration-200 w-full max-w-full overflow-hidden"
       aria-label="Upcoming Events Auto-Sliding Header"
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between gap-2.5 sm:gap-4 h-11 sm:h-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between gap-2.5 sm:gap-4 h-11 sm:h-12 overflow-hidden w-full max-w-full">
         
         {/* Left Indicator Pill: "UPCOMING" with live animated pulse */}
         <div className="flex items-center gap-1.5 shrink-0">

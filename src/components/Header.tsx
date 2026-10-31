@@ -14,6 +14,9 @@ interface HeaderProps {
   unreadNotificationsCount: number;
   events?: EventItem[];
   onSelectEvent?: (event: EventItem) => void;
+  currentUser: any | null;
+  onOpenLogin: () => void;
+  onOpenProfile: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -26,6 +29,9 @@ export const Header: React.FC<HeaderProps> = ({
   unreadNotificationsCount,
   events = [],
   onSelectEvent,
+  currentUser,
+  onOpenLogin,
+  onOpenProfile,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -45,8 +51,8 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 w-full max-w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4 w-full max-w-full">
         
         {/* ZONE 1: Brand Wordmark (Single Text Element) */}
         <div className="flex items-center gap-3">
@@ -137,20 +143,49 @@ export const Header: React.FC<HeaderProps> = ({
             <span>Create Event</span>
           </button>
 
-          {/* Admin Reports & Governance Button */}
-          <button
-            type="button"
-            onClick={() => handleNavClick('admin-dashboard')}
-            className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-colors whitespace-nowrap ${
-              currentView === 'admin-dashboard'
-                ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
-            }`}
-            title="Open Admin Reports & Governance"
-          >
-            <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Admin Reports</span>
-          </button>
+          {/* Admin Reports & Governance Button (SuperAdmin only) */}
+          {currentUser?.role === 'SuperAdmin' && (
+            <button
+              type="button"
+              onClick={() => handleNavClick('admin-dashboard')}
+              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-colors whitespace-nowrap ${
+                currentView === 'admin-dashboard'
+                  ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
+              }`}
+              title="Open Admin Reports & Governance"
+            >
+              <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Admin Reports</span>
+            </button>
+          )}
+
+          {/* User Profile / Login */}
+          {currentUser ? (
+            <button
+              type="button"
+              onClick={onOpenProfile}
+              className="flex items-center gap-2 px-1.5 py-1.5 rounded-xl hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200 group"
+            >
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.name}
+                className="w-8 h-8 rounded-lg object-cover border border-slate-200 shadow-xs"
+              />
+              <div className="hidden lg:flex flex-col items-start pr-2">
+                <span className="text-[11px] font-bold text-slate-900 leading-none">{currentUser.name}</span>
+                <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider mt-0.5">{currentUser.role}</span>
+              </div>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onOpenLogin}
+              className="hidden md:inline-flex px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
+            >
+              Sign In
+            </button>
+          )}
 
           {/* PWA Install Trigger */}
           <PWAInstallButton />
@@ -196,22 +231,26 @@ export const Header: React.FC<HeaderProps> = ({
             ))}
           </div>
 
-          <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
-            <button
-              type="button"
-              onClick={() => handleNavClick('organizer-dashboard')}
-              className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
-            >
-              Organizer Hub
-            </button>
-            <button
-              type="button"
-              onClick={() => handleNavClick('admin-dashboard')}
-              className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
-            >
-              Admin Moderation
-            </button>
-          </div>
+          {currentUser && (
+            <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
+              <button
+                type="button"
+                onClick={() => handleNavClick('organizer-dashboard')}
+                className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
+              >
+                Organizer Hub
+              </button>
+              {currentUser.role === 'SuperAdmin' && (
+                <button
+                  type="button"
+                  onClick={() => handleNavClick('admin-dashboard')}
+                  className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
+                >
+                  Admin Moderation
+                </button>
+              )}
+            </div>
+          )}
 
           <button
             type="button"

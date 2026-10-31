@@ -187,9 +187,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   onChange={(e) => setRole(e.target.value as any)}
                   className="w-full min-h-[48px] px-4 rounded-xl border border-slate-200 bg-slate-50 font-semibold cursor-pointer focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all outline-none"
                 >
-                  <option value="attendee">Attendee / Visitor</option>
-                  <option value="organizer">Event Organizer</option>
-                  <option value="admin">Platform Super Admin</option>
+                  <option value="Attendee">Attendee / Visitor</option>
+                  <option value="Organizer">Event Organizer</option>
+                  <option value="SuperAdmin">Platform Super Admin</option>
                 </select>
               </div>
             </div>
@@ -265,6 +265,19 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <span>Save All Changes</span>
               </button>
             </div>
+          </div>
+
+          <div className="pt-8 border-t border-slate-100 mt-8">
+            <button
+              type="button"
+              onClick={async () => {
+                await fetch('/api/auth/logout', { method: 'POST' });
+                window.location.reload();
+              }}
+              className="w-full py-4 text-red-600 font-bold text-sm hover:bg-red-50 rounded-2xl transition-all active:scale-[0.98] border border-red-100"
+            >
+              Sign Out from KigaliPulse
+            </button>
           </div>
 
         </form>

@@ -32,7 +32,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   ];
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 text-white py-14 sm:py-20 lg:py-24">
+    <section className="relative overflow-hidden bg-slate-950 text-white py-14 sm:py-20 lg:py-24 w-full max-w-full">
       {/* Background Image with Layered Gradient Scrim */}
       <div className="absolute inset-0 z-0">
         <img
@@ -120,7 +120,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Field 4: Date Picker & Search Button */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full">
               <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-xl border border-slate-200/60 focus-within:border-emerald-600 focus-within:bg-white transition-colors">
                 <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
@@ -128,13 +128,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   aria-label="Select date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-transparent text-xs sm:text-sm font-medium focus:outline-none text-slate-800"
+                  className="w-full bg-transparent text-xs sm:text-sm font-medium focus:outline-none text-slate-800 min-w-0"
                 />
               </div>
 
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 shrink-0"
+                className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 shrink-0"
               >
                 <span>Find Events</span>
                 <ArrowRight className="w-4 h-4" />

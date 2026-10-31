@@ -427,7 +427,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     : [];
 
   return (
-    <div className="min-h-screen bg-slate-100/70 text-slate-900 font-sans flex flex-col lg:flex-row antialiased">
+    <div className="min-h-screen bg-slate-100/70 text-slate-900 font-sans flex flex-col lg:flex-row antialiased w-full max-w-full overflow-x-hidden">
       {/* 1. Desktop & Mobile Sidebar */}
       <AdminSidebar
         activeTab={activeTab}
@@ -447,7 +447,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
 
       {/* 2. Main Content Wrapper */}
       <div
-        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 w-full max-w-full overflow-x-hidden ${
           isSidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'
         }`}
       >

@@ -1,0 +1,29 @@
+[
+  {
+    "uid": "super-admin-fixed",
+    "email": "emmanuelmuke58@gmail.com",
+    "passwordHash": "$2b$12$v0cWFN0StOSAXMG./99jjuVT.lRWvVnnFtkMCbpXCrTYzKPgg3HnS",
+    "name": "Super Admin",
+    "role": "SuperAdmin",
+    "status": "Active",
+    "createdAt": "2026-10-31T22:26:41.054Z",
+    "lastLogin": "2026-10-31T22:33:25.021Z",
+    "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+    "phone": "+250 788 000 001",
+    "savedEventIds": [],
+    "followedOrganizerIds": [],
+    "notifications": [],
+    "preferredCategories": [
+      "music",
+      "nightlife",
+      "business",
+      "tech",
+      "arts"
+    ],
+    "preferredNeighborhoods": [
+      "Kimihurura",
+      "Kiyovu",
+      "Remera"
+    ]
+  }
+]

@@ -1,28 +1,32 @@
 import React from 'react';
-import { Home, Compass, Bookmark, Plus, LayoutDashboard } from 'lucide-react';
+import { Home, Compass, Bookmark, Plus, LayoutDashboard, User } from 'lucide-react';
 
 interface MobileBottomNavProps {
   currentView: string;
   onNavigate: (view: string) => void;
   savedCount: number;
+  isLoggedIn?: boolean;
 }
 
 export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   currentView,
   onNavigate,
   savedCount,
+  isLoggedIn = false,
 }) => {
   const tabs = [
     { id: 'discover', label: 'Discover', icon: Compass },
     { id: 'home', label: 'Home', icon: Home },
     { id: 'create', label: 'Create', icon: Plus, isPrimary: true },
     { id: 'saved', label: 'Saved', icon: Bookmark, badge: savedCount },
-    { id: 'organizer-dashboard', label: 'Portal', icon: LayoutDashboard },
+    isLoggedIn
+      ? { id: 'organizer-dashboard', label: 'Portal', icon: LayoutDashboard }
+      : { id: 'login', label: 'Sign In', icon: User },
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 pb-[env(safe-area-inset-bottom)]">
-      <nav aria-label="Mobile navigation" className="grid grid-cols-5 items-center h-16 px-2">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 pb-[env(safe-area-inset-bottom)] max-w-full w-full overflow-hidden">
+      <nav aria-label="Mobile navigation" className="grid grid-cols-5 items-center h-16 px-2 w-full max-w-full">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = currentView === tab.id;
