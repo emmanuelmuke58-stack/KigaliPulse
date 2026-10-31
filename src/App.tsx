@@ -42,6 +42,7 @@ import { SavedEventsDrawer } from './components/SavedEventsDrawer';
 import { UserProfileModal, NotificationModal } from './components/UserProfileModal';
 import { InfoModals } from './components/InfoModals';
 import { Footer } from './components/Footer';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { EventSubmission } from './types/admin';
 import { INITIAL_EVENT_SUBMISSIONS, INITIAL_ADMIN_NOTIFICATIONS } from './data/adminMockData';
 
@@ -702,6 +703,9 @@ export default function App() {
         type={infoModalType}
         onClose={() => setInfoModalType(null)}
       />
+
+      {/* Global Connectivity Indicator */}
+      <OfflineIndicator />
 
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Bookmark, PlusCircle, Menu, X, Sparkles, Bell, BarChart3 } from 'lucide-react';
 import { EventItem } from '../types';
 import { CompactHeaderEventSlider } from './CompactHeaderEventSlider';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   currentView: string;
@@ -150,6 +151,9 @@ export const Header: React.FC<HeaderProps> = ({
             <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
             <span>Admin Reports</span>
           </button>
+
+          {/* PWA Install Trigger */}
+          <PWAInstallButton />
 
           {/* Mobile Hamburger Toggle */}
           <button
