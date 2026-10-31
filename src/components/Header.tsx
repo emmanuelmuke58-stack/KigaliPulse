@@ -14,6 +14,9 @@ interface HeaderProps {
   unreadNotificationsCount: number;
   events?: EventItem[];
   onSelectEvent?: (event: EventItem) => void;
+  currentUser: any | null;
+  onOpenLogin: () => void;
+  onOpenProfile: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -26,6 +29,9 @@ export const Header: React.FC<HeaderProps> = ({
   unreadNotificationsCount,
   events = [],
   onSelectEvent,
+  currentUser,
+  onOpenLogin,
+  onOpenProfile,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -141,7 +147,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('admin-dashboard')}
-            className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-colors whitespace-nowrap ${
+            className={`${currentUser?.role === 'SuperAdmin' ? 'inline-flex' : 'hidden'} lg:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-colors whitespace-nowrap ${
               currentView === 'admin-dashboard'
                 ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
@@ -151,6 +157,33 @@ export const Header: React.FC<HeaderProps> = ({
             <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
             <span>Admin Reports</span>
           </button>
+
+          {/* User Profile / Login */}
+          {currentUser ? (
+            <button
+              type="button"
+              onClick={onOpenProfile}
+              className="flex items-center gap-2 px-1.5 py-1.5 rounded-xl hover:bg-slate-100 transition-all border border-transparent hover:border-slate-200 group"
+            >
+              <img
+                src={currentUser.avatar}
+                alt={currentUser.name}
+                className="w-8 h-8 rounded-lg object-cover border border-slate-200 shadow-xs"
+              />
+              <div className="hidden lg:flex flex-col items-start pr-2">
+                <span className="text-[11px] font-bold text-slate-900 leading-none">{currentUser.name}</span>
+                <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider mt-0.5">{currentUser.role}</span>
+              </div>
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onOpenLogin}
+              className="px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
+            >
+              Sign In
+            </button>
+          )}
 
           {/* PWA Install Trigger */}
           <PWAInstallButton />

@@ -195,14 +195,17 @@ export interface NotificationItem {
 }
 
 export interface UserProfile {
+  uid: string;
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   avatar: string;
-  role: 'attendee' | 'organizer' | 'admin';
+  role: 'Attendee' | 'Organizer' | 'SuperAdmin';
+  status?: string;
   preferredCategories: EventCategory[];
   preferredNeighborhoods: string[];
   savedEventIds: string[];
   followedOrganizerIds: string[];
   notifications: NotificationItem[];
 }
+

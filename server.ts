@@ -168,6 +168,160 @@ async function startServer() {
     }
   });
 
+  appExpress.post('/api/auth/register', async (req, res) => {
+    const { email, password, name } = req.body;
+    if (!email || !password || !name) return res.status(400).json({ error: 'All fields required.' });
+
+    const cleanEmail = email.toLowerCase().trim();
+    try {
+      const users = loadUsers();
+      if (users.find(u => u.email === cleanEmail)) {
+        return res.status(400).json({ error: 'Email already registered.' });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+      const newUser: User = {
+        uid: `user-${Date.now()}`,
+        email: cleanEmail,
+        passwordHash: hashedPassword,
+        name,
+        role: 'Attendee',
+        status: 'Active',
+        createdAt: new Date().toISOString(),
+        lastLogin: null,
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+
+      const token = jwt.sign(
+        { uid: newUser.uid, email: newUser.email, role: newUser.role },
+        JWT_SECRET,
+        { expiresIn: '8h' }
+      );
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 8 * 60 * 60 * 1000
+      });
+
+      const { passwordHash, ...safeUser } = newUser;
+      res.json({ user: safeUser });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // EVENTS LOGIC
+  const EVENTS_FILE = path.resolve(DATA_DIR, 'events.json');
+  function loadEvents() {
+    if (!fs.existsSync(EVENTS_FILE)) return [];
+    try {
+      return JSON.parse(fs.readFileSync(EVENTS_FILE, 'utf-8'));
+    } catch (e) {
+      return [];
+    }
+  }
+  function saveEvents(events: any[]) {
+    fs.writeFileSync(EVENTS_FILE, JSON.stringify(events, null, 2));
+  }
+
+  appExpress.get('/api/events', (req, res) => {
+    const events = loadEvents();
+    // Return all for now, but usually you'd filter by 'Published' status for public
+    res.json(events);
+  });
+
+  appExpress.post('/api/events', async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const events = loadEvents();
+      const newEvent = {
+        ...req.body,
+        id: `evt-${Date.now()}`,
+        userId: decoded.uid, // Track ownership
+        createdAt: new Date().toISOString(),
+        status: 'Pending' // Default to pending for moderation
+      };
+      events.push(newEvent);
+      saveEvents(events);
+      res.status(201).json(newEvent);
+    } catch (error) {
+      res.status(401).json({ error: 'Session invalid' });
+    }
+  });
+
+  appExpress.get('/api/events/my', async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const events = loadEvents();
+      const myEvents = events.filter((e: any) => e.userId === decoded.uid || decoded.role === 'SuperAdmin');
+      res.json(myEvents);
+    } catch (error) {
+      res.status(401).json({ error: 'Session invalid' });
+    }
+  });
+
+  appExpress.delete('/api/events/:id', async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const events = loadEvents();
+      const eventIndex = events.findIndex((e: any) => e.id === req.params.id);
+      
+      if (eventIndex === -1) return res.status(404).json({ error: 'Event not found' });
+      
+      const event = events[eventIndex];
+      // Ownership check
+      if (event.userId !== decoded.uid && decoded.role !== 'SuperAdmin') {
+        return res.status(403).json({ error: 'Insufficient permissions' });
+      }
+
+      events.splice(eventIndex, 1);
+      saveEvents(events);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(401).json({ error: 'Session invalid' });
+    }
+  });
+
+  appExpress.put('/api/events/:id', async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const events = loadEvents();
+      const eventIndex = events.findIndex((e: any) => e.id === req.params.id);
+
+      if (eventIndex === -1) return res.status(404).json({ error: 'Event not found' });
+
+      const event = events[eventIndex];
+      // Ownership check (only owner or Admin can update)
+      if (event.userId !== decoded.uid && decoded.role !== 'SuperAdmin') {
+        return res.status(403).json({ error: 'Insufficient permissions' });
+      }
+
+      const updatedEvent = { ...event, ...req.body, updatedAt: new Date().toISOString() };
+      events[eventIndex] = updatedEvent;
+      saveEvents(events);
+      res.json(updatedEvent);
+    } catch (error) {
+      res.status(401).json({ error: 'Session invalid' });
+    }
+  });
+
   // VITE MIDDLEWARE
   const vite = await createViteServer({
     server: { middlewareMode: true },

@@ -45,6 +45,7 @@ import { Footer } from './components/Footer';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { EventSubmission } from './types/admin';
 import { INITIAL_EVENT_SUBMISSIONS, INITIAL_ADMIN_NOTIFICATIONS } from './data/adminMockData';
+import { LoginView } from './components/LoginView';
 
 export default function App() {
   // Navigation & View State (Discover Events page is the default site page)
@@ -56,9 +57,11 @@ export default function App() {
   const [discoverKeyword, setDiscoverKeyword] = useState<string>('');
 
   // Primary Data State (Initialized and synchronized dynamically with persistent storage)
-  const [events, setEvents] = useState<EventItem[]>(() => getStoredEvents());
+  const [events, setEvents] = useState<EventItem[]>([]);
+  const [userEvents, setUserEvents] = useState<EventItem[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(INITIAL_AUDIT_LOGS);
-  const [currentUser, setCurrentUser] = useState<UserProfile>(CURRENT_USER);
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   // Modals & Drawers State
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
@@ -76,15 +79,78 @@ export default function App() {
   // Create Event mode: 'visitor' (public event submission for approval) | 'wizard' (pro organizer 6-step wizard)
   const [createViewMode, setCreateViewMode] = useState<'visitor' | 'wizard'>('visitor');
 
-  // Synchronize events dynamically on view switch or when approved events change
+  // 1. Initial Auth Check
   useEffect(() => {
-    const syncEvents = () => {
-      setEvents(getStoredEvents());
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/me');
+        if (res.ok) {
+          const data = await res.json();
+          setCurrentUser(data.user);
+        }
+      } catch (e) {
+        console.error('Auth Check failed', e);
+      } finally {
+        setIsAuthLoading(false);
+      }
     };
-    syncEvents();
-    window.addEventListener('storage', syncEvents);
-    return () => window.removeEventListener('storage', syncEvents);
+    checkAuth();
+  }, []);
+
+  // 2. Fetch Events
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch('/api/events');
+        if (res.ok) {
+          const data = await res.json();
+          // If no events in DB yet, fallback to mock data to keep the site looking good
+          setEvents(data.length > 0 ? data : INITIAL_EVENTS);
+        } else {
+          setEvents(INITIAL_EVENTS);
+        }
+      } catch (e) {
+        setEvents(INITIAL_EVENTS);
+      }
+    };
+    fetchEvents();
   }, [currentView]);
+
+  // 3. Fetch User Events (when logged in and on a dashboard)
+  useEffect(() => {
+    if (!currentUser || !['organizer-dashboard', 'admin-dashboard'].includes(currentView)) return;
+
+    const fetchUserEvents = async () => {
+      try {
+        const res = await fetch('/api/events/my');
+        if (res.ok) {
+          const data = await res.json();
+          setUserEvents(data);
+        }
+      } catch (e) {
+        console.error('Failed to fetch user events', e);
+      }
+    };
+    fetchUserEvents();
+  }, [currentView, currentUser]);
+
+  // View Protection logic
+  const PROTECTED_VIEWS = ['create', 'organizer-dashboard', 'admin-dashboard'];
+  const isViewProtected = PROTECTED_VIEWS.includes(currentView);
+
+  const handleLoginSuccess = (user: UserProfile) => {
+    setCurrentUser(user);
+    // If they were trying to go to a protected view, they stay there. 
+    // Otherwise, maybe go to home or discover.
+  };
+
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="w-12 h-12 border-4 border-slate-200 border-t-emerald-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   // Automatic event view tracker: opens detail modal, increments dynamic views count with session deduplication, and persists
   const handleSelectEvent = (event: EventItem) => {
@@ -96,7 +162,12 @@ export default function App() {
   // Toggle Save Event handler
   const handleToggleSave = (e: React.MouseEvent, eventId: string) => {
     e.stopPropagation();
+    if (!currentUser) {
+      setCurrentView('login');
+      return;
+    }
     setCurrentUser((prev) => {
+      if (!prev) return prev;
       const exists = prev.savedEventIds.includes(eventId);
       const updatedSaves = exists
         ? prev.savedEventIds.filter((id) => id !== eventId)
@@ -179,28 +250,38 @@ export default function App() {
   };
 
   // Event Created from Wizard
-  const handleEventCreated = (newEvent: EventItem) => {
-    setEvents((prev) => {
-      const updated = [newEvent, ...prev];
-      saveStoredEvents(updated);
-      return updated;
-    });
+  const handleEventCreated = async (newEvent: EventItem) => {
+    try {
+      const res = await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newEvent),
+      });
 
-    // Create Audit Log
-    const newLog: AuditLogItem = {
-      id: `log-${Date.now()}`,
-      action: 'Submitted New Event for Moderation',
-      targetType: 'Event',
-      targetTitle: newEvent.title,
-      targetId: newEvent.id,
-      user: currentUser.name,
-      role: 'Event Organizer',
-      timestamp: 'Just now',
-      notes: `Submitted with price ${newEvent.priceDisplay} at ${newEvent.venue}`,
-    };
-    setAuditLogs((prev) => [newLog, ...prev]);
+      if (!res.ok) throw new Error('Failed to save event');
 
-    setCurrentView('organizer-dashboard');
+      const savedEvent = await res.json();
+      setEvents((prev) => [savedEvent, ...prev]);
+
+      // Create Audit Log
+      const newLog: AuditLogItem = {
+        id: `log-${Date.now()}`,
+        action: 'Submitted New Event for Moderation',
+        targetType: 'Event',
+        targetTitle: savedEvent.title,
+        targetId: savedEvent.id,
+        user: currentUser?.name || 'Unknown',
+        role: 'Event Organizer',
+        timestamp: 'Just now',
+        notes: `Submitted with price ${savedEvent.priceDisplay} at ${savedEvent.venue}`,
+      };
+      setAuditLogs((prev) => [newLog, ...prev]);
+
+      setCurrentView('organizer-dashboard');
+    } catch (e) {
+      console.error(e);
+      alert('Error saving event to server.');
+    }
   };
 
   // Visitor Event Submission Handler (Persists proposal & notifies Admin)
@@ -265,99 +346,139 @@ export default function App() {
   };
 
   // Super Admin: Update Event Status & Log Action
-  const handleUpdateEventStatus = (
+  const handleUpdateEventStatus = async (
     eventId: string,
     newStatus: EventStatus,
     actionName: string,
     notes?: string
   ) => {
-    let targetTitle = 'Event';
-
-    setEvents((prev) => {
-      const updated = prev.map((evt) => {
-        if (evt.id === eventId) {
-          targetTitle = evt.title;
-          return { ...evt, status: newStatus };
-        }
-        return evt;
+    try {
+      const res = await fetch(`/api/events/${eventId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
       });
-      saveStoredEvents(updated);
-      return updated;
-    });
 
-    const log: AuditLogItem = {
-      id: `log-${Date.now()}`,
-      action: actionName,
-      targetType: 'Event',
-      targetTitle,
-      targetId: eventId,
-      user: 'SuperAdmin Jean-Paul',
-      role: 'Platform Administrator',
-      timestamp: 'Just now',
-      notes,
-    };
-    setAuditLogs((prev) => [log, ...prev]);
+      if (!res.ok) throw new Error('Failed to update event status');
+
+      const updatedEvent = await res.json();
+      
+      setEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
+      setUserEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
+
+      const log: AuditLogItem = {
+        id: `log-${Date.now()}`,
+        action: actionName,
+        targetType: 'Event',
+        targetTitle: updatedEvent.title,
+        targetId: eventId,
+        user: currentUser?.name || 'SuperAdmin',
+        role: 'Platform Administrator',
+        timestamp: 'Just now',
+        notes,
+      };
+      setAuditLogs((prev) => [log, ...prev]);
+    } catch (e) {
+      console.error(e);
+      alert('Error updating event status.');
+    }
   };
 
   // Super Admin: Toggle Feature Event
-  const handleToggleFeatureEvent = (eventId: string) => {
-    let targetTitle = 'Event';
-    let isNowFeatured = false;
+  const handleToggleFeatureEvent = async (eventId: string) => {
+    const event = events.find((e) => e.id === eventId);
+    if (!event) return;
 
-    setEvents((prev) => {
-      const updated = prev.map((evt) => {
-        if (evt.id === eventId) {
-          targetTitle = evt.title;
-          isNowFeatured = !evt.isFeatured;
-          return { ...evt, isFeatured: isNowFeatured };
-        }
-        return evt;
+    try {
+      const res = await fetch(`/api/events/${eventId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isFeatured: !event.isFeatured }),
       });
-      saveStoredEvents(updated);
-      return updated;
-    });
 
-    const log: AuditLogItem = {
-      id: `log-${Date.now()}`,
-      action: isNowFeatured ? 'Promoted Event to Featured Carousel' : 'Removed from Featured Carousel',
-      targetType: 'Event',
-      targetTitle,
-      targetId: eventId,
-      user: 'SuperAdmin Jean-Paul',
-      role: 'Platform Administrator',
-      timestamp: 'Just now',
-    };
-    setAuditLogs((prev) => [log, ...prev]);
+      if (!res.ok) throw new Error('Failed to toggle feature');
+
+      const updatedEvent = await res.json();
+      setEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
+      setUserEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
+
+      const log: AuditLogItem = {
+        id: `log-${Date.now()}`,
+        action: updatedEvent.isFeatured ? 'Promoted Event to Featured Carousel' : 'Removed from Featured Carousel',
+        targetType: 'Event',
+        targetTitle: updatedEvent.title,
+        targetId: eventId,
+        user: currentUser?.name || 'SuperAdmin',
+        role: 'Platform Administrator',
+        timestamp: 'Just now',
+      };
+      setAuditLogs((prev) => [log, ...prev]);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   // Super Admin: Delete Event
-  const handleDeleteEvent = (eventId: string) => {
-    const evt = events.find((e) => e.id === eventId);
-    setEvents((prev) => {
-      const updated = prev.filter((e) => e.id !== eventId);
-      saveStoredEvents(updated);
-      return updated;
-    });
+  const handleDeleteEvent = async (eventId: string) => {
+    if (!confirm('Are you sure you want to permanently delete this event?')) return;
 
-    const log: AuditLogItem = {
-      id: `log-${Date.now()}`,
-      action: 'Permanently Deleted Event',
-      targetType: 'Event',
-      targetTitle: evt ? evt.title : eventId,
-      targetId: eventId,
-      user: 'SuperAdmin Jean-Paul',
-      role: 'Platform Administrator',
-      timestamp: 'Just now',
-    };
-    setAuditLogs((prev) => [log, ...prev]);
+    try {
+      const res = await fetch(`/api/events/${eventId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) throw new Error('Failed to delete event');
+
+      const evt = events.find((e) => e.id === eventId);
+      setEvents((prev) => prev.filter((e) => e.id !== eventId));
+      setUserEvents((prev) => prev.filter((e) => e.id !== eventId));
+
+      const log: AuditLogItem = {
+        id: `log-${Date.now()}`,
+        action: 'Permanently Deleted Event',
+        targetType: 'Event',
+        targetTitle: evt ? evt.title : eventId,
+        targetId: eventId,
+        user: currentUser?.name || 'SuperAdmin',
+        role: 'Platform Administrator',
+        timestamp: 'Just now',
+      };
+      setAuditLogs((prev) => [log, ...prev]);
+    } catch (e) {
+      console.error(e);
+      alert('Error deleting event.');
+    }
   };
 
   // Saved Events List
-  const savedEventsList = events.filter((e) => currentUser.savedEventIds.includes(e.id));
-  const unreadCount = currentUser.notifications.filter((n) => !n.read).length;
+  const savedEventsList = currentUser ? events.filter((e) => currentUser.savedEventIds.includes(e.id)) : [];
+  const unreadCount = currentUser ? currentUser.notifications.filter((n) => !n.read).length : 0;
 
   // Dedicated Enterprise Admin System Suite (Complete UI Design)
   if (currentView === 'admin-dashboard') {
+    if (!currentUser) {
+      return (
+        <div className="min-h-screen">
+          <Header
+            currentView={currentView}
+            onNavigate={setCurrentView}
+            savedCount={0}
+            onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
+            onOpenSearchModal={() => setIsSearchModalOpen(true)}
+            onOpenNotifications={() => setIsNotificationsOpen(true)}
+            unreadNotificationsCount={0}
+            currentUser={null}
+            onOpenLogin={() => setCurrentView('login')}
+            onOpenProfile={() => setIsProfileModalOpen(true)}
+          />
+          <LoginView onLoginSuccess={handleLoginSuccess} onCancel={() => setCurrentView('discover')} />
+        </div>
+      );
+    }
+    if (currentUser.role !== 'SuperAdmin') {
+      setCurrentView('discover');
+      return null;
+    }
     return <AdminSystem onExitToPublicSite={() => setCurrentView('home')} />;
   }
 
@@ -378,13 +499,32 @@ export default function App() {
         unreadNotificationsCount={unreadCount}
         events={events}
         onSelectEvent={handleSelectEvent}
+        currentUser={currentUser}
+        onOpenLogin={() => setCurrentView('login')}
+        onOpenProfile={() => setIsProfileModalOpen(true)}
       />
 
       {/* 2. Main View Routing */}
       <main className="flex-1 pb-20 md:pb-0">
         
+        {/* AUTH PROTECTION OVERLAY */}
+        {isViewProtected && !currentUser && (
+          <LoginView 
+            onLoginSuccess={handleLoginSuccess}
+            onCancel={() => setCurrentView('discover')}
+          />
+        )}
+
+        {/* LOGIN VIEW */}
+        {currentView === 'login' && (
+          <LoginView 
+            onLoginSuccess={() => setCurrentView('discover')}
+            onCancel={() => setCurrentView('discover')}
+          />
+        )}
+
         {/* HOMEPAGE VIEW */}
-        {currentView === 'home' && (
+        {currentView === 'home' && !isViewProtected && (
           <div>
             {/* Hero Section with large search bar and quick filters */}
             <HeroSection
@@ -540,23 +680,11 @@ export default function App() {
         )}
 
         {/* ORGANIZER DASHBOARD */}
-        {currentView === 'organizer-dashboard' && (
+        {currentView === 'organizer-dashboard' && currentUser && (
           <OrganizerDashboard
-            events={events}
+            events={userEvents}
             currentUser={currentUser}
             onCreateEvent={() => setCurrentView('create')}
-            onSelectEvent={handleSelectEvent}
-          />
-        )}
-
-        {/* SUPER ADMIN DASHBOARD & MODERATION */}
-        {currentView === 'admin-dashboard' && (
-          <AdminDashboard
-            events={events}
-            onUpdateEventStatus={handleUpdateEventStatus}
-            onToggleFeatureEvent={handleToggleFeatureEvent}
-            onDeleteEvent={handleDeleteEvent}
-            auditLogs={auditLogs}
             onSelectEvent={handleSelectEvent}
           />
         )}
@@ -604,7 +732,7 @@ export default function App() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         }}
-        savedCount={currentUser.savedEventIds.length}
+        savedCount={currentUser?.savedEventIds.length || 0}
       />
 
       {/* MODALS & DRAWERS */}
@@ -675,15 +803,17 @@ export default function App() {
       />
 
       {/* User Profile Modal */}
-      <UserProfileModal
-        isOpen={isProfileModalOpen}
-        onClose={() => setIsProfileModalOpen(false)}
-        currentUser={currentUser}
-        onUpdateProfile={(updated) => setCurrentUser(updated)}
-        onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
-        onOpenOrganizerPortal={() => setCurrentView('organizer-dashboard')}
-        onOpenAdminPortal={() => setCurrentView('admin-dashboard')}
-      />
+      {currentUser && (
+        <UserProfileModal
+          isOpen={isProfileModalOpen}
+          onClose={() => setIsProfileModalOpen(false)}
+          currentUser={currentUser}
+          onUpdateProfile={(updated) => setCurrentUser(updated)}
+          onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
+          onOpenOrganizerPortal={() => setCurrentView('organizer-dashboard')}
+          onOpenAdminPortal={() => setCurrentView('admin-dashboard')}
+        />
+      )}
 
       {/* Notifications Modal */}
       <NotificationModal
