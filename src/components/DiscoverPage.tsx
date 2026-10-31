@@ -225,28 +225,28 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
   // Render Filter Sidebar Content
   const filterSidebarContent = (
-    <div className="space-y-6 text-xs text-slate-700">
+    <div className="space-y-6 text-sm text-slate-700">
       
       {/* Header with Clear Button */}
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-900 text-xs">
-          <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="flex items-center gap-2 font-bold uppercase tracking-wider text-slate-900 text-sm">
+          <SlidersHorizontal className="w-4 h-4 text-emerald-600" />
           <span>Filter Events</span>
         </div>
         <button
           type="button"
           onClick={handleClearFilters}
-          className="text-xs text-emerald-700 hover:text-emerald-800 font-semibold inline-flex items-center gap-1"
+          className="text-sm text-emerald-700 hover:text-emerald-800 font-bold inline-flex items-center gap-1 cursor-pointer"
         >
-          <RotateCcw className="w-3 h-3" />
+          <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset</span>
         </button>
       </div>
 
       {/* Date Filter Presets */}
       <div>
-        <label className="block font-bold text-slate-900 mb-2">When</label>
-        <div className="grid grid-cols-2 gap-1.5">
+        <label className="block font-bold text-slate-900 mb-2.5 text-sm">When</label>
+        <div className="grid grid-cols-2 gap-2">
           {[
             { id: 'all', label: 'Any Date' },
             { id: 'today', label: 'Today' },
@@ -262,9 +262,9 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 setDatePreset(dp.id);
                 setCustomDate('');
               }}
-              className={`px-2.5 py-1.5 rounded-lg border text-left font-medium transition-colors ${
+              className={`px-3 py-2 rounded-xl border text-left font-semibold text-sm transition-colors cursor-pointer ${
                 datePreset === dp.id && !customDate
-                  ? 'bg-emerald-600 border-emerald-600 text-white font-bold'
+                  ? 'bg-emerald-600 border-emerald-600 text-white font-extrabold shadow-sm'
                   : 'border-slate-200 hover:bg-slate-50 text-slate-700'
               }`}
             >
@@ -422,10 +422,10 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
       
       {/* Top Banner / Heading */}
       <div className="mb-8">
-        <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
           Discover Events in Kigali
         </h1>
-        <p className="text-slate-500 text-xs sm:text-sm mt-1">
+        <p className="text-slate-600 text-sm sm:text-base mt-1.5 font-medium">
           Explore upcoming gatherings, live performances, exhibitions, and summits across Rwanda’s capital.
         </p>
       </div>
@@ -434,7 +434,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
       <div className="flex flex-col lg:flex-row items-start gap-8">
         
         {/* DESKTOP LEFT SIDEBAR FILTERS */}
-        <aside className="hidden lg:block w-72 shrink-0 bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm sticky top-20">
+        <aside className="hidden lg:block w-76 shrink-0 bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm sticky top-20">
           {filterSidebarContent}
         </aside>
 
@@ -442,23 +442,23 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
         <div className="flex-1 w-full space-y-6">
           
           {/* Controls Bar: Search, View Toggles & Sorting */}
-          <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             
             {/* Search Input */}
-            <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-slate-50 rounded-xl border border-slate-200/70 focus-within:border-emerald-600 focus-within:bg-white transition-colors">
-              <Search className="w-4 h-4 text-slate-400 shrink-0" />
+            <div className="flex-1 flex items-center gap-2.5 px-3.5 py-2.5 bg-slate-50 rounded-xl border border-slate-200/70 focus-within:border-emerald-600 focus-within:bg-white transition-colors">
+              <Search className="w-5 h-5 text-slate-400 shrink-0" />
               <input
                 type="text"
                 placeholder="Search event name, venue, or keyword..."
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                className="w-full bg-transparent text-xs sm:text-sm font-medium focus:outline-none text-slate-800"
+                className="w-full bg-transparent text-sm sm:text-base font-semibold focus:outline-none text-slate-900 placeholder:text-slate-400 placeholder:font-normal"
               />
               {keyword && (
                 <button
                   type="button"
                   onClick={() => setKeyword('')}
-                  className="text-xs text-slate-400 hover:text-slate-600 font-bold"
+                  className="text-sm text-slate-400 hover:text-slate-600 font-bold px-1"
                 >
                   ✕
                 </button>
@@ -466,29 +466,29 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
             </div>
 
             {/* Actions Cluster */}
-            <div className="flex items-center justify-between sm:justify-end gap-2.5">
+            <div className="flex items-center justify-between sm:justify-end gap-3">
               
               {/* Mobile Filter Button */}
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(true)}
-                className="lg:hidden px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-1.5 hover:bg-slate-50"
+                className="lg:hidden px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 flex items-center gap-2 hover:bg-slate-50 cursor-pointer"
               >
-                <Filter className="w-3.5 h-3.5 text-emerald-600" />
+                <Filter className="w-4 h-4 text-emerald-600" />
                 <span>Filters</span>
                 {(selectedCategories.length > 0 || selectedNeighborhoods.length > 0 || datePreset !== 'all') && (
-                  <span className="w-2 h-2 rounded-full bg-emerald-600" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
                 )}
               </button>
 
               {/* Sorting Dropdown */}
-              <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                <ArrowUpDown className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+              <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                <ArrowUpDown className="w-4 h-4 text-slate-400 shrink-0" />
                 <select
                   aria-label="Sort events"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 py-2 px-2.5 rounded-xl focus:outline-none cursor-pointer"
+                  className="bg-slate-50 border border-slate-200 text-sm font-bold text-slate-800 py-2.5 px-3 rounded-xl focus:outline-none cursor-pointer"
                 >
                   <option value="soonest">Soonest Date (Upcoming First)</option>
                   <option value="recommended">Recommended</option>

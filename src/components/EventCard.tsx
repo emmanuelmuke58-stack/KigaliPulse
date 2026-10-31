@@ -38,20 +38,20 @@ export const EventCard: React.FC<EventCardProps> = ({
           />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between gap-1 text-[11px] mb-0.5">
+          <div className="flex items-center justify-between gap-1 text-xs mb-1">
             <span className="text-emerald-700 font-bold truncate">{event.displayDate}</span>
             <span
-              className="inline-flex items-center gap-1 font-semibold text-slate-600 shrink-0 bg-slate-100 px-1.5 py-0.5 rounded text-[10px]"
+              className="inline-flex items-center gap-1 font-semibold text-slate-600 shrink-0 bg-slate-100 px-2 py-0.5 rounded text-xs"
               title={`${event.views.toLocaleString()} page visits (views)`}
             >
-              <Eye className="w-3 h-3 text-slate-500" />
+              <Eye className="w-3.5 h-3.5 text-slate-500" />
               <span>{event.views.toLocaleString()} Views</span>
             </span>
           </div>
-          <h4 className="font-bold text-xs text-slate-900 group-hover:text-emerald-700 truncate">
+          <h4 className="font-bold text-sm text-slate-900 group-hover:text-emerald-700 truncate">
             {event.title}
           </h4>
-          <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+          <div className="flex items-center justify-between text-xs text-slate-600 mt-1">
             <span className="truncate">{event.venue}</span>
             <span className="font-bold text-slate-900 tabular-nums">{event.priceDisplay}</span>
           </div>
@@ -96,12 +96,12 @@ export const EventCard: React.FC<EventCardProps> = ({
         <div className="flex-1 p-5 flex flex-col justify-between">
           <div>
             {/* Unboxed Metadata Header */}
-            <div className="flex items-center justify-between gap-2 text-xs text-slate-500 font-medium mb-1.5 flex-wrap">
+            <div className="flex items-center justify-between gap-2 text-sm text-slate-600 font-medium mb-2 flex-wrap">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-emerald-700 font-semibold">{event.category}</span>
-                <span aria-hidden="true">·</span>
-                <span>{event.displayDate}</span>
-                <span aria-hidden="true">·</span>
+                <span className="text-emerald-700 font-bold">{event.category}</span>
+                <span aria-hidden="true" className="text-slate-300">·</span>
+                <span className="font-semibold text-slate-800">{event.displayDate}</span>
+                <span aria-hidden="true" className="text-slate-300">·</span>
                 <span>{event.time}</span>
               </div>
 
@@ -112,21 +112,21 @@ export const EventCard: React.FC<EventCardProps> = ({
               >
                 <Eye className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                 <span className="tabular-nums font-bold text-slate-800">{event.views.toLocaleString()}</span>
-                <span className="text-[11px] text-slate-500 font-medium">Views</span>
+                <span className="text-xs text-slate-500 font-medium">Views</span>
               </div>
             </div>
 
-            <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1">
               {event.title}
             </h3>
 
-            <p className="mt-1 text-xs text-slate-600 line-clamp-2">
+            <p className="mt-1.5 text-sm text-slate-600 line-clamp-2 leading-relaxed">
               {event.description}
             </p>
 
-            <div className="mt-3 flex items-center justify-between gap-2 text-xs text-slate-500">
+            <div className="mt-3 flex items-center justify-between gap-2 text-sm text-slate-600 font-medium">
               <div className="flex items-center gap-2 truncate">
-                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
                 <span className="truncate">{event.venue}, {event.neighborhood}</span>
               </div>
             </div>
@@ -135,11 +135,11 @@ export const EventCard: React.FC<EventCardProps> = ({
           {/* Card Footer */}
           <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-slate-900 tabular-nums">
+              <span className="text-base sm:text-lg font-black text-slate-900 tabular-nums">
                 {event.priceDisplay}
               </span>
               {event.isFree && (
-                <span className="text-xs text-emerald-700 font-medium">(Free Entry)</span>
+                <span className="text-xs sm:text-sm text-emerald-700 font-bold">(Free Entry)</span>
               )}
             </div>
 
@@ -232,60 +232,60 @@ export const EventCard: React.FC<EventCardProps> = ({
         </div>
 
         {/* Gradient Scrim with Category and Location */}
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end justify-between p-3">
-          <div className="text-[11px] font-medium text-white flex items-center gap-1.5 truncate">
-            <span className="font-semibold text-emerald-300">{event.category}</span>
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end justify-between p-3.5">
+          <div className="text-xs font-semibold text-white flex items-center gap-1.5 truncate">
+            <span className="font-bold text-emerald-300">{event.category}</span>
             <span aria-hidden="true" className="text-white/60">·</span>
-            <span className="text-slate-200">{event.neighborhood}</span>
+            <span className="text-slate-100">{event.neighborhood}</span>
           </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5">
         <div>
           {/* Timing Info & Views Count Row */}
-          <div className="flex items-center justify-between gap-2 text-xs mb-1.5 flex-wrap">
-            <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-              <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+          <div className="flex items-center justify-between gap-2 text-sm mb-2 flex-wrap">
+            <div className="flex items-center gap-1.5 text-emerald-700 font-bold">
+              <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{event.displayDate}</span>
               <span aria-hidden="true" className="text-slate-300">·</span>
-              <span className="text-slate-600 font-normal">{event.time}</span>
+              <span className="text-slate-600 font-medium">{event.time}</span>
             </div>
 
             {/* Total Views Count Clearly Displayed */}
             <div
-              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold shrink-0 border border-slate-200/60"
+              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold shrink-0 border border-slate-200/60"
               title={`${event.views.toLocaleString()} page visits (Views represent event page visits, not confirmed ticket purchases)`}
             >
               <Eye className="w-3.5 h-3.5 text-slate-500 shrink-0" />
               <span className="tabular-nums font-bold text-slate-800">{event.views.toLocaleString()}</span>
-              <span className="text-[11px] text-slate-500 font-medium">Views</span>
+              <span className="text-xs text-slate-500 font-medium">Views</span>
             </div>
           </div>
 
-          <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
             {event.title}
           </h3>
 
-          <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-500">
-            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span className="truncate font-medium">{event.venue}</span>
+          <div className="mt-2.5 flex items-center gap-1.5 text-sm text-slate-600 font-medium">
+            <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
+            <span className="truncate">{event.venue}</span>
           </div>
         </div>
 
         {/* Card Footer: Price & View CTA */}
-        <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+        <div className="pt-3.5 border-t border-slate-100 flex items-center justify-between">
           <div>
-            <div className="text-[10px] uppercase font-bold text-slate-400">Price</div>
-            <div className="text-sm font-extrabold text-slate-900 tabular-nums">
+            <div className="text-xs uppercase font-extrabold text-slate-400 tracking-wider">Price</div>
+            <div className="text-base sm:text-lg font-black text-slate-900 tabular-nums">
               {event.priceDisplay}
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 group-hover:translate-x-0.5 transition-transform">
+          <div className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 group-hover:translate-x-0.5 transition-transform">
             <span>View Event</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
       </div>

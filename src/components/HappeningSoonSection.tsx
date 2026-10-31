@@ -30,14 +30,14 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
-              <Clock className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-sm font-extrabold uppercase tracking-wider text-emerald-700 mb-1.5">
+              <Clock className="w-4 h-4" />
               <span>Next Up on the Calendar</span>
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Happening Soon
             </h2>
-            <p className="text-slate-500 text-xs sm:text-sm mt-1">
+            <p className="text-slate-600 text-sm sm:text-base mt-1.5 font-medium">
               Events taking place across Kigali in the upcoming days.
             </p>
           </div>
@@ -45,7 +45,7 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
           <button
             type="button"
             onClick={onViewAll}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-emerald-700 hover:text-emerald-800 transition-colors group cursor-pointer"
           >
             <span>Explore Full Schedule</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

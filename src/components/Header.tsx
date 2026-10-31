@@ -61,14 +61,14 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => handleNavClick('discover')}
             className="flex items-center gap-2.5 text-left group focus:outline-none cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 font-display font-extrabold text-lg flex items-center justify-center shadow-sm group-hover:bg-emerald-700 group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-slate-900 text-emerald-400 font-display font-extrabold text-xl flex items-center justify-center shadow-sm group-hover:bg-emerald-700 group-hover:text-white transition-colors">
               KP
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-black text-xl tracking-tight text-slate-900 leading-none">
+              <span className="font-display font-black text-2xl tracking-tight text-slate-900 leading-none">
                 KigaliPulse
               </span>
-              <span className="text-[10px] tracking-widest text-slate-400 uppercase font-semibold mt-0.5">
+              <span className="text-xs tracking-widest text-slate-500 uppercase font-bold mt-0.5">
                 Rwanda
               </span>
             </div>
@@ -76,15 +76,15 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* ZONE 2: Clean Typography Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <nav className="hidden md:flex items-center gap-7 text-base font-semibold text-slate-600">
           {navLinks.map((link) => (
             <button
               key={link.id}
               type="button"
               onClick={() => handleNavClick(link.id)}
-              className={`transition-colors whitespace-nowrap py-1 relative ${
+              className={`transition-colors whitespace-nowrap py-1 relative cursor-pointer ${
                 currentView === link.id
-                  ? 'text-slate-900 font-bold border-b-2 border-emerald-600'
+                  ? 'text-slate-950 font-black border-b-2 border-emerald-600'
                   : 'hover:text-slate-900'
               }`}
             >

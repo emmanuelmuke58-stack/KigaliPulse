@@ -139,21 +139,21 @@ export const CompactHeaderEventSlider: React.FC<CompactHeaderEventSliderProps> =
       className="bg-slate-900 border-b border-slate-800 text-white select-none transition-colors duration-200 w-full max-w-full overflow-hidden"
       aria-label="Upcoming Events Auto-Sliding Header"
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-1.5 flex items-center justify-between gap-2.5 sm:gap-4 h-11 sm:h-12 overflow-hidden w-full max-w-full">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-3 sm:gap-4 h-12 sm:h-13 overflow-hidden w-full max-w-full">
         
         {/* Left Indicator Pill: "UPCOMING" with live animated pulse */}
-        <div className="flex items-center gap-1.5 shrink-0">
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] sm:text-[11px] font-black uppercase tracking-wider">
-            <span className="relative flex h-2 w-2">
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-black uppercase tracking-wider">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
             </span>
             <span className="hidden xs:inline">Upcoming</span>
             <span className="xs:hidden">Live</span>
           </div>
 
           {/* Mini order indicator */}
-          <span className="hidden sm:inline-block font-mono text-[10px] text-slate-400 tabular-nums">
+          <span className="hidden sm:inline-block font-mono text-xs text-slate-400 tabular-nums font-semibold">
             {currentIndex + 1}/{totalEvents}
           </span>
         </div>
@@ -173,13 +173,13 @@ export const CompactHeaderEventSlider: React.FC<CompactHeaderEventSliderProps> =
               return (
                 <div
                   key={evt.id}
-                  className="w-full shrink-0 flex items-center justify-between gap-2 sm:gap-3 cursor-pointer group"
+                  className="w-full shrink-0 flex items-center justify-between gap-2.5 sm:gap-3 cursor-pointer group"
                   onClick={() => onSelectEvent(evt)}
                 >
                   {/* Event Thumbnail & Meta Details */}
-                  <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
                     {/* Small Thumbnail */}
-                    <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-md sm:rounded-lg overflow-hidden shrink-0 border border-slate-700/80 bg-slate-800 shadow-sm">
+                    <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-md sm:rounded-lg overflow-hidden shrink-0 border border-slate-700/80 bg-slate-800 shadow-sm">
                       <img
                         src={evt.image}
                         alt={evt.title}
@@ -187,23 +187,23 @@ export const CompactHeaderEventSlider: React.FC<CompactHeaderEventSliderProps> =
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                       {relLabel && (
-                        <span className="absolute bottom-0 inset-x-0 bg-emerald-600/90 text-slate-950 font-black text-[7px] text-center uppercase tracking-tighter sm:hidden">
+                        <span className="absolute bottom-0 inset-x-0 bg-emerald-600/95 text-slate-950 font-black text-[8px] text-center uppercase tracking-tighter sm:hidden">
                           {relLabel}
                         </span>
                       )}
                     </div>
 
                     {/* Textual Information */}
-                    <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 overflow-hidden">
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1 overflow-hidden">
                       {/* Urgency Pill (Desktop) */}
                       {relLabel && (
-                        <span className="hidden md:inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-tight bg-emerald-400 text-slate-950 shrink-0">
+                        <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded text-xs font-black uppercase tracking-tight bg-emerald-400 text-slate-950 shrink-0">
                           {relLabel}
                         </span>
                       )}
 
                       {/* Event Title */}
-                      <span className="text-xs sm:text-sm font-bold text-white group-hover:text-emerald-400 transition-colors truncate">
+                      <span className="text-sm sm:text-base font-bold text-white group-hover:text-emerald-400 transition-colors truncate">
                         {evt.title}
                       </span>
 

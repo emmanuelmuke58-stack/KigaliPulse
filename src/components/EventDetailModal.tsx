@@ -160,58 +160,58 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
 
           {/* Headline Content Over Scrim */}
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 space-y-2 text-white">
-            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 flex-wrap">
-              <span className="uppercase tracking-wider font-bold">{event.category}</span>
+            <div className="flex items-center gap-2 text-sm font-bold text-emerald-400 flex-wrap">
+              <span className="uppercase tracking-wider font-extrabold">{event.category}</span>
               <span aria-hidden="true" className="text-white/40">·</span>
-              <span className="text-slate-300 font-medium">{event.neighborhood}, Kigali</span>
+              <span className="text-slate-200 font-semibold">{event.neighborhood}, Kigali</span>
             </div>
 
-            <h1 className="font-display text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+            <h1 className="font-display text-2xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
               {event.title}
             </h1>
           </div>
         </div>
 
         {/* Key Metrics / Info Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 p-5 sm:p-6 bg-slate-50 border-b border-slate-200/80 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 p-5 sm:p-6 bg-slate-50 border-b border-slate-200/80">
           <div>
-            <span className="text-slate-500 font-medium block">Date</span>
-            <div className="font-bold text-sm text-slate-900 mt-0.5 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Date</span>
+            <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5">
+              <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{event.displayDate}</span>
             </div>
           </div>
 
           <div>
-            <span className="text-slate-500 font-medium block">Time</span>
-            <div className="font-bold text-sm text-slate-900 mt-0.5 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Time</span>
+            <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5">
+              <Clock className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{event.time}</span>
             </div>
           </div>
 
           <div>
-            <span className="text-slate-500 font-medium block">Venue &amp; Location</span>
-            <div className="font-bold text-sm text-slate-900 mt-0.5 flex items-center gap-1.5 truncate">
-              <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Venue &amp; Location</span>
+            <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5 truncate">
+              <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
               <span className="truncate">{event.venue}</span>
             </div>
           </div>
 
           <div>
-            <span className="text-slate-500 font-medium block">Admission Price</span>
-            <div className="font-bold text-base text-emerald-700 mt-0.5 tabular-nums">
+            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Admission Price</span>
+            <div className="font-black text-lg sm:text-xl text-emerald-700 mt-1 tabular-nums">
               {event.priceDisplay}
             </div>
           </div>
 
           <div>
-            <span className="text-slate-500 font-medium block">Page Visits</span>
-            <div className="font-bold text-sm text-slate-900 mt-0.5 flex items-center gap-1.5 tabular-nums">
-              <Eye className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-              <span>{event.views.toLocaleString()} Views</span>
+            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Page Visits</span>
+            <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5 tabular-nums">
+              <Eye className="w-4 h-4 text-blue-600 shrink-0" />
+              <span>{event.views.toLocaleString()}</span>
             </div>
-            <span className="text-[10px] text-slate-400 block mt-0.5">
+            <span className="text-xs text-slate-500 block mt-0.5 font-medium">
               Listing visitors
             </span>
           </div>
@@ -226,7 +226,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
               href={event.externalTicketUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 min-h-[48px] py-3 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 text-center"
+              className="flex-1 min-h-[52px] py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-extrabold text-base transition-all shadow-md flex items-center justify-center gap-2 text-center"
             >
               <span>Get Tickets / Register</span>
               <ExternalLink className="w-4 h-4" />
@@ -236,7 +236,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={(e) => onToggleSave(e, event.id)}
-              className={`min-h-[48px] px-5 py-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-colors ${
+              className={`min-h-[52px] px-5 py-3.5 rounded-xl border text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer ${
                 isSaved
                   ? 'bg-amber-500 border-amber-500 text-white'
                   : 'border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'
@@ -250,7 +250,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={shareWhatsApp}
-              className="min-h-[48px] px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+              className="min-h-[52px] px-5 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors shadow-sm cursor-pointer"
               title="Share on WhatsApp (Rwanda's favorite messenger)"
             >
               <Share2 className="w-4 h-4" />
@@ -308,24 +308,24 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           <div className="space-y-6 pt-4 border-t border-slate-100 pb-20 md:pb-0">
             
             {/* About Section */}
-            <div className="space-y-2">
-              <h2 className="text-base font-bold text-slate-900">About the Event</h2>
-              <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+            <div className="space-y-2.5">
+              <h2 className="text-lg sm:text-xl font-extrabold text-slate-900">About the Event</h2>
+              <p className="text-base text-slate-700 leading-relaxed whitespace-pre-line font-normal">
                 {event.description}
               </p>
             </div>
 
             {/* What to Expect */}
             {event.whatToExpect && event.whatToExpect.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="text-sm font-bold text-slate-900">What to Expect</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div className="space-y-3.5">
+                <h3 className="text-base font-bold text-slate-900">What to Expect</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {event.whatToExpect.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3 rounded-xl bg-slate-50 border border-slate-200/60 text-xs text-slate-700 flex items-start gap-2.5"
+                      className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-sm text-slate-800 flex items-start gap-3 font-medium"
                     >
-                      <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </div>
                   ))}
@@ -335,20 +335,20 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
 
             {/* Event Schedule Timeline */}
             {event.schedule && event.schedule.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="text-sm font-bold text-slate-900">Schedule &amp; Program</h3>
-                <div className="space-y-2.5 border-l-2 border-emerald-500/30 pl-4 ml-1">
+              <div className="space-y-3.5">
+                <h3 className="text-base font-bold text-slate-900">Schedule &amp; Program</h3>
+                <div className="space-y-3 border-l-2 border-emerald-500/30 pl-4 ml-1">
                   {event.schedule.map((slot, idx) => (
-                    <div key={idx} className="relative space-y-0.5">
-                      <span className="absolute -left-[21px] top-1.5 w-2 h-2 rounded-full bg-emerald-600 ring-4 ring-white" />
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-emerald-700 tabular-nums">
+                    <div key={idx} className="relative space-y-1">
+                      <span className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-emerald-600 ring-4 ring-white" />
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-sm font-bold text-emerald-700 tabular-nums">
                           {slot.time}
                         </span>
-                        <h4 className="text-xs font-bold text-slate-900">{slot.title}</h4>
+                        <h4 className="text-sm font-bold text-slate-900">{slot.title}</h4>
                       </div>
                       {slot.description && (
-                        <p className="text-xs text-slate-500">{slot.description}</p>
+                        <p className="text-sm text-slate-600">{slot.description}</p>
                       )}
                     </div>
                   ))}
