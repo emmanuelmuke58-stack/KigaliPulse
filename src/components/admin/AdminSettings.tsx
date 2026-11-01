@@ -30,6 +30,8 @@ import {
   ROLE_PERMISSIONS_MATRIX,
 } from '../../data/adminMockData';
 
+import { useFontSize } from '../../contexts/FontSizeContext';
+
 interface AdminSettingsProps {
   currentUser: EnterpriseUser;
   onUpdateCurrentUser: (user: EnterpriseUser) => void;
@@ -41,9 +43,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
   onUpdateCurrentUser,
   onTriggerToast,
 }) => {
+  const { fontSize, preset, setFontSize, setPreset, resetToDefault, savePreferences } = useFontSize();
+
   // Active sub-section tab
   const [activeSection, setActiveSection] = useState<
-    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system'
+    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system' | 'font'
   >('general');
 
   // Form states
@@ -120,6 +124,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
           { id: 'account', label: 'Account Profile', icon: User },
           { id: 'security', label: 'Security & 2FA', icon: Lock },
           { id: 'notifications', label: 'Notification Rules', icon: Bell },
+          { id: 'font', label: 'Font Size', icon: Sparkles },
           { id: 'roles', label: 'Roles & Permissions', icon: Shield },
           { id: 'system', label: 'System & Maintenance', icon: Database },
         ].map((tab) => {
@@ -531,6 +536,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             </button>
           </div>
         </div>
+      )}
+
+      {/* SECTION: FONT SIZE MANAGEMENT */}
+      {activeSection === 'font' && (
+        <FontSizeSettings onTriggerToast={onTriggerToast} />
       )}
 
       {/* SECTION 5: ROLES & PERMISSIONS MATRIX */}

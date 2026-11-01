@@ -209,5 +209,7 @@ export interface UserProfile {
   savedEventIds: string[];
   followedOrganizerIds: string[];
   notifications: NotificationItem[];
+  preferredFontSize?: number;
+  preferredFontPreset?: string;
 }
 
