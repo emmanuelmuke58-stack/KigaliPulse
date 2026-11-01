@@ -16,14 +16,14 @@ export const LocationsSection: React.FC<LocationsSectionProps> = ({
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+            <div className="flex items-center gap-1.5 text-base font-bold uppercase tracking-wider text-emerald-400 mb-1">
               <Navigation className="w-3.5 h-3.5" />
               <span>Explore The Hills</span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Kigali Districts &amp; Neighborhoods
             </h2>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            <p className="text-slate-400 text-base sm:text-base mt-1">
               Select any vibrant area to see localized events and venue hotspots.
             </p>
           </div>
@@ -39,23 +39,23 @@ export const LocationsSection: React.FC<LocationsSectionProps> = ({
               className="group p-4 bg-slate-800/80 hover:bg-slate-800 rounded-2xl border border-white/10 hover:border-emerald-500/50 transition-all text-left flex items-start justify-between gap-3 cursor-pointer"
             >
               <div className="space-y-1">
-                <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-semibold">
+                <div className="flex items-center gap-1.5 text-base text-emerald-400 font-semibold">
                   <MapPin className="w-3.5 h-3.5 shrink-0" />
                   <span>{hood.district} District</span>
                 </div>
                 <h3 className="font-bold text-base text-white group-hover:text-emerald-300 transition-colors">
                   {hood.name}
                 </h3>
-                <p className="text-xs text-slate-400 leading-snug">
+                <p className="text-base text-slate-400 leading-snug">
                   {hood.highlight}
                 </p>
               </div>
 
               <div className="shrink-0 flex flex-col items-end">
-                <span className="text-xs font-extrabold text-white bg-slate-700/80 px-2.5 py-1 rounded-lg">
+                <span className="text-base font-extrabold text-white bg-slate-700/80 px-2.5 py-1 rounded-lg">
                   {hood.count}
                 </span>
-                <span className="text-[10px] text-slate-400 mt-1">events</span>
+                <span className="text-[14px] text-slate-400 mt-1">events</span>
               </div>
             </button>
           ))}

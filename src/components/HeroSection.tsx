@@ -47,7 +47,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         
         {/* Subtle Region Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-sm font-bold">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-base font-bold">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span>Kigali Event Discovery &amp; City Guide</span>
         </div>
@@ -79,7 +79,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 placeholder="What are you looking for?"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                className="w-full bg-transparent text-sm sm:text-base font-semibold focus:outline-none placeholder:text-slate-400 text-slate-900 placeholder:font-normal"
+                className="w-full bg-transparent text-base sm:text-base font-semibold focus:outline-none placeholder:text-slate-400 text-slate-900 placeholder:font-normal"
               />
             </div>
 
@@ -90,7 +90,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 aria-label="Select category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-transparent text-sm sm:text-base font-semibold focus:outline-none text-slate-900 cursor-pointer"
+                className="w-full bg-transparent text-base sm:text-base font-semibold focus:outline-none text-slate-900 cursor-pointer"
               >
                 <option value="">All Categories</option>
                 {CATEGORIES.map((cat) => (
@@ -108,7 +108,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 aria-label="Select location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full bg-transparent text-sm sm:text-base font-semibold focus:outline-none text-slate-900 cursor-pointer"
+                className="w-full bg-transparent text-base sm:text-base font-semibold focus:outline-none text-slate-900 cursor-pointer"
               >
                 <option value="">All Kigali Areas</option>
                 {KIGALI_NEIGHBORHOODS.map((hood) => (
@@ -128,13 +128,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   aria-label="Select date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-transparent text-sm sm:text-base font-semibold focus:outline-none text-slate-900 min-w-0"
+                  className="w-full bg-transparent text-base sm:text-base font-semibold focus:outline-none text-slate-900 min-w-0"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-sm sm:text-base rounded-xl transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-base sm:text-base rounded-xl transition-all shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer"
               >
                 <span>Find Events</span>
                 <ArrowRight className="w-4 h-4" />
@@ -144,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </form>
 
         {/* Quick Filter Buttons Below Search */}
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 text-sm">
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 text-base">
           <span className="text-slate-300 font-bold">Quick Filters:</span>
           {quickFilters.map((qf) => {
             const isActive = activeQuickFilter === qf.id;
@@ -153,7 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 key={qf.id}
                 type="button"
                 onClick={() => onQuickFilter(qf.id)}
-                className={`px-3.5 py-2 rounded-xl border text-sm font-bold transition-colors cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl border text-base font-bold transition-colors cursor-pointer ${
                   isActive
                     ? 'bg-emerald-600 border-emerald-500 text-white font-extrabold shadow-sm'
                     : 'bg-white/10 hover:bg-white/20 border-white/20 text-slate-100'

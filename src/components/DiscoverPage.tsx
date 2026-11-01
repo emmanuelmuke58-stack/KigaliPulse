@@ -225,18 +225,18 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
   // Render Filter Sidebar Content
   const filterSidebarContent = (
-    <div className="space-y-6 text-sm text-slate-700">
+    <div className="space-y-6 text-base text-slate-700">
       
       {/* Header with Clear Button */}
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2 font-bold uppercase tracking-wider text-slate-900 text-sm">
+        <div className="flex items-center gap-2 font-bold uppercase tracking-wider text-slate-900 text-base">
           <SlidersHorizontal className="w-4 h-4 text-emerald-600" />
           <span>Filter Events</span>
         </div>
         <button
           type="button"
           onClick={handleClearFilters}
-          className="text-sm text-emerald-700 hover:text-emerald-800 font-bold inline-flex items-center gap-1 cursor-pointer"
+          className="text-base text-emerald-700 hover:text-emerald-800 font-bold inline-flex items-center gap-1 cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset</span>
@@ -245,7 +245,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
       {/* Date Filter Presets */}
       <div>
-        <label className="block font-bold text-slate-900 mb-2.5 text-sm">When</label>
+        <label className="block font-bold text-slate-900 mb-2.5 text-base">When</label>
         <div className="grid grid-cols-2 gap-2">
           {[
             { id: 'all', label: 'Any Date' },
@@ -262,7 +262,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 setDatePreset(dp.id);
                 setCustomDate('');
               }}
-              className={`px-3 py-2 rounded-xl border text-left font-semibold text-sm transition-colors cursor-pointer ${
+              className={`px-3 py-2 rounded-xl border text-left font-semibold text-base transition-colors cursor-pointer ${
                 datePreset === dp.id && !customDate
                   ? 'bg-emerald-600 border-emerald-600 text-white font-extrabold shadow-sm'
                   : 'border-slate-200 hover:bg-slate-50 text-slate-700'
@@ -283,7 +283,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               setCustomDate(e.target.value);
               setDatePreset('');
             }}
-            className="w-full p-2 rounded-xl border border-slate-200 text-xs bg-slate-50 focus:outline-none focus:border-emerald-600"
+            className="w-full p-2 rounded-xl border border-slate-200 text-base bg-slate-50 focus:outline-none focus:border-emerald-600"
           />
         </div>
       </div>
@@ -308,7 +308,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                   className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 w-3.5 h-3.5 cursor-pointer"
                 />
                 <span className="text-slate-800 flex-1 truncate">{cat.name}</span>
-                <span className="text-[10px] text-slate-400 font-medium tabular-nums">
+                <span className="text-[14px] text-slate-400 font-medium tabular-nums">
                   {cat.eventCount}
                 </span>
               </label>
@@ -337,7 +337,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                   className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 w-3.5 h-3.5 cursor-pointer"
                 />
                 <span className="text-slate-800 flex-1 truncate">{hood.name}</span>
-                <span className="text-[10px] text-slate-400 font-medium">
+                <span className="text-[14px] text-slate-400 font-medium">
                   {hood.district}
                 </span>
               </label>
@@ -366,7 +366,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
 
         {priceType !== 'free' && (
           <div className="mt-3 space-y-1">
-            <div className="flex justify-between text-slate-500 text-[11px]">
+            <div className="flex justify-between text-slate-500 text-[15px]">
               <span>Max Ticket:</span>
               <span className="font-bold text-slate-900 tabular-nums">
                 RF {maxPrice.toLocaleString()}
@@ -393,7 +393,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
           aria-label="Filter by time of day"
           value={timeOfDay}
           onChange={(e) => setTimeOfDay(e.target.value)}
-          className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50 focus:outline-none focus:border-emerald-600 cursor-pointer"
+          className="w-full p-2.5 rounded-xl border border-slate-200 text-base bg-slate-50 focus:outline-none focus:border-emerald-600 cursor-pointer"
         >
           <option value="all">Any Time</option>
           <option value="morning">Morning (Before 12:00)</option>
@@ -411,7 +411,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
           placeholder="Filter by organizer name..."
           value={organizerQuery}
           onChange={(e) => setOrganizerQuery(e.target.value)}
-          className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50 focus:outline-none focus:border-emerald-600"
+          className="w-full p-2.5 rounded-xl border border-slate-200 text-base bg-slate-50 focus:outline-none focus:border-emerald-600"
         />
       </div>
     </div>
@@ -425,7 +425,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
         <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
           Discover Events in Kigali
         </h1>
-        <p className="text-slate-600 text-sm sm:text-base mt-1.5 font-medium">
+        <p className="text-slate-600 text-base sm:text-base mt-1.5 font-medium">
           Explore upcoming gatherings, live performances, exhibitions, and summits across Rwanda’s capital.
         </p>
       </div>
@@ -452,13 +452,13 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
                 placeholder="Search event name, venue, or keyword..."
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                className="w-full bg-transparent text-sm sm:text-base font-semibold focus:outline-none text-slate-900 placeholder:text-slate-400 placeholder:font-normal"
+                className="w-full bg-transparent text-base sm:text-base font-semibold focus:outline-none text-slate-900 placeholder:text-slate-400 placeholder:font-normal"
               />
               {keyword && (
                 <button
                   type="button"
                   onClick={() => setKeyword('')}
-                  className="text-sm text-slate-400 hover:text-slate-600 font-bold px-1"
+                  className="text-base text-slate-400 hover:text-slate-600 font-bold px-1"
                 >
                   ✕
                 </button>
@@ -472,7 +472,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(true)}
-                className="lg:hidden px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 flex items-center gap-2 hover:bg-slate-50 cursor-pointer"
+                className="lg:hidden px-3.5 py-2.5 rounded-xl border border-slate-200 text-base font-bold text-slate-700 flex items-center gap-2 hover:bg-slate-50 cursor-pointer"
               >
                 <Filter className="w-4 h-4 text-emerald-600" />
                 <span>Filters</span>
@@ -482,13 +482,13 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               </button>
 
               {/* Sorting Dropdown */}
-              <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+              <div className="flex items-center gap-2 text-base text-slate-600 font-medium">
                 <ArrowUpDown className="w-4 h-4 text-slate-400 shrink-0" />
                 <select
                   aria-label="Sort events"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-slate-50 border border-slate-200 text-sm font-bold text-slate-800 py-2.5 px-3 rounded-xl focus:outline-none cursor-pointer"
+                  className="bg-slate-50 border border-slate-200 text-base font-bold text-slate-800 py-2.5 px-3 rounded-xl focus:outline-none cursor-pointer"
                 >
                   <option value="soonest">Soonest Date (Upcoming First)</option>
                   <option value="recommended">Recommended</option>
@@ -537,14 +537,14 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
           </div>
 
           {/* Results Count & Active Filters Indicator */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 bg-slate-50 border border-slate-200/80 rounded-xl px-3.5 py-2.5 text-xs">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 bg-slate-50 border border-slate-200/80 rounded-xl px-3.5 py-2.5 text-base">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-slate-600 font-medium">
                 Showing <strong className="text-slate-900 font-bold tabular-nums">{sortedEvents.length}</strong> {sortedEvents.length === 1 ? 'event' : 'events'}
               </span>
 
               {datePreset === 'today' && !customDate && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-xs shadow-xs">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-base shadow-xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   <span>Happening Today</span>
                   <button
@@ -559,7 +559,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               )}
 
               {datePreset !== 'today' && datePreset !== 'all' && !customDate && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-semibold text-xs border border-emerald-200">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-semibold text-base border border-emerald-200">
                   <span>When: {datePreset.replace('_', ' ')}</span>
                   <button
                     type="button"
@@ -573,7 +573,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               )}
 
               {customDate && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-semibold text-xs border border-emerald-200">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-semibold text-base border border-emerald-200">
                   <span>Date: {customDate}</span>
                   <button
                     type="button"
@@ -636,14 +636,14 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               </div>
               <div className="space-y-1">
                 <h3 className="text-base font-bold text-slate-900">No events found matching your criteria</h3>
-                <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                <p className="text-base text-slate-500 max-w-sm mx-auto">
                   Try adjusting or clearing your date, category, or location filters to see more events happening in Kigali.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClearFilters}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors"
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-base rounded-xl shadow-sm transition-colors"
               >
                 Clear All Filters
               </button>
@@ -679,7 +679,7 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
               <button
                 type="button"
                 onClick={() => setMobileFilterOpen(false)}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] transition-all text-white font-bold text-sm rounded-2xl shadow-lg"
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] transition-all text-white font-bold text-base rounded-2xl shadow-lg"
               >
                 Apply Filters ({sortedEvents.length} Events)
               </button>

@@ -90,7 +90,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             />
             <div>
               <h2 className="font-bold text-lg text-slate-900">{currentUser.name}</h2>
-              <span className="text-xs text-slate-500 font-medium capitalize">
+              <span className="text-base text-slate-500 font-medium capitalize">
                 Kigali Member · {role}
               </span>
             </div>
@@ -108,16 +108,16 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
         {/* Portal Switching Shortcuts */}
         <div className="px-6 py-4 bg-slate-50 border-b border-slate-100 flex flex-wrap items-center gap-2">
-          <span className="text-[10px] uppercase tracking-wider text-slate-400 font-bold w-full mb-1">Quick Links</span>
+          <span className="text-[14px] uppercase tracking-wider text-slate-400 font-bold w-full mb-1">Quick Links</span>
           <button
             type="button"
             onClick={() => {
               onClose();
               onOpenSavedDrawer();
             }}
-            className="min-h-[44px] px-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-600 text-slate-700 text-xs font-bold transition-all shadow-sm active:scale-[0.98]"
+            className="min-h-[44px] px-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-600 text-slate-700 text-base font-bold transition-all shadow-sm active:scale-[0.98]"
           >
-            Saved ({currentUser.savedEventIds.length})
+            Saved ({currentUser.savedEventIds?.length || 0})
           </button>
           <button
             type="button"
@@ -125,7 +125,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               onClose();
               onOpenOrganizerPortal();
             }}
-            className="min-h-[44px] px-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-600 text-slate-700 text-xs font-bold transition-all shadow-sm active:scale-[0.98]"
+            className="min-h-[44px] px-4 rounded-xl bg-white border border-slate-200 hover:border-emerald-600 text-slate-700 text-base font-bold transition-all shadow-sm active:scale-[0.98]"
           >
             Organizer Hub
           </button>
@@ -135,17 +135,17 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               onClose();
               onOpenAdminPortal();
             }}
-            className="min-h-[44px] px-4 rounded-xl bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 text-xs font-bold transition-all shadow-sm active:scale-[0.98]"
+            className="min-h-[44px] px-4 rounded-xl bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 text-base font-bold transition-all shadow-sm active:scale-[0.98]"
           >
             Admin Panel
           </button>
         </div>
 
         {/* Profile Settings Form */}
-        <form onSubmit={handleSave} className="p-6 space-y-8 text-xs pb-[calc(6rem+env(safe-area-inset-bottom))]">
+        <form onSubmit={handleSave} className="p-6 space-y-8 text-base pb-[calc(6rem+env(safe-area-inset-bottom))]">
           
           <div className="space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
+            <h3 className="font-bold text-base text-slate-900 border-b pb-2">
               Account Details
             </h3>
 
@@ -197,7 +197,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
           {/* Preferred Categories */}
           <div className="space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
+            <h3 className="font-bold text-base text-slate-900 border-b pb-2">
               Event Interests
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -208,7 +208,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     key={cat.id}
                     type="button"
                     onClick={() => handleToggleCat(cat.id)}
-                    className={`min-h-[44px] px-4 py-2 rounded-xl border text-xs font-bold transition-all active:scale-[0.98] ${
+                    className={`min-h-[44px] px-4 py-2 rounded-xl border text-base font-bold transition-all active:scale-[0.98] ${
                       isChecked
                         ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
                         : 'border-slate-200 text-slate-700 hover:bg-slate-50'
@@ -223,7 +223,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
           {/* Preferred Neighborhoods */}
           <div className="space-y-4">
-            <h3 className="font-bold text-sm text-slate-900 border-b pb-2">
+            <h3 className="font-bold text-base text-slate-900 border-b pb-2">
               Kigali Locations
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -234,7 +234,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     key={hood.name}
                     type="button"
                     onClick={() => handleToggleHood(hood.name)}
-                    className={`min-h-[44px] px-4 py-2 rounded-xl border text-xs font-bold transition-all active:scale-[0.98] ${
+                    className={`min-h-[44px] px-4 py-2 rounded-xl border text-base font-bold transition-all active:scale-[0.98] ${
                       isChecked
                         ? 'bg-emerald-600 border-emerald-600 text-white shadow-md'
                         : 'border-slate-200 text-slate-700 hover:bg-slate-50'
@@ -251,7 +251,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-slate-100 sm:relative sm:p-0 sm:bg-transparent sm:border-0 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-0 z-30">
             <div className="max-w-2xl mx-auto flex items-center justify-between">
               {savedSuccess ? (
-                <span className="text-emerald-700 font-bold flex items-center gap-1 text-xs">
+                <span className="text-emerald-700 font-bold flex items-center gap-1 text-base">
                   <CheckCircle className="w-4 h-4" /> Profile Updated!
                 </span>
               ) : (
@@ -259,7 +259,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               )}
               <button
                 type="submit"
-                className="w-full sm:w-auto min-h-[48px] px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+                className="w-full sm:w-auto min-h-[48px] px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base rounded-xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
               >
                 <Save className="w-4 h-4" />
                 <span>Save All Changes</span>
@@ -274,7 +274,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 await fetch('/api/auth/logout', { method: 'POST' });
                 window.location.reload();
               }}
-              className="w-full py-4 text-red-600 font-bold text-sm hover:bg-red-50 rounded-2xl transition-all active:scale-[0.98] border border-red-100"
+              className="w-full py-4 text-red-600 font-bold text-base hover:bg-red-50 rounded-2xl transition-all active:scale-[0.98] border border-red-100"
             >
               Sign Out from KigaliPulse
             </button>
@@ -316,20 +316,20 @@ export const NotificationModal: React.FC<{
           {notifications.map((notif) => (
             <div
               key={notif.id}
-              className={`p-3 rounded-xl border text-xs space-y-1 ${
+              className={`p-3 rounded-xl border text-base space-y-1 ${
                 notif.read ? 'bg-slate-50 border-slate-100 text-slate-500' : 'bg-emerald-50/50 border-emerald-200 text-slate-800'
               }`}
             >
               <div className="flex items-center justify-between">
                 <h4 className="font-bold">{notif.title}</h4>
-                <span className="text-[10px] text-slate-400">{notif.time}</span>
+                <span className="text-[14px] text-slate-400">{notif.time}</span>
               </div>
               <p className="text-slate-600">{notif.message}</p>
             </div>
           ))}
         </div>
 
-        <div className="pt-2 border-t flex justify-between items-center text-xs">
+        <div className="pt-2 border-t flex justify-between items-center text-base">
           <button type="button" onClick={onMarkAllAsRead} className="text-emerald-700 font-semibold hover:underline">
             Mark all as read
           </button>

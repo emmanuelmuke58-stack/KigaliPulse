@@ -17,6 +17,7 @@ interface HeaderProps {
   currentUser: any | null;
   onOpenLogin: () => void;
   onOpenProfile: () => void;
+  onLogout: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -32,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentUser,
   onOpenLogin,
   onOpenProfile,
+  onLogout,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -68,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-display font-black text-2xl tracking-tight text-slate-900 leading-none">
                 KigaliPulse
               </span>
-              <span className="text-xs tracking-widest text-slate-500 uppercase font-bold mt-0.5">
+              <span className="text-base tracking-widest text-slate-500 uppercase font-bold mt-0.5">
                 Rwanda
               </span>
             </div>
@@ -127,7 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Bookmark className="w-4 h-4" />
             {savedCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 bg-amber-500 text-white text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center">
+              <span className="absolute top-1.5 right-1.5 bg-amber-500 text-white text-[14px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center">
                 {savedCount}
               </span>
             )}
@@ -137,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={() => handleNavClick('create')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm whitespace-nowrap"
+            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm whitespace-nowrap"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Create Event</span>
@@ -148,7 +150,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={() => handleNavClick('admin-dashboard')}
-              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-colors whitespace-nowrap ${
+              className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-base font-bold rounded-xl border transition-colors whitespace-nowrap ${
                 currentView === 'admin-dashboard'
                   ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
@@ -173,15 +175,15 @@ export const Header: React.FC<HeaderProps> = ({
                 className="w-8 h-8 rounded-lg object-cover border border-slate-200 shadow-xs"
               />
               <div className="hidden lg:flex flex-col items-start pr-2">
-                <span className="text-[11px] font-bold text-slate-900 leading-none">{currentUser.name}</span>
-                <span className="text-[9px] text-emerald-600 font-bold uppercase tracking-wider mt-0.5">{currentUser.role}</span>
+                <span className="text-[15px] font-bold text-slate-900 leading-none">{currentUser.name}</span>
+                <span className="text-[13px] text-emerald-600 font-bold uppercase tracking-wider mt-0.5">{currentUser.role}</span>
               </div>
             </button>
           ) : (
             <button
               type="button"
               onClick={onOpenLogin}
-              className="hidden md:inline-flex px-4 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
+              className="hidden lg:inline-flex px-4 py-2 text-base font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
             >
               Sign In
             </button>
@@ -220,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({
                 key={link.id}
                 type="button"
                 onClick={() => handleNavClick(link.id)}
-                className={`text-left px-4 py-3 rounded-2xl text-sm font-semibold transition-all active:scale-[0.97] ${
+                className={`text-left px-4 py-3 rounded-2xl text-base font-semibold transition-all active:scale-[0.97] ${
                   currentView === link.id
                     ? 'bg-emerald-50 text-emerald-800'
                     : 'text-slate-700 hover:bg-slate-50'
@@ -236,7 +238,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={() => handleNavClick('organizer-dashboard')}
-                className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
+                className="w-full py-3.5 text-center text-base font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
               >
                 Organizer Hub
               </button>
@@ -244,18 +246,25 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   type="button"
                   onClick={() => handleNavClick('admin-dashboard')}
-                  className="w-full py-3.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
+                  className="w-full py-3.5 text-center text-base font-bold text-slate-700 bg-slate-100 rounded-2xl hover:bg-slate-200 active:scale-[0.98] transition-all"
                 >
                   Admin Moderation
                 </button>
               )}
+              <button
+                type="button"
+                onClick={onLogout}
+                className="w-full py-3.5 text-center text-base font-bold text-red-600 bg-red-50 rounded-2xl hover:bg-red-100 active:scale-[0.98] transition-all"
+              >
+                Sign Out
+              </button>
             </div>
           )}
 
           <button
             type="button"
             onClick={() => handleNavClick('create')}
-            className="w-full mt-3 py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2 transition-all shadow-md"
+            className="w-full mt-3 py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold text-base rounded-2xl flex items-center justify-center gap-2 transition-all shadow-md"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Submit New Event</span>

@@ -12,6 +12,7 @@ import {
   ArrowLeft,
   Loader2,
 } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 import { EnterpriseUser } from '../../types/admin';
 
 interface AdminAuthProps {
@@ -30,6 +31,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { login, resetPassword, currentUser: authUser } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,19 +45,13 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Authentication failed. Please check your credentials.');
+      await login(email, password);
+      // The parent AdminSystem uses the context authUser to decide what to show
+      // But we need to ensure the user has the right role
+      if (authUser && authUser.role !== 'SuperAdmin') {
+        throw new Error('Access denied: You do not have SuperAdmin privileges.');
       }
-
-      onLoginSuccess(data.user);
+      onLoginSuccess({} as any); // Trigger success in parent
     } catch (err: any) {
       setErrorMessage(err.message);
     } finally {
@@ -63,14 +59,17 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
     }
   };
 
-  const handleForgotSubmit = (e: React.FormEvent) => {
+  const handleForgotSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Mock for now, as real email sending requires more infra
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await resetPassword(email);
       setAuthScreen('reset-success');
-    }, 1000);
+    } catch (err: any) {
+      setErrorMessage(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -93,7 +92,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
         <button
           type="button"
           onClick={onExitToPublic}
-          className="text-sm font-semibold text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition-colors group"
+          className="text-base font-semibold text-slate-500 hover:text-slate-900 flex items-center gap-1.5 transition-colors group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           <span>Exit to Public Portal</span>
@@ -111,11 +110,11 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="mb-8">
                   <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Admin Login</h1>
-                  <p className="text-slate-500 text-sm font-medium">Access the KigaliPulse enterprise ecosystem.</p>
+                  <p className="text-slate-500 text-base font-medium">Access the KigaliPulse enterprise ecosystem.</p>
                 </div>
 
                 {errorMessage && (
-                  <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-start gap-3 text-sm animate-in zoom-in-95 duration-200">
+                  <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-start gap-3 text-base animate-in zoom-in-95 duration-200">
                     <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                     <span className="font-semibold leading-relaxed">{errorMessage}</span>
                   </div>
@@ -123,7 +122,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
 
                 <form onSubmit={handleLogin} className="space-y-5">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Email Address</label>
+                    <label className="text-base font-bold text-slate-400 uppercase tracking-widest px-1">Email Address</label>
                     <div className="relative group">
                       <Mail className="w-5 h-5 text-slate-300 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-emerald-500 transition-colors" />
                       <input
@@ -139,11 +138,11 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
 
                   <div className="space-y-2">
                     <div className="flex justify-between items-center px-1">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Password</label>
+                      <label className="text-base font-bold text-slate-400 uppercase tracking-widest">Password</label>
                       <button
                         type="button"
                         onClick={() => setAuthScreen('forgot')}
-                        className="text-xs font-bold text-emerald-600 hover:text-emerald-700"
+                        className="text-base font-bold text-emerald-600 hover:text-emerald-700"
                       >
                         Forgot?
                       </button>
@@ -190,12 +189,12 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div className="mb-8">
                   <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2">Reset Password</h2>
-                  <p className="text-slate-500 text-sm font-medium">We'll send recovery instructions to your email.</p>
+                  <p className="text-slate-500 text-base font-medium">We'll send recovery instructions to your email.</p>
                 </div>
 
                 <form onSubmit={handleForgotSubmit} className="space-y-5">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Admin Email</label>
+                    <label className="text-base font-bold text-slate-400 uppercase tracking-widest px-1">Admin Email</label>
                     <div className="relative group">
                       <Mail className="w-5 h-5 text-slate-300 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-emerald-500 transition-colors" />
                       <input
@@ -218,7 +217,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
                   <button
                     type="button"
                     onClick={() => setAuthScreen('login')}
-                    className="w-full text-center text-sm font-bold text-slate-500 hover:text-slate-800 transition-colors pt-2"
+                    className="w-full text-center text-base font-bold text-slate-500 hover:text-slate-800 transition-colors pt-2"
                   >
                     Back to Login
                   </button>
@@ -232,7 +231,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-3">Check Your Inbox</h2>
-                <p className="text-slate-500 text-sm font-medium mb-10 leading-relaxed px-4">
+                <p className="text-slate-500 text-base font-medium mb-10 leading-relaxed px-4">
                   If an account exists for that email, we've sent instructions to reset your password.
                 </p>
 
@@ -249,26 +248,26 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({
 
           {/* Footer Info */}
           <div className="mt-12 text-center">
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">KigaliPulse Enterprise Security</p>
+            <p className="text-[15px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-3">KigaliPulse Enterprise Security</p>
             <div className="flex items-center justify-center gap-4 text-slate-400">
               <div className="flex items-center gap-1.5">
                 <div className="w-1 h-1 rounded-full bg-slate-300" />
-                <span className="text-[10px] font-bold">SHA-256 AES</span>
+                <span className="text-[14px] font-bold">SHA-256 AES</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-1 h-1 rounded-full bg-slate-300" />
-                <span className="text-[10px] font-bold">Bcrypt Hashing</span>
+                <span className="text-[14px] font-bold">Bcrypt Hashing</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-1 h-1 rounded-full bg-slate-300" />
-                <span className="text-[10px] font-bold">HTTP-Only SSL</span>
+                <span className="text-[14px] font-bold">HTTP-Only SSL</span>
               </div>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="relative z-10 p-8 text-center text-[11px] font-semibold text-slate-400 tracking-wide uppercase opacity-50">
+      <footer className="relative z-10 p-8 text-center text-[15px] font-semibold text-slate-400 tracking-wide uppercase opacity-50">
         &copy; {new Date().getFullYear()} KigaliPulse Group · Authorized Access Only
       </footer>
     </div>

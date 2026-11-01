@@ -190,7 +190,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
         <div className="p-6 sm:p-8 bg-slate-900 text-white space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <span className="text-base font-bold uppercase tracking-wider text-emerald-400">
                 Organizer Submission Portal
               </span>
               <h1 className="font-display text-2xl sm:text-3xl font-extrabold mt-0.5">
@@ -200,7 +200,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
             <button
               type="button"
               onClick={onCancel}
-              className="text-xs text-slate-400 hover:text-white px-3 py-1.5 rounded-lg border border-white/10"
+              className="text-base text-slate-400 hover:text-white px-3 py-1.5 rounded-lg border border-white/10"
             >
               Cancel
             </button>
@@ -215,7 +215,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                     s.num <= step ? 'bg-emerald-400' : 'bg-slate-800'
                   }`}
                 />
-                <span className="text-[10px] hidden sm:block truncate text-slate-400 font-medium">
+                <span className="text-[14px] hidden sm:block truncate text-slate-400 font-medium">
                   {s.num}. {s.title}
                 </span>
               </div>
@@ -234,7 +234,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
               </h2>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Event Title *
                 </label>
                 <input
@@ -243,19 +243,19 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   placeholder="e.g. Kigali Electronic Sunset Rooftop Session"
                   value={formData.title}
                   onChange={(e) => updateField('title', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Event Category *
                   </label>
                   <select
                     value={formData.categoryCode}
                     onChange={(e) => handleCategoryChange(e.target.value as EventCategory)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium focus:outline-none focus:border-emerald-600 bg-slate-50 cursor-pointer"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base sm:text-base font-medium focus:outline-none focus:border-emerald-600 bg-slate-50 cursor-pointer"
                   >
                     {CATEGORIES.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -266,20 +266,20 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Organizer / Host Brand Name *
                   </label>
                   <input
                     type="text"
                     value={formData.organizer}
                     onChange={(e) => updateField('organizer', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base sm:text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Detailed Description *
                 </label>
                 <textarea
@@ -288,19 +288,19 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   placeholder="Provide an overview of the event, lineup, and special highlights..."
                   value={formData.description}
                   onChange={(e) => updateField('description', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base sm:text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Cover Photo URL (High resolution landscape)
                 </label>
                 <input
                   type="url"
                   value={formData.image}
                   onChange={(e) => updateField('image', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-xs sm:text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base sm:text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                 />
               </div>
             </div>
@@ -315,7 +315,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Start Date *
                   </label>
                   <input
@@ -323,12 +323,12 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                     required
                     value={formData.startDate}
                     onChange={(e) => updateField('startDate', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Start Time *
                   </label>
                   <input
@@ -336,31 +336,31 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                     required
                     value={formData.startTime}
                     onChange={(e) => updateField('startTime', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     End Date
                   </label>
                   <input
                     type="date"
                     value={formData.endDate}
                     onChange={(e) => updateField('endDate', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     End Time
                   </label>
                   <input
                     type="time"
                     value={formData.endTime}
                     onChange={(e) => updateField('endTime', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-600 bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none focus:border-emerald-600 bg-slate-50"
                   />
                 </div>
               </div>
@@ -375,13 +375,13 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
               </h2>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Choose Established Venue (or type custom)
                 </label>
                 <select
                   value={formData.venue}
                   onChange={(e) => handleVenueChange(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm bg-slate-50 font-medium focus:outline-none cursor-pointer"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base bg-slate-50 font-medium focus:outline-none cursor-pointer"
                 >
                   {VENUES.map((v) => (
                     <option key={v.id} value={v.name}>
@@ -394,13 +394,13 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Neighborhood *
                   </label>
                   <select
                     value={formData.neighborhood}
                     onChange={(e) => updateField('neighborhood', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:outline-none cursor-pointer"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base bg-slate-50 focus:outline-none cursor-pointer"
                   >
                     {KIGALI_NEIGHBORHOODS.map((h) => (
                       <option key={h.name} value={h.name}>
@@ -411,13 +411,13 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     District
                   </label>
                   <select
                     value={formData.district}
                     onChange={(e) => updateField('district', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm bg-slate-50 focus:outline-none cursor-pointer"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base bg-slate-50 focus:outline-none cursor-pointer"
                   >
                     <option value="Gasabo">Gasabo</option>
                     <option value="Nyarugenge">Nyarugenge</option>
@@ -427,7 +427,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Full Street Address *
                 </label>
                 <input
@@ -436,7 +436,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   placeholder="e.g. KG 563 St, Kacyiru, Kigali, Rwanda"
                   value={formData.address}
                   onChange={(e) => updateField('address', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                 />
               </div>
             </div>
@@ -450,7 +450,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
               </h2>
 
               <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-bold">
+                <label className="flex items-center gap-2 cursor-pointer text-base font-bold">
                   <input
                     type="radio"
                     name="pricingType"
@@ -461,7 +461,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   <span>Paid Tickets</span>
                 </label>
 
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-bold">
+                <label className="flex items-center gap-2 cursor-pointer text-base font-bold">
                   <input
                     type="radio"
                     name="pricingType"
@@ -475,7 +475,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
 
               {!formData.isFree && (
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Standard Ticket Price (in Rwandan Francs - RWF) *
                   </label>
                   <input
@@ -484,13 +484,13 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                     step="500"
                     value={formData.price}
                     onChange={(e) => updateField('price', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50 tabular-nums font-bold"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50 tabular-nums font-bold"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   External Official Ticketing Link *
                 </label>
                 <input
@@ -499,15 +499,15 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   placeholder="https://mookh.com/event/... or https://eventbrite.com/..."
                   value={formData.externalTicketUrl}
                   onChange={(e) => updateField('externalTicketUrl', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                 />
-                <span className="text-[11px] text-slate-500 mt-1 block">
+                <span className="text-[15px] text-slate-500 mt-1 block">
                   KigaliPulse directs attendees to official verified ticketing platforms (Mookh, Eventbrite, BK Arena Tickets, etc.).
                 </span>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Ticketing Provider Name
                 </label>
                 <input
@@ -515,7 +515,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   placeholder="e.g. Mookh Rwanda, TiCQ, BK Arena Portal"
                   value={formData.ticketProviderName}
                   onChange={(e) => updateField('ticketProviderName', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                 />
               </div>
             </div>
@@ -530,7 +530,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Contact Phone Number *
                   </label>
                   <input
@@ -538,12 +538,12 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                     required
                     value={formData.contactPhone}
                     onChange={(e) => updateField('contactPhone', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Contact Email Address *
                   </label>
                   <input
@@ -551,44 +551,44 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                     required
                     value={formData.contactEmail}
                     onChange={(e) => updateField('contactEmail', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Age Restriction
                   </label>
                   <input
                     type="text"
                     value={formData.ageRestriction}
                     onChange={(e) => updateField('ageRestriction', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-base font-bold text-slate-700 mb-1">
                     Dress Code Recommendation
                   </label>
                   <input
                     type="text"
                     value={formData.dressCode}
                     onChange={(e) => updateField('dressCode', e.target.value)}
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                    className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
+                <label className="block text-base font-bold text-slate-700 mb-1">
                   Event Rules &amp; Security Policy
                 </label>
                 <textarea
                   rows={2}
                   value={formData.eventRules}
                   onChange={(e) => updateField('eventRules', e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-slate-50"
+                  className="w-full p-3 rounded-xl border border-slate-200 text-base focus:outline-none bg-slate-50"
                 />
               </div>
             </div>
@@ -604,13 +604,13 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                 <h2 className="text-xl font-bold text-slate-900">
                   Ready to Submit for Moderation
                 </h2>
-                <p className="text-xs text-slate-500 leading-relaxed">
+                <p className="text-base text-slate-500 leading-relaxed">
                   Your event will be audited by KigaliPulse admins to verify authentic venue bookings, safe ticketing links, and correct category tagging.
                 </p>
               </div>
 
               {/* Summary Card */}
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 text-xs">
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 text-base">
                 <div className="flex justify-between border-b pb-2">
                   <span className="text-slate-500">Event Title:</span>
                   <span className="font-bold text-slate-900">{formData.title || 'Untitled Event'}</span>
@@ -640,7 +640,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowPreviewModal(true)}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1.5"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-200 text-base font-bold text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1.5"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Preview Card</span>
@@ -650,7 +650,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSubmit('Draft')}
-                    className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1.5"
+                    className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl border border-slate-200 text-base font-bold text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1.5"
                   >
                     <Save className="w-4 h-4" />
                     <span>Save Draft</span>
@@ -659,7 +659,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                   <button
                     type="button"
                     onClick={() => handleSubmit('Pending Approval')}
-                    className="flex-1 sm:flex-none px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md"
+                    className="flex-1 sm:flex-none px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold flex items-center justify-center gap-1.5 shadow-md"
                   >
                     <Send className="w-4 h-4" />
                     <span>Submit Event</span>
@@ -676,7 +676,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
                 type="button"
                 disabled={step === 1}
                 onClick={() => setStep((s) => s - 1)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 ${
+                className={`px-4 py-2 rounded-xl text-base font-bold flex items-center gap-1.5 ${
                   step === 1
                     ? 'opacity-40 cursor-not-allowed text-slate-400'
                     : 'text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -689,7 +689,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
               <button
                 type="button"
                 onClick={() => setStep((s) => s + 1)}
-                className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
+                className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold flex items-center gap-1.5 shadow-sm"
               >
                 <span>Continue</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -705,7 +705,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl relative">
             <div className="flex items-center justify-between border-b pb-2">
-              <h3 className="text-sm font-bold text-slate-900">Event Card Preview</h3>
+              <h3 className="text-base font-bold text-slate-900">Event Card Preview</h3>
               <button
                 type="button"
                 onClick={() => setShowPreviewModal(false)}
@@ -725,7 +725,7 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
             <button
               type="button"
               onClick={() => setShowPreviewModal(false)}
-              className="w-full py-2 bg-slate-900 text-white text-xs font-bold rounded-xl"
+              className="w-full py-2 bg-slate-900 text-white text-base font-bold rounded-xl"
             >
               Close Preview
             </button>

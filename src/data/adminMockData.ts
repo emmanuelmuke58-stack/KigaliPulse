@@ -247,7 +247,7 @@ export const INITIAL_ADMIN_ACTIVITY_LOGS: EnterpriseActivityLog[] = [
     userName: 'Emmanuel Muke',
     userEmail: 'emmanuelmuke58@gmail.com',
     userAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    userRole: 'Super Admin',
+    userRole: 'SuperAdmin',
     action: 'Changed System Settings',
     module: 'Settings',
     description: 'Updated municipal emergency compliance protocols and session duration to 60m.',
@@ -292,7 +292,7 @@ export const INITIAL_ADMIN_ACTIVITY_LOGS: EnterpriseActivityLog[] = [
     userName: 'Emmanuel Muke',
     userEmail: 'emmanuelmuke58@gmail.com',
     userAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    userRole: 'Super Admin',
+    userRole: 'SuperAdmin',
     action: 'Exported Report',
     module: 'Finance',
     description: 'Exported Q3 Kigali ticketing transactions breakdown as encrypted PDF.',
@@ -336,7 +336,7 @@ export const INITIAL_ADMIN_ACTIVITY_LOGS: EnterpriseActivityLog[] = [
     userName: 'System Gateway',
     userEmail: 'automated-daemon@kigalipulse.rw',
     userAvatar: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80',
-    userRole: 'Super Admin',
+    userRole: 'SuperAdmin',
     action: 'Automated Backup Executed',
     module: 'System',
     description: 'PostgreSQL encrypted relational snapshot verified and synced to cloud storage.',
@@ -425,7 +425,7 @@ export const INITIAL_ADMIN_NOTIFICATIONS: EnterpriseNotification[] = [
 
 export const ROLE_PERMISSIONS_MATRIX: RolePermissionConfig[] = [
   {
-    role: 'Super Admin',
+    role: 'SuperAdmin',
     description: 'Unrestricted full access across enterprise governance, databases, finance, and system settings.',
     userCount: 2,
     permissions: { view: true, create: true, edit: true, delete: true, export: true, approve: true },

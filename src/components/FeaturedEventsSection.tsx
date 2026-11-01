@@ -32,14 +32,14 @@ export const FeaturedEventsSection: React.FC<FeaturedEventsSectionProps> = ({
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 text-sm font-extrabold uppercase tracking-wider text-emerald-700 mb-1.5">
+          <div className="flex items-center gap-2 text-base font-extrabold uppercase tracking-wider text-emerald-700 mb-1.5">
             <Sparkles className="w-4 h-4" />
             <span>Curated Highlights</span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Featured Events in Kigali
           </h2>
-          <p className="text-slate-600 text-sm sm:text-base mt-1.5 font-medium">
+          <p className="text-slate-600 text-base sm:text-base mt-1.5 font-medium">
             Hand-picked headline concerts, flagship tech summits, and cultural gatherings.
           </p>
         </div>
@@ -47,7 +47,7 @@ export const FeaturedEventsSection: React.FC<FeaturedEventsSectionProps> = ({
         <button
           type="button"
           onClick={onViewAll}
-          className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-emerald-700 hover:text-emerald-800 transition-colors group cursor-pointer"
+          className="inline-flex items-center gap-2 text-base sm:text-base font-bold text-emerald-700 hover:text-emerald-800 transition-colors group cursor-pointer"
         >
           <span>View All Events</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

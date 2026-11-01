@@ -30,14 +30,14 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-sm font-extrabold uppercase tracking-wider text-emerald-700 mb-1.5">
+            <div className="flex items-center gap-2 text-base font-extrabold uppercase tracking-wider text-emerald-700 mb-1.5">
               <Clock className="w-4 h-4" />
               <span>Next Up on the Calendar</span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Happening Soon
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base mt-1.5 font-medium">
+            <p className="text-slate-600 text-base sm:text-base mt-1.5 font-medium">
               Events taking place across Kigali in the upcoming days.
             </p>
           </div>
@@ -45,7 +45,7 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
           <button
             type="button"
             onClick={onViewAll}
-            className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-emerald-700 hover:text-emerald-800 transition-colors group cursor-pointer"
+            className="inline-flex items-center gap-2 text-base sm:text-base font-bold text-emerald-700 hover:text-emerald-800 transition-colors group cursor-pointer"
           >
             <span>Explore Full Schedule</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -65,20 +65,20 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
               >
                 {/* Date Square Block */}
                 <div className="w-full sm:w-24 sm:h-24 h-16 rounded-xl bg-slate-900 text-white shrink-0 flex sm:flex-col items-center justify-between sm:justify-center p-3 text-center">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400">
+                  <span className="text-[14px] uppercase font-bold tracking-wider text-emerald-400">
                     {new Date(event.date).toLocaleString('default', { month: 'short' })}
                   </span>
                   <span className="text-xl sm:text-2xl font-black font-display leading-none">
                     {new Date(event.date).getDate()}
                   </span>
-                  <span className="text-[10px] text-slate-400 font-medium sm:mt-1">
+                  <span className="text-[14px] text-slate-400 font-medium sm:mt-1">
                     {new Date(event.date).toLocaleString('default', { weekday: 'short' })}
                   </span>
                 </div>
 
                 {/* Event Details */}
                 <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center justify-between gap-1.5 text-xs text-slate-500 font-medium">
+                  <div className="flex items-center justify-between gap-1.5 text-base text-slate-500 font-medium">
                     <div className="flex items-center gap-1.5 truncate">
                       <span className="text-emerald-700 font-semibold">{event.category}</span>
                       <span aria-hidden="true">·</span>
@@ -86,12 +86,12 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
                     </div>
 
                     <span
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md shrink-0 border border-slate-200/60"
+                      className="inline-flex items-center gap-1 text-[15px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md shrink-0 border border-slate-200/60"
                       title={`${event.views.toLocaleString()} page visits (views)`}
                     >
                       <Eye className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                       <span className="tabular-nums font-bold text-slate-800">{event.views.toLocaleString()}</span>
-                      <span className="text-[10px] text-slate-500 font-normal">Views</span>
+                      <span className="text-[14px] text-slate-500 font-normal">Views</span>
                     </span>
                   </div>
 
@@ -99,13 +99,13 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
                     {event.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500 pt-0.5">
+                  <div className="flex items-center gap-1.5 text-base text-slate-500 pt-0.5">
                     <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                     <span className="truncate">{event.venue} ({event.neighborhood})</span>
                   </div>
 
                   <div className="pt-2 flex items-center justify-between">
-                    <div className="text-xs font-bold text-slate-900 tabular-nums">
+                    <div className="text-base font-bold text-slate-900 tabular-nums">
                       {event.priceDisplay}
                     </div>
 

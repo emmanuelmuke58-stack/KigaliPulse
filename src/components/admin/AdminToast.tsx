@@ -39,8 +39,8 @@ export const AdminToast: React.FC<AdminToastProps> = ({ toasts, onDismiss }) => 
             <div className={`absolute top-0 bottom-0 left-0 w-1.5 ${barColor}`} />
             {icon}
             <div className="flex-1 min-w-0">
-              <h4 className="font-bold text-xs uppercase tracking-wider text-slate-900">{toast.title}</h4>
-              <p className="text-xs text-slate-600 mt-0.5 leading-snug">{toast.message}</p>
+              <h4 className="font-bold text-base uppercase tracking-wider text-slate-900">{toast.title}</h4>
+              <p className="text-base text-slate-600 mt-0.5 leading-snug">{toast.message}</p>
             </div>
             <button
               type="button"

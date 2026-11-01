@@ -18,6 +18,7 @@ import {
   CURRENT_USER,
 } from './data/mockData';
 import { getStoredEvents, saveStoredEvents, recordEventView } from './services/eventStore';
+import { useAuth } from './contexts/AuthContext';
 
 // Component Imports
 import { Header } from './components/Header';
@@ -62,8 +63,9 @@ export default function App() {
   const [events, setEvents] = useState<EventItem[]>(() => getStoredEvents());
   const [userEvents, setUserEvents] = useState<EventItem[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(INITIAL_AUDIT_LOGS);
-  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
-  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  
+  // Auth from Context
+  const { currentUser, updateUserProfile, logout, getAuthToken, loading: isAuthLoading } = useAuth();
 
   // Modals & Drawers State
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
@@ -81,29 +83,17 @@ export default function App() {
   // Create Event mode: 'visitor' (public event submission for approval) | 'wizard' (pro organizer 6-step wizard)
   const [createViewMode, setCreateViewMode] = useState<'visitor' | 'wizard'>('wizard');
 
-  // 1. Initial Auth Check
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('/api/auth/me');
-        if (res.ok) {
-          const data = await res.json();
-          setCurrentUser(data.user);
-        }
-      } catch (e) {
-        console.error('Auth Check failed', e);
-      } finally {
-        setIsAuthLoading(false);
-      }
-    };
-    checkAuth();
-  }, []);
+  // Initial Auth Check (Handled by AuthContext now)
 
   // 2. Fetch Events from backend API and merge updates
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch('/api/events');
+        const token = await getAuthToken();
+        const headers: any = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+
+        const res = await fetch('/api/events', { headers });
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data) && data.length > 0) {
@@ -124,7 +114,10 @@ export default function App() {
 
     const fetchUserEvents = async () => {
       try {
-        const res = await fetch('/api/events/my');
+        const token = await getAuthToken();
+        const res = await fetch('/api/events/my', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
         if (res.ok) {
           const data = await res.json();
           setUserEvents(data);
@@ -140,8 +133,7 @@ export default function App() {
   const PROTECTED_VIEWS = ['create', 'organizer-dashboard', 'admin-dashboard'];
   const isViewProtected = PROTECTED_VIEWS.includes(currentView);
 
-  const handleLoginSuccess = (user: UserProfile) => {
-    setCurrentUser(user);
+  const handleLoginSuccess = () => {
     if (intendedView) {
       const target = intendedView;
       setIntendedView('');
@@ -179,20 +171,7 @@ export default function App() {
       ? (currentUser.savedEventIds || []).filter((id) => id !== eventId)
       : [...(currentUser.savedEventIds || []), eventId];
 
-    setCurrentUser((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        savedEventIds: updatedSaves,
-      };
-    });
-
-    // Sync saved status to backend profile
-    fetch('/api/auth/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ savedEventIds: updatedSaves }),
-    }).catch(() => {});
+    updateUserProfile({ savedEventIds: updatedSaves }).catch(() => {});
 
     // Also increment saves counter on the event item and persist
     setEvents((prev) => {
@@ -222,19 +201,7 @@ export default function App() {
       ? (currentUser.followedOrganizerIds || []).filter((id) => id !== organizerId)
       : [...(currentUser.followedOrganizerIds || []), organizerId];
 
-    setCurrentUser((prev) => {
-      if (!prev) return prev;
-      return {
-        ...prev,
-        followedOrganizerIds: updatedFollows,
-      };
-    });
-
-    fetch('/api/auth/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ followedOrganizerIds: updatedFollows }),
-    }).catch(() => {});
+    updateUserProfile({ followedOrganizerIds: updatedFollows }).catch(() => {});
   };
 
   // Search from Hero Section
@@ -278,9 +245,13 @@ export default function App() {
   // Event Created from Wizard
   const handleEventCreated = async (newEvent: EventItem) => {
     try {
+      const token = await getAuthToken();
       const res = await fetch('/api/events', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(newEvent),
       });
 
@@ -356,29 +327,18 @@ export default function App() {
     setAuditLogs((prev) => [newLog, ...prev]);
 
     if (currentUser) {
-      setCurrentUser((prev) => {
-        if (!prev) return prev;
-        const newNotifs = [
-          {
-            id: `unotif-${Date.now()}`,
-            title: 'Event Proposal Submitted',
-            message: `Your event "${submission.name}" has been submitted and is waiting for admin approval.`,
-            time: 'Just now',
-            read: false,
-            type: 'update' as const,
-          },
-          ...(prev.notifications || []),
-        ];
-        fetch('/api/auth/profile', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ notifications: newNotifs }),
-        }).catch(() => {});
-        return {
-          ...prev,
-          notifications: newNotifs,
-        };
-      });
+      const newNotifs = [
+        {
+          id: `unotif-${Date.now()}`,
+          title: 'Event Proposal Submitted',
+          message: `Your event "${submission.name}" has been submitted and is waiting for admin approval.`,
+          time: 'Just now',
+          read: false,
+          type: 'update' as const,
+        },
+        ...(currentUser.notifications || []),
+      ];
+      updateUserProfile({ notifications: newNotifs }).catch(() => {});
     }
   };
 
@@ -390,9 +350,13 @@ export default function App() {
     notes?: string
   ) => {
     try {
+      const token = await getAuthToken();
       const res = await fetch(`/api/events/${eventId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ status: newStatus }),
       });
 
@@ -427,9 +391,13 @@ export default function App() {
     if (!event) return;
 
     try {
+      const token = await getAuthToken();
       const res = await fetch(`/api/events/${eventId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ isFeatured: !event.isFeatured }),
       });
 
@@ -460,8 +428,10 @@ export default function App() {
     if (!confirm('Are you sure you want to permanently delete this event?')) return;
 
     try {
+      const token = await getAuthToken();
       const res = await fetch(`/api/events/${eventId}`, {
         method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
       });
 
       if (!res.ok) throw new Error('Failed to delete event');
@@ -488,7 +458,7 @@ export default function App() {
   };
 
   // Saved Events List
-  const savedEventsList = currentUser?.savedEventIds
+  const savedEventsList = (currentUser && currentUser.savedEventIds && Array.isArray(currentUser.savedEventIds))
     ? events.filter((e) => currentUser.savedEventIds.includes(e.id))
     : [];
   const unreadCount = currentUser?.notifications
@@ -511,6 +481,7 @@ export default function App() {
             currentUser={null}
             onOpenLogin={() => setCurrentView('login')}
             onOpenProfile={() => setIsProfileModalOpen(true)}
+            onLogout={logout}
           />
           <LoginView onLoginSuccess={handleLoginSuccess} onCancel={() => setCurrentView('discover')} />
         </div>
@@ -552,6 +523,7 @@ export default function App() {
           setCurrentView('login');
         }}
         onOpenProfile={() => setIsProfileModalOpen(true)}
+        onLogout={logout}
       />
 
       {/* 2. Main View Routing */}
@@ -586,7 +558,7 @@ export default function App() {
             {/* Sponsored Homepage Banner */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
               <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between p-4 sm:p-5 gap-4 shadow-sm">
-                <span className="absolute top-2 right-2 bg-black/60 text-emerald-400 text-[9px] uppercase font-black tracking-widest px-2 py-0.5 rounded">
+                <span className="absolute top-2 right-2 bg-black/60 text-emerald-400 text-[13px] uppercase font-black tracking-widest px-2 py-0.5 rounded">
                   Sponsored Partner
                 </span>
 
@@ -597,8 +569,8 @@ export default function App() {
                     className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0"
                   />
                   <div>
-                    <h3 className="font-bold text-sm sm:text-base text-white">{ADVERTISEMENTS[0].title}</h3>
-                    <p className="text-xs text-slate-300 mt-0.5 line-clamp-1">
+                    <h3 className="font-bold text-base sm:text-base text-white">{ADVERTISEMENTS[0].title}</h3>
+                    <p className="text-base text-slate-300 mt-0.5 line-clamp-1">
                       Direct 4x weekly from Kigali (KGL). Book non-stop business &amp; leisure flights with Rwanda's national flag carrier.
                     </p>
                   </div>
@@ -608,7 +580,7 @@ export default function App() {
                   href={ADVERTISEMENTS[0].destinationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs whitespace-nowrap transition-colors shrink-0 shadow"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base whitespace-nowrap transition-colors shrink-0 shadow"
                 >
                   Book Official Tickets
                 </a>
@@ -687,7 +659,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setCreateViewMode('wizard')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-xl text-base font-bold transition-all cursor-pointer ${
                       createViewMode === 'wizard'
                         ? 'bg-emerald-600 text-white shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -698,7 +670,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setCreateViewMode('visitor')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-xl text-base font-bold transition-all cursor-pointer ${
                       createViewMode === 'visitor'
                         ? 'bg-emerald-600 text-white shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -707,7 +679,7 @@ export default function App() {
                     Community Submission
                   </button>
                 </div>
-                <span className="text-[11px] text-slate-500 hidden sm:inline font-medium pr-3">
+                <span className="text-[15px] text-slate-500 hidden sm:inline font-medium pr-3">
                   {createViewMode === 'wizard'
                     ? 'Publish event details, schedule & ticket information'
                     : 'Submit event proposal for admin review & approval'}
@@ -753,7 +725,7 @@ export default function App() {
             </p>
             <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-3">
               <h3 className="font-bold text-lg text-slate-900">Architected for Scalability</h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p className="text-base sm:text-base text-slate-600 leading-relaxed">
                 Designed to answer "What is happening in Kigali?" within seconds, KigaliPulse is built on a responsive mobile-first architecture engineered to expand effortlessly from Kigali to other major Rwandan destinations (Musanze, Rubavu, Huye) and across the East African Community.
               </p>
             </div>
@@ -864,12 +836,7 @@ export default function App() {
           onClose={() => setIsProfileModalOpen(false)}
           currentUser={currentUser}
           onUpdateProfile={(updated) => {
-            setCurrentUser(updated);
-            fetch('/api/auth/profile', {
-              method: 'PUT',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(updated),
-            }).catch(() => {});
+            updateUserProfile(updated).catch(() => {});
           }}
           onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
           onOpenOrganizerPortal={() => setCurrentView('organizer-dashboard')}
@@ -884,16 +851,8 @@ export default function App() {
         notifications={currentUser?.notifications || []}
         onMarkAllAsRead={() => {
           if (currentUser) {
-            setCurrentUser((prev) => {
-              if (!prev) return prev;
-              const readNotifs = (prev.notifications || []).map((n) => ({ ...n, read: true }));
-              fetch('/api/auth/profile', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ notifications: readNotifs }),
-              }).catch(() => {});
-              return { ...prev, notifications: readNotifs };
-            });
+            const readNotifs = (currentUser.notifications || []).map((n) => ({ ...n, read: true }));
+            updateUserProfile({ notifications: readNotifs }).catch(() => {});
           }
         }}
       />

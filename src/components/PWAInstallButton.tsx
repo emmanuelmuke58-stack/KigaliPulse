@@ -16,7 +16,7 @@ export const PWAInstallButton: React.FC = () => {
     return (
       <button
         onClick={install}
-        className="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-all shadow-sm whitespace-nowrap active:scale-95"
+        className="flex items-center gap-2 px-3.5 py-2 text-base font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-all shadow-sm whitespace-nowrap active:scale-95"
       >
         <Download className="w-3.5 h-3.5" />
         <span>Install WebApp</span>
@@ -30,7 +30,7 @@ export const PWAInstallButton: React.FC = () => {
       <>
         <button
           onClick={() => setShowIOSGuide(true)}
-          className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200 transition-all whitespace-nowrap active:scale-95"
+          className="flex items-center gap-2 px-3 py-2 text-base font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200 transition-all whitespace-nowrap active:scale-95"
         >
           <Smartphone className="w-3.5 h-3.5" />
           <span>Add to Home</span>
@@ -52,18 +52,18 @@ export const PWAInstallButton: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-slate-900">1</span>
+                    <span className="text-base font-bold text-slate-900">1</span>
                   </div>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-base text-slate-600 leading-relaxed">
                     Tap the <span className="font-bold text-slate-900">Share</span> button in your Safari browser (the square with an arrow pointing up).
                   </p>
                 </div>
                 
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-slate-900">2</span>
+                    <span className="text-base font-bold text-slate-900">2</span>
                   </div>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="text-base text-slate-600 leading-relaxed">
                     Scroll down the share menu and tap <span className="font-bold text-slate-900">Add to Home Screen</span>.
                   </p>
                 </div>
@@ -71,7 +71,7 @@ export const PWAInstallButton: React.FC = () => {
 
               <button
                 onClick={() => setShowIOSGuide(false)}
-                className="mt-6 w-full rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/20 active:scale-[0.98]"
+                className="mt-6 w-full rounded-xl bg-emerald-600 py-3 text-base font-bold text-white hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/20 active:scale-[0.98]"
               >
                 Got it
               </button>

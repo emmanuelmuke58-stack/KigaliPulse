@@ -8,7 +8,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
   return (
-    <footer className="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 pt-12 pb-20 md:pb-12 mt-auto w-full max-w-full overflow-hidden">
+    <footer className="bg-slate-900 text-slate-400 text-base border-t border-slate-800 pt-12 pb-20 md:pb-12 mt-auto w-full max-w-full overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
@@ -16,19 +16,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
           {/* Brand Column */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5 text-white">
-              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white font-display font-extrabold text-sm flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white font-display font-extrabold text-base flex items-center justify-center">
                 KP
               </div>
               <span className="font-display font-black text-xl tracking-tight">KigaliPulse</span>
             </div>
-            <p className="text-slate-400 leading-relaxed text-xs">
+            <p className="text-slate-400 leading-relaxed text-base">
               The premier mobile-first event discovery and organizer platform for Kigali, Rwanda. Discover concerts, tech summits, nightlife, and cultural exhibitions across the capital.
             </p>
           </div>
 
           {/* Navigation Links */}
           <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider">Explore Platform</h4>
+            <h4 className="font-bold text-white text-base uppercase tracking-wider">Explore Platform</h4>
             <ul className="space-y-2">
               <li>
                 <button type="button" onClick={() => onNavigate('discover')} className="hover:text-white transition-colors">
@@ -70,7 +70,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
 
           {/* Locations */}
           <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider">Kigali Hubs</h4>
+            <h4 className="font-bold text-white text-base uppercase tracking-wider">Kigali Hubs</h4>
             <ul className="space-y-2">
               <li><span className="text-slate-300">Kimihurura</span> · Convention &amp; Dining</li>
               <li><span className="text-slate-300">Remera</span> · BK Arena &amp; Sports</li>
@@ -92,7 +92,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
 
           {/* Legal & Info */}
           <div className="space-y-2.5">
-            <h4 className="font-bold text-white text-xs uppercase tracking-wider">Information</h4>
+            <h4 className="font-bold text-white text-base uppercase tracking-wider">Information</h4>
             <ul className="space-y-2">
               <li>
                 <button type="button" onClick={() => onOpenInfo('about')} className="hover:text-white transition-colors">
@@ -125,7 +125,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
         </div>
 
         {/* Bottom Baseline Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-base text-slate-500">
           <div>
             &copy; 2026 KigaliPulse Rwanda. All rights reserved.
           </div>

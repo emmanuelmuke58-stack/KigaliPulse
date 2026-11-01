@@ -1028,11 +1028,13 @@ export const INITIAL_AUDIT_LOGS: AuditLogItem[] = [
 
 export const CURRENT_USER: UserProfile = {
   uid: 'usr-guest-default',
+  firstName: 'Guest',
+  lastName: 'User',
   name: 'Guest User',
   email: '',
   phone: '',
   avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  role: 'Attendee',
+  role: 'Standard User',
   preferredCategories: [],
   preferredNeighborhoods: [],
   savedEventIds: [],

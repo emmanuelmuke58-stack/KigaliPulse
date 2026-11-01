@@ -196,11 +196,13 @@ export interface NotificationItem {
 
 export interface UserProfile {
   uid: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  name: string; // Composite field
   email: string;
   phone?: string;
   avatar: string;
-  role: 'Attendee' | 'Organizer' | 'SuperAdmin';
+  role: 'Standard User' | 'Business Admin' | 'SuperAdmin';
   status?: string;
   preferredCategories: EventCategory[];
   preferredNeighborhoods: string[];

@@ -160,7 +160,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
 
           {/* Headline Content Over Scrim */}
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 space-y-2 text-white">
-            <div className="flex items-center gap-2 text-sm font-bold text-emerald-400 flex-wrap">
+            <div className="flex items-center gap-2 text-base font-bold text-emerald-400 flex-wrap">
               <span className="uppercase tracking-wider font-extrabold">{event.category}</span>
               <span aria-hidden="true" className="text-white/40">·</span>
               <span className="text-slate-200 font-semibold">{event.neighborhood}, Kigali</span>
@@ -175,7 +175,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
         {/* Key Metrics / Info Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 p-5 sm:p-6 bg-slate-50 border-b border-slate-200/80">
           <div>
-            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Date</span>
+            <span className="text-base uppercase font-bold text-slate-500 tracking-wider block">Date</span>
             <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{event.displayDate}</span>
@@ -183,7 +183,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
 
           <div>
-            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Time</span>
+            <span className="text-base uppercase font-bold text-slate-500 tracking-wider block">Time</span>
             <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{event.time}</span>
@@ -191,7 +191,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
 
           <div>
-            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Venue &amp; Location</span>
+            <span className="text-base uppercase font-bold text-slate-500 tracking-wider block">Venue &amp; Location</span>
             <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5 truncate">
               <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
               <span className="truncate">{event.venue}</span>
@@ -199,19 +199,19 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
 
           <div>
-            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Admission Price</span>
+            <span className="text-base uppercase font-bold text-slate-500 tracking-wider block">Admission Price</span>
             <div className="font-black text-lg sm:text-xl text-emerald-700 mt-1 tabular-nums">
               {event.priceDisplay}
             </div>
           </div>
 
           <div>
-            <span className="text-xs uppercase font-bold text-slate-500 tracking-wider block">Page Visits</span>
+            <span className="text-base uppercase font-bold text-slate-500 tracking-wider block">Page Visits</span>
             <div className="font-extrabold text-base sm:text-lg text-slate-900 mt-1 flex items-center gap-1.5 tabular-nums">
               <Eye className="w-4 h-4 text-blue-600 shrink-0" />
               <span>{event.views.toLocaleString()}</span>
             </div>
-            <span className="text-xs text-slate-500 block mt-0.5 font-medium">
+            <span className="text-base text-slate-500 block mt-0.5 font-medium">
               Listing visitors
             </span>
           </div>
@@ -236,7 +236,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={(e) => onToggleSave(e, event.id)}
-              className={`min-h-[52px] px-5 py-3.5 rounded-xl border text-sm font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer ${
+              className={`min-h-[52px] px-5 py-3.5 rounded-xl border text-base font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer ${
                 isSaved
                   ? 'bg-amber-500 border-amber-500 text-white'
                   : 'border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300'
@@ -250,7 +250,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             <button
               type="button"
               onClick={shareWhatsApp}
-              className="min-h-[52px] px-5 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-bold flex items-center justify-center gap-2 transition-colors shadow-sm cursor-pointer"
+              className="min-h-[52px] px-5 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-base font-bold flex items-center justify-center gap-2 transition-colors shadow-sm cursor-pointer"
               title="Share on WhatsApp (Rwanda's favorite messenger)"
             >
               <Share2 className="w-4 h-4" />
@@ -259,7 +259,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
 
           {/* Transparency Callout: External Ticketing Provider Notice */}
-          <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-xs text-amber-900 flex items-start gap-2.5">
+          <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/60 text-base text-amber-900 flex items-start gap-2.5">
             <ShieldCheck className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
             <div className="space-y-0.5">
               <span className="font-bold">Buy Tickets — External Ticketing Platform</span>
@@ -271,7 +271,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
           </div>
 
           {/* Multi-Channel Share Bar */}
-          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-base">
             <span className="font-semibold text-slate-500 mr-2">Share this event:</span>
             <button
               type="button"
@@ -323,7 +323,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                   {event.whatToExpect.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-sm text-slate-800 flex items-start gap-3 font-medium"
+                      className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 text-base text-slate-800 flex items-start gap-3 font-medium"
                     >
                       <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                       <span>{item}</span>
@@ -342,13 +342,13 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                     <div key={idx} className="relative space-y-1">
                       <span className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-emerald-600 ring-4 ring-white" />
                       <div className="flex items-center gap-2.5">
-                        <span className="text-sm font-bold text-emerald-700 tabular-nums">
+                        <span className="text-base font-bold text-emerald-700 tabular-nums">
                           {slot.time}
                         </span>
-                        <h4 className="text-sm font-bold text-slate-900">{slot.title}</h4>
+                        <h4 className="text-base font-bold text-slate-900">{slot.title}</h4>
                       </div>
                       {slot.description && (
-                        <p className="text-sm text-slate-600">{slot.description}</p>
+                        <p className="text-base text-slate-600">{slot.description}</p>
                       )}
                     </div>
                   ))}
@@ -359,21 +359,21 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             {/* Performers or Speakers */}
             {event.performers && event.performers.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-sm font-bold text-slate-900">Performers &amp; Speakers</h3>
+                <h3 className="text-base font-bold text-slate-900">Performers &amp; Speakers</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {event.performers.map((performer, idx) => (
                     <div
                       key={idx}
                       className="p-3 rounded-xl border border-slate-200/70 bg-white flex items-center gap-3"
                     >
-                      <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0 text-xs">
+                      <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0 text-base">
                         {performer.name.charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <h4 className="font-bold text-xs text-slate-900 truncate">{performer.name}</h4>
-                        <span className="text-[11px] text-slate-500 truncate block">{performer.role}</span>
+                        <h4 className="font-bold text-base text-slate-900 truncate">{performer.name}</h4>
+                        <span className="text-[15px] text-slate-500 truncate block">{performer.role}</span>
                         {performer.company && (
-                          <span className="text-[10px] text-slate-400 truncate block">{performer.company}</span>
+                          <span className="text-[14px] text-slate-400 truncate block">{performer.company}</span>
                         )}
                       </div>
                     </div>
@@ -383,7 +383,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             )}
 
             {/* Practical Guidelines: Dress Code, Age, Parking */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/70 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/70 text-base">
               <div>
                 <span className="text-slate-400 font-medium block">Dress Code</span>
                 <span className="font-bold text-slate-800 mt-0.5 block">
@@ -414,18 +414,18 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                     className="w-12 h-12 rounded-xl object-cover"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-xl bg-slate-900 text-white font-bold flex items-center justify-center text-sm">
+                  <div className="w-12 h-12 rounded-xl bg-slate-900 text-white font-bold flex items-center justify-center text-base">
                     {event.organizer.charAt(0)}
                   </div>
                 )}
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <h4 className="font-bold text-sm text-slate-900">{event.organizer}</h4>
-                    <span className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-semibold">
+                    <h4 className="font-bold text-base text-slate-900">{event.organizer}</h4>
+                    <span className="text-[14px] px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-semibold">
                       Verified Host
                     </span>
                   </div>
-                  <span className="text-xs text-slate-500">Contact: {event.contactPhone || '+250 788 000 000'}</span>
+                  <span className="text-base text-slate-500">Contact: {event.contactPhone || '+250 788 000 000'}</span>
                 </div>
               </div>
 
@@ -433,7 +433,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onSelectOrganizer(event.organizerId)}
-                  className="min-h-[44px] px-4 py-2 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-colors"
+                  className="min-h-[44px] px-4 py-2 text-base font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-colors"
                 >
                   View Host Profile
                 </button>
@@ -443,8 +443,8 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             {/* Interactive Venue Map */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-bold text-slate-900">Venue &amp; Location Map</h3>
-                <span className="text-xs text-slate-500">{event.address}</span>
+                <h3 className="text-base font-bold text-slate-900">Venue &amp; Location Map</h3>
+                <span className="text-base text-slate-500">{event.address}</span>
               </div>
 
               <InteractiveKigaliMap
@@ -458,7 +458,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             </div>
 
             {/* SEO Structured Data Schema.org Toggle */}
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-base text-slate-500">
               <div className="flex items-center gap-1.5">
                 <Code className="w-3.5 h-3.5 text-slate-400" />
                 <span>SEO Schema.org / JSON-LD Data available</span>
@@ -473,7 +473,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             </div>
 
             {showJsonLd && (
-              <pre className="p-3 bg-slate-900 text-emerald-400 rounded-xl text-[11px] overflow-x-auto font-mono max-h-48">
+              <pre className="p-3 bg-slate-900 text-emerald-400 rounded-xl text-[15px] overflow-x-auto font-mono max-h-48">
                 {JSON.stringify(jsonLdData, null, 2)}
               </pre>
             )}
@@ -484,7 +484,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
         {/* Sticky Mobile Bottom Bar: Get Tickets / Register (15% cap) */}
         <div className="md:hidden sticky bottom-0 z-30 px-5 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center justify-between gap-4 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
           <div>
-            <span className="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">Admission</span>
+            <span className="text-[14px] text-slate-400 block font-bold uppercase tracking-wider">Admission</span>
             <span className="text-base font-extrabold text-slate-900 tabular-nums">
               {event.priceDisplay}
             </span>
@@ -494,7 +494,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
             href={event.externalTicketUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 min-h-[48px] px-6 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition-transform"
+            className="flex-1 min-h-[48px] px-6 rounded-xl bg-emerald-600 text-white font-bold text-base flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition-transform"
           >
             <span>Get Tickets</span>
             <ExternalLink className="w-4 h-4" />

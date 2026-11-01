@@ -35,7 +35,7 @@ export const SavedEventsDrawer: React.FC<SavedEventsDrawerProps> = ({
             </div>
             <div>
               <h2 className="font-bold text-base text-slate-900">Saved Events</h2>
-              <span className="text-xs text-slate-500 font-medium">
+              <span className="text-base text-slate-500 font-medium">
                 {savedEvents.length} events bookmarked
               </span>
             </div>
@@ -59,8 +59,8 @@ export const SavedEventsDrawer: React.FC<SavedEventsDrawerProps> = ({
                 <Bookmark className="w-8 h-8" />
               </div>
               <div className="space-y-1">
-                <h4 className="font-bold text-sm text-slate-800">Your collection is empty</h4>
-                <p className="text-xs text-slate-500 max-w-[200px] mx-auto leading-relaxed">
+                <h4 className="font-bold text-base text-slate-800">Your collection is empty</h4>
+                <p className="text-base text-slate-500 max-w-[200px] mx-auto leading-relaxed">
                   Click the bookmark icon on any event to save it for later.
                 </p>
               </div>
@@ -88,13 +88,13 @@ export const SavedEventsDrawer: React.FC<SavedEventsDrawerProps> = ({
                     onSelectEvent(evt);
                   }}
                 >
-                  <span className="text-[10px] font-bold text-emerald-700 block uppercase tracking-wider">
+                  <span className="text-[14px] font-bold text-emerald-700 block uppercase tracking-wider">
                     {evt.category}
                   </span>
-                  <h4 className="font-bold text-xs text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
+                  <h4 className="font-bold text-base text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
                     {evt.title}
                   </h4>
-                  <div className="flex items-center gap-1.5 text-[11px] text-slate-500 truncate">
+                  <div className="flex items-center gap-1.5 text-[15px] text-slate-500 truncate">
                     <span>{evt.displayDate}</span>
                     <span aria-hidden="true">·</span>
                     <span className="font-bold text-slate-900 tabular-nums">{evt.priceDisplay}</span>
@@ -119,12 +119,12 @@ export const SavedEventsDrawer: React.FC<SavedEventsDrawerProps> = ({
         {savedEvents.length > 0 && (
           <div className="p-5 border-t border-slate-100 bg-slate-50/50 pb-[calc(1.25rem+env(safe-area-inset-bottom))] flex items-center justify-between gap-4">
             <div className="hidden sm:block">
-              <span className="text-slate-500 text-xs font-medium">Ready to explore?</span>
+              <span className="text-slate-500 text-base font-medium">Ready to explore?</span>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="w-full sm:w-auto px-6 py-3 bg-emerald-600 text-white font-bold text-sm rounded-xl hover:bg-emerald-700 shadow-md active:scale-[0.98] transition-all"
+              className="w-full sm:w-auto px-6 py-3 bg-emerald-600 text-white font-bold text-base rounded-xl hover:bg-emerald-700 shadow-md active:scale-[0.98] transition-all"
             >
               Continue Browsing
             </button>

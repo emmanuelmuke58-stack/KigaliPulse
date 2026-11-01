@@ -440,7 +440,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
       <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           {/* Breadcrumb style badge as requested */}
-          <div className="flex items-center gap-2 text-xs font-black tracking-wider text-emerald-700 uppercase mb-1">
+          <div className="flex items-center gap-2 text-base font-black tracking-wider text-emerald-700 uppercase mb-1">
             <span className="px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 font-extrabold">
               ADMIN SUITE
             </span>
@@ -450,13 +450,13 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
 
           <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
             <span>Executive Overview</span>
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 inline-flex items-center gap-1.5">
+            <span className="text-base font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 inline-flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Platform Telemetry
             </span>
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+          <p className="text-base sm:text-base text-slate-500 mt-1 max-w-2xl">
             Strictly focused on <strong>platform usage and platform performance</strong> across all Kigali events, registered users, and marketplace activity.
           </p>
         </div>
@@ -466,11 +466,11 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
           <div className="relative">
             <div className="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-300 rounded-xl px-3.5 py-2 transition-colors cursor-pointer group shadow-2xs">
               <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span className="text-xs text-slate-500 font-semibold">Date:</span>
+              <span className="text-base text-slate-500 font-semibold">Date:</span>
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value as PeriodFilter)}
-                className="bg-transparent text-xs font-black text-slate-900 focus:outline-none cursor-pointer pr-1"
+                className="bg-transparent text-base font-black text-slate-900 focus:outline-none cursor-pointer pr-1"
                 aria-label="Filter Executive Overview by period"
               >
                 <option value="today">Today</option>
@@ -484,7 +484,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
           </div>
 
           {/* Quick period indicator pill */}
-          <span className="text-xs font-semibold text-slate-500 hidden sm:inline-block">
+          <span className="text-base font-semibold text-slate-500 hidden sm:inline-block">
             {activeData.periodLabel}
           </span>
         </div>
@@ -492,7 +492,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
 
       {/* Custom Date Pickers (only shown when 'custom' is active) */}
       {selectedPeriod === 'custom' && (
-        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center gap-4 text-xs animate-in fade-in">
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-center gap-4 text-base animate-in fade-in">
           <span className="font-bold text-slate-700 flex items-center gap-1.5">
             <Calendar className="w-4 h-4 text-emerald-600" />
             Custom Date Range:
@@ -515,7 +515,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               className="bg-white border border-slate-200 rounded-lg px-2.5 py-1 text-slate-800 font-semibold"
             />
           </div>
-          <span className="text-[11px] text-slate-500 ml-auto italic">
+          <span className="text-[15px] text-slate-500 ml-auto italic">
             Metrics re-indexed for custom window
           </span>
         </div>
@@ -539,13 +539,13 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 flex items-center justify-center">
                 <Users className="w-5 h-5" />
               </div>
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1">
+              <span className="text-[15px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 inline-flex items-center gap-1">
                 <TrendingUp className="w-3 h-3 text-emerald-600" />
                 {activeData.newUsersGrowth}
               </span>
             </div>
 
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-base font-bold text-slate-500 uppercase tracking-wider">
               Total Platform Users
             </div>
             
@@ -553,13 +553,13 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               {activeData.totalUsers.toLocaleString()}
             </div>
 
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-base text-slate-500 mt-1 leading-relaxed">
               Total registered users across event attendees, organizers, and admins.
             </p>
 
             {/* VISUALIZATION: User Registration Growth Chart */}
             <div className="mt-4 pt-3 border-t border-slate-100">
-              <div className="flex items-center justify-between text-[11px] mb-1.5 font-semibold">
+              <div className="flex items-center justify-between text-[15px] mb-1.5 font-semibold">
                 <span className="text-slate-600 flex items-center gap-1">
                   <LineChart className="w-3 h-3 text-sky-600" />
                   Growth Velocity
@@ -574,7 +574,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-base">
             <span className="text-slate-600 font-semibold flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-sky-500 inline-block" />
               New users indicator:
@@ -595,12 +595,12 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center">
                 <Eye className="w-5 h-5" />
               </div>
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+              <span className="text-[15px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
                 {activeData.uniqueVisitsRatio} unique ratio
               </span>
             </div>
 
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-base font-bold text-slate-500 uppercase tracking-wider">
               Total Visits
             </div>
             
@@ -608,13 +608,13 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               {activeData.totalVisits.toLocaleString()}
             </div>
 
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-base text-slate-500 mt-1 leading-relaxed">
               Total visits to the platform and event marketplace across web and mobile.
             </p>
 
             {/* VISUALIZATION: Visits Flow Chart */}
             <div className="mt-4 pt-3 border-t border-slate-100">
-              <div className="flex items-center justify-between text-[11px] mb-1.5 font-semibold">
+              <div className="flex items-center justify-between text-[15px] mb-1.5 font-semibold">
                 <span className="text-slate-600 flex items-center gap-1">
                   <BarChart3 className="w-3 h-3 text-emerald-600" />
                   Traffic Volume
@@ -633,7 +633,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-base">
             <span className="text-slate-600 font-semibold flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
               Unique visits:
@@ -654,12 +654,12 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-200 text-purple-700 flex items-center justify-center">
                 <Coins className="w-5 h-5" />
               </div>
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-200">
+              <span className="text-[15px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-800 border border-purple-200">
                 Platform Take Rate: ~5.6%
               </span>
             </div>
 
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-base font-bold text-slate-500 uppercase tracking-wider">
               Total Platform Revenue
             </div>
             
@@ -668,7 +668,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             </div>
 
             {/* Clear distinction notice required by user brief */}
-            <div className="mt-2 p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-600 leading-snug flex items-start gap-1.5">
+            <div className="mt-2 p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-[15px] text-slate-600 leading-snug flex items-start gap-1.5">
               <Info className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
               <span>
                 <strong>Platform revenue only</strong> (commission &amp; service fees). Distinct from merchant gross sales ({activeData.grossMerchantSales}).
@@ -677,7 +677,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
 
             {/* VISUALIZATION: Revenue Inflow Sparkline Chart */}
             <div className="mt-3 pt-2.5 border-t border-slate-100">
-              <div className="flex items-center justify-between text-[11px] mb-1.5 font-semibold">
+              <div className="flex items-center justify-between text-[15px] mb-1.5 font-semibold">
                 <span className="text-slate-600 flex items-center gap-1">
                   <TrendingUp className="w-3 h-3 text-purple-600" />
                   Fee Inflow Curve
@@ -692,7 +692,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-base">
             <span className="text-slate-600 font-semibold">Gross Event Volume (Ref):</span>
             <strong className="text-slate-700 tabular-nums font-bold">
               {activeData.grossMerchantSales}
@@ -718,13 +718,13 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 flex items-center justify-center">
                 <Ticket className="w-5 h-5" />
               </div>
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1">
+              <span className="text-[15px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1">
                 <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                 {activeData.ticketDeliverySuccess} automated
               </span>
             </div>
 
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-base font-bold text-slate-500 uppercase tracking-wider">
               Tickets Sold
             </div>
             
@@ -732,13 +732,13 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               {activeData.ticketsSold.toLocaleString()}
             </div>
 
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-base text-slate-500 mt-1 leading-relaxed">
               Total event tickets and registrations issued through the platform.
             </p>
 
             {/* VISUALIZATION: Ticket Sales Velocity Bar Chart */}
             <div className="mt-4 pt-3 border-t border-slate-100">
-              <div className="flex items-center justify-between text-[11px] mb-2 font-semibold">
+              <div className="flex items-center justify-between text-[15px] mb-2 font-semibold">
                 <span className="text-slate-600 flex items-center gap-1">
                   <BarChart3 className="w-3 h-3 text-amber-600" />
                   Sales Velocity Distribution
@@ -756,7 +756,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               </div>
             </div>
 
-            <div className="mt-4 space-y-1.5 text-xs">
+            <div className="mt-4 space-y-1.5 text-base">
               <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100 font-medium">
                 <span className="text-slate-600">Mobile Money / Card:</span>
                 <span className="font-bold text-slate-900">92.4%</span>
@@ -768,7 +768,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-emerald-700 font-bold group-hover:text-emerald-800">
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-base text-emerald-700 font-bold group-hover:text-emerald-800">
             <span>View All Ticket Orders</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
@@ -788,20 +788,20 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                   Top Businesses Using the Platform
                 </h3>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-base text-slate-500 mt-0.5">
                 Ranked strictly by <strong>platform usage &amp; activity signals</strong> (events created, published, platform visits, ticket activity, engagement).
               </p>
             </div>
 
             {/* Non-sales badge clarification */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-bold self-start sm:self-auto shrink-0">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-[15px] font-bold self-start sm:self-auto shrink-0">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>Ranked by Platform Activity (Not Sales)</span>
             </div>
           </div>
 
           {/* Explicit Filter Rule Callout */}
-          <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/80 text-xs text-emerald-950 flex items-start gap-2">
+          <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-200/80 text-base text-emerald-950 flex items-start gap-2">
             <Info className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
             <div className="leading-relaxed">
               <strong>Executive Ranking Principle:</strong> Ranks businesses using the platform based on system engagement, events managed, and visitor interactions. <strong>Sales volume and merchant revenue are excluded from ranking.</strong>
@@ -823,7 +823,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                   <div className="flex items-start sm:items-center gap-3 min-w-0">
                     {/* Rank Circle */}
                     <span
-                      className={`w-7 h-7 rounded-lg text-xs font-black flex items-center justify-center shrink-0 ${
+                      className={`w-7 h-7 rounded-lg text-base font-black flex items-center justify-center shrink-0 ${
                         biz.rank === 1
                           ? 'bg-amber-400 text-slate-950 shadow-xs'
                           : biz.rank === 2
@@ -839,16 +839,16 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                     {/* Business Info */}
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-extrabold text-sm text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
+                        <span className="font-extrabold text-base text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
                           {biz.name}
                         </span>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200/80 shrink-0 hidden sm:inline-block">
+                        <span className="text-[14px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200/80 shrink-0 hidden sm:inline-block">
                           {biz.category}
                         </span>
                       </div>
                       
                       {/* Activity breakdown signals */}
-                      <div className="text-[11px] text-slate-500 mt-0.5 font-medium flex items-center gap-2">
+                      <div className="text-[15px] text-slate-500 mt-0.5 font-medium flex items-center gap-2">
                         <span className="text-emerald-700 font-bold">{biz.primarySignal}</span>
                       </div>
                     </div>
@@ -857,7 +857,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                   {/* VISUALIZATION: Multi-segmented Activity Distribution Chart */}
                   <div className="flex items-center gap-4 shrink-0 sm:text-right pl-10 sm:pl-0">
                     <div className="w-28 sm:w-36 hidden sm:block">
-                      <div className="flex justify-between text-[10px] text-slate-400 mb-1 font-semibold">
+                      <div className="flex justify-between text-[14px] text-slate-400 mb-1 font-semibold">
                         <span>Platform Engagement</span>
                         <span className="text-slate-700">{biz.engagementScore}%</span>
                       </div>
@@ -884,10 +884,10 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                     </div>
 
                     <div className="text-right">
-                      <div className="text-sm font-black text-slate-900 tabular-nums">
+                      <div className="text-base font-black text-slate-900 tabular-nums">
                         {biz.totalActivities} activities
                       </div>
-                      <div className="text-[10px] text-emerald-700 font-bold">
+                      <div className="text-[14px] text-emerald-700 font-bold">
                         Score {biz.engagementScore}/100
                       </div>
                     </div>
@@ -898,8 +898,8 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
           </div>
 
           {/* Activity legend */}
-          <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
-            <div className="flex items-center gap-3 text-[11px]">
+          <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between text-base text-slate-500 gap-2">
+            <div className="flex items-center gap-3 text-[15px]">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block" /> Events Created &amp; Published
               </span>
@@ -914,7 +914,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             <button
               type="button"
               onClick={() => onNavigateTab('businesses')}
-              className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer"
+              className="text-base font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1 cursor-pointer"
             >
               <span>View All Businesses</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -945,14 +945,14 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                 Platform Activity Over Time
               </h2>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-base text-slate-500 mt-0.5">
               Track overall platform visits and ticket activity across the selected period (answers <em>"How is the platform being used?"</em>).
             </p>
           </div>
 
           {/* Toggle between Dual Chart & Structured Data Table */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-xs">
+            <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200 text-base">
               <button
                 type="button"
                 onClick={() => setChartViewMode('chart')}
@@ -982,7 +982,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
         </div>
 
         {/* Legend Indicator */}
-        <div className="flex flex-wrap items-center justify-between gap-4 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-base">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 font-bold text-slate-800">
               <span className="w-3 h-3 rounded bg-emerald-600 inline-block" />
@@ -994,7 +994,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
             </div>
           </div>
 
-          <div className="text-[11px] text-slate-500 font-medium">
+          <div className="text-[15px] text-slate-500 font-medium">
             Active Cycle: <strong className="text-slate-800">{activeData.periodLabel}</strong>
           </div>
         </div>
@@ -1019,18 +1019,18 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                     {/* Hover Floating Tooltip */}
                     {isHovered && (
                       <div className="absolute -top-16 bg-slate-900 text-white border border-slate-800 rounded-xl px-3.5 py-2 shadow-2xl text-center pointer-events-none z-30 min-w-[130px] animate-in fade-in zoom-in-95">
-                        <div className="text-[11px] font-black text-slate-200 border-b border-slate-800 pb-1 mb-1">
+                        <div className="text-[15px] font-black text-slate-200 border-b border-slate-800 pb-1 mb-1">
                           {point.period}
                         </div>
-                        <div className="flex items-center justify-between text-xs gap-3">
+                        <div className="flex items-center justify-between text-base gap-3">
                           <span className="text-emerald-400 font-bold">Visits:</span>
                           <span className="font-extrabold tabular-nums">{point.visits.toLocaleString()}</span>
                         </div>
-                        <div className="flex items-center justify-between text-xs gap-3">
+                        <div className="flex items-center justify-between text-base gap-3">
                           <span className="text-sky-400 font-bold">Tickets:</span>
                           <span className="font-extrabold tabular-nums">{point.tickets.toLocaleString()}</span>
                         </div>
-                        <div className="text-[10px] text-slate-400 pt-1 mt-1 border-t border-slate-800 text-right">
+                        <div className="text-[14px] text-slate-400 pt-1 mt-1 border-t border-slate-800 text-right">
                           Ratio: {conversionRatio}%
                         </div>
                       </div>
@@ -1062,7 +1062,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                     </div>
 
                     {/* X-Axis Label */}
-                    <span className="text-[11px] font-bold text-slate-600 mt-3 truncate max-w-[70px] sm:max-w-none text-center">
+                    <span className="text-[15px] font-bold text-slate-600 mt-3 truncate max-w-[70px] sm:max-w-none text-center">
                       {point.period}
                     </span>
                   </div>
@@ -1070,7 +1070,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
               })}
             </div>
 
-            <div className="flex items-center justify-between text-xs text-slate-500 pt-3 px-2">
+            <div className="flex items-center justify-between text-base text-slate-500 pt-3 px-2">
               <span>Telemetry Source: In-app session telemetry &amp; live ticketing dispatcher</span>
               <span className="font-semibold text-slate-700">
                 Peak Day Ratio: 23.9% ticket engagement per visit
@@ -1080,7 +1080,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
         ) : (
           /* VIEW 2: STRUCTURED DATA TABLE (Matching exact user sample table) */
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-base">
               <thead>
                 <tr className="border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider bg-slate-50/60">
                   <th className="py-3 px-4 rounded-l-xl">Period</th>
@@ -1111,7 +1111,7 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
                         </span>
                       </td>
                       <td className="py-3.5 px-4 text-right">
-                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        <span className="inline-flex items-center gap-1 text-[15px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                           <TrendingUp className="w-3 h-3 text-emerald-600" />
                           High platform traffic
                         </span>
@@ -1134,16 +1134,16 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
         {/* Widget 1: System Health & Reliability */}
         <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+            <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
               <Zap className="w-4 h-4 text-amber-500" />
               <span>Platform Health &amp; Latency</span>
             </h3>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className="text-[14px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
               Normal (99.98%)
             </span>
           </div>
 
-          <div className="space-y-2.5 text-xs">
+          <div className="space-y-2.5 text-base">
             <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
               <span className="text-slate-600 font-medium">Core API Latency</span>
               <span className="font-black text-slate-900 tabular-nums">210 ms</span>
@@ -1162,16 +1162,16 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
         {/* Widget 2: Platform Usage by Event Category */}
         <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+            <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
               <Layers className="w-4 h-4 text-purple-600" />
               <span>Usage by Event Category</span>
             </h3>
-            <span className="text-[10px] font-bold text-slate-500">
+            <span className="text-[14px] font-bold text-slate-500">
               Browse Volume
             </span>
           </div>
 
-          <div className="space-y-2 text-xs">
+          <div className="space-y-2 text-base">
             <div>
               <div className="flex justify-between text-slate-600 mb-1 font-semibold">
                 <span>Music, Festivals &amp; Concerts</span>
@@ -1217,16 +1217,16 @@ export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({
         {/* Widget 3: Platform Access Channels */}
         <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
+            <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
               <Smartphone className="w-4 h-4 text-sky-600" />
               <span>Platform Access Channels</span>
             </h3>
-            <span className="text-[10px] font-bold text-slate-500">
+            <span className="text-[14px] font-bold text-slate-500">
               Clients
             </span>
           </div>
 
-          <div className="space-y-2.5 text-xs">
+          <div className="space-y-2.5 text-base">
             <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100">
               <span className="flex items-center gap-2 text-slate-700 font-semibold">
                 <Smartphone className="w-3.5 h-3.5 text-slate-500" />
