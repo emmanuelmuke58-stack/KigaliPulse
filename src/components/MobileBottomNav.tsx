@@ -18,7 +18,6 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   const { t } = useLanguage();
   const tabs = [
     { id: 'home', label: t('nav.home'), icon: Home },
-    { id: 'create', label: t('nav.create'), icon: Plus, isPrimary: true },
     { id: 'saved', label: t('header.saved'), icon: Bookmark, badge: savedCount },
     isLoggedIn
       ? { id: 'organizer-dashboard', label: 'Portal', icon: LayoutDashboard }
@@ -26,49 +25,35 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 pb-[env(safe-area-inset-bottom)] max-w-full w-full overflow-hidden shadow-lg">
-        <nav aria-label="Mobile navigation" className="grid grid-cols-4 items-center h-18 px-2 w-full max-w-full">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/98 backdrop-blur-xl border-t border-slate-100 pb-[env(safe-area-inset-bottom)] max-w-full w-full overflow-hidden shadow-[0_-8px_30px_rgb(0,0,0,0.04)]">
+      <nav aria-label="Mobile navigation" className="flex items-center justify-around h-20 px-4 w-full max-w-full relative">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = currentView === tab.id;
 
-          if (tab.isPrimary) {
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => onNavigate(tab.id)}
-                className="flex flex-col items-center justify-center -mt-5 group focus:outline-none cursor-pointer"
-                aria-label="Create an event"
-              >
-                <div className="w-13 h-13 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg flex items-center justify-center group-active:scale-95 transition-transform">
-                  <Icon className="w-6 h-6 stroke-[2.2px]" />
-                </div>
-                <span className="text-base font-bold text-slate-800 mt-1">{t('nav.create')}</span>
-              </button>
-            );
-          }
 
           return (
             <button
               key={tab.id}
               type="button"
               onClick={() => onNavigate(tab.id)}
-              className={`min-h-[52px] flex flex-col items-center justify-center relative transition-colors focus:outline-none cursor-pointer ${
-                isActive ? 'text-emerald-700 font-extrabold' : 'text-slate-600 hover:text-slate-900'
+              className={`flex-1 flex flex-col items-center justify-center relative transition-all duration-300 focus:outline-none cursor-pointer py-2 ${
+                isActive ? 'text-emerald-600' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
               <div className="relative">
-                <Icon className={`w-5.5 h-5.5 ${isActive ? 'stroke-[2.5px]' : 'stroke-[1.9px]'}`} />
+                <Icon className={`w-6 h-6 ${isActive ? 'stroke-[2.5px]' : 'stroke-[1.8px]'}`} />
                 {typeof tab.badge === 'number' && tab.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 bg-amber-500 text-white text-[14px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1.5 -right-2 bg-rose-500 text-white text-[10px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-sm border-2 border-white">
                     {tab.badge}
                   </span>
                 )}
               </div>
-              <span className="text-base tracking-tight mt-1 font-semibold">{tab.label}</span>
+              <span className={`text-[12px] mt-1.5 font-bold tracking-tight transition-all ${isActive ? 'opacity-100 scale-105' : 'opacity-90'}`}>
+                {tab.label}
+              </span>
               {isActive && (
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-0.5" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-in fade-in zoom-in duration-300" />
               )}
             </button>
           );

@@ -273,14 +273,6 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={() => handleNavClick('create')}
-            className="w-full mt-3 py-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold text-base rounded-2xl flex items-center justify-center gap-2 transition-all shadow-md"
-          >
-            <PlusCircle className="w-4 h-4" />
-            <span>Submit New Event</span>
-          </button>
         </div>
       )}
     </header>
