@@ -31,6 +31,7 @@ import {
 } from '../../data/adminMockData';
 
 import { useFontSize } from '../../contexts/FontSizeContext';
+import { FontSizeSettings } from '../FontSizeSettings';
 
 interface AdminSettingsProps {
   currentUser: EnterpriseUser;
