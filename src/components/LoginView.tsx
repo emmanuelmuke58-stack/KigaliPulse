@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, ArrowRight, ShieldCheck, Phone, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface LoginViewProps {
   onLoginSuccess: (user: any) => void;
@@ -8,6 +9,7 @@ interface LoginViewProps {
 }
 
 export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onCancel }) => {
+  const { t } = useLanguage();
   const { login, register, resetPassword } = useAuth();
   const [isRegister, setIsRegister] = useState(false);
   const [isReset, setIsReset] = useState(false);
@@ -83,7 +85,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onCancel }
                   !isRegister ? 'bg-white text-slate-900 shadow-sm' : 'text-white hover:bg-white/10'
                 }`}
               >
-                Sign In
+                {t('auth.login')}
               </button>
               <button
                 type="button"
@@ -92,7 +94,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLoginSuccess, onCancel }
                   isRegister ? 'bg-white text-slate-900 shadow-sm' : 'text-white hover:bg-white/10'
                 }`}
               >
-                Sign Up
+                {t('auth.signup')}
               </button>
             </div>
           )}

@@ -3,6 +3,8 @@ import { Search, Bookmark, PlusCircle, Menu, X, Sparkles, Bell, BarChart3 } from
 import { EventItem } from '../types';
 import { CompactHeaderEventSlider } from './CompactHeaderEventSlider';
 import { PWAInstallButton } from './PWAInstallButton';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface HeaderProps {
   currentView: string;
@@ -35,15 +37,16 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenProfile,
   onLogout,
 }) => {
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: 'discover', label: 'Discover Events' },
-    { id: 'home', label: 'Home' },
-    { id: 'categories', label: 'Categories' },
-    { id: 'venues', label: 'Venues' },
-    { id: 'organizers', label: 'Organizers' },
-    { id: 'advertise', label: 'Advertise' },
+    { id: 'discover', label: t('nav.discover') },
+    { id: 'home', label: t('nav.home') },
+    { id: 'categories', label: t('nav.categories') },
+    { id: 'venues', label: t('nav.venues') },
+    { id: 'organizers', label: t('nav.organizers') },
+    { id: 'advertise', label: t('nav.advertise') },
     { id: 'about', label: 'About' },
   ];
 
@@ -142,8 +145,13 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm whitespace-nowrap"
           >
             <PlusCircle className="w-3.5 h-3.5" />
-            <span>Create Event</span>
+            <span>{t('nav.create')}</span>
           </button>
+
+          {/* Language Switcher */}
+          <div className="hidden sm:block">
+            <LanguageSwitcher />
+          </div>
 
           {/* Admin Reports & Governance Button (SuperAdmin only) */}
           {currentUser?.role === 'SuperAdmin' && (
@@ -185,7 +193,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={onOpenLogin}
               className="hidden lg:inline-flex px-4 py-2 text-base font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-all"
             >
-              Sign In
+              {t('auth.login')}
             </button>
           )}
 
@@ -216,6 +224,10 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white px-4 py-6 space-y-3 shadow-xl animate-in slide-in-from-top-2 duration-200">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <span className="text-[14px] font-bold text-slate-500 uppercase tracking-wider">Select Language</span>
+            <LanguageSwitcher />
+          </div>
           <div className="grid grid-cols-2 gap-3 pb-3 border-b border-slate-100">
             {navLinks.map((link) => (
               <button

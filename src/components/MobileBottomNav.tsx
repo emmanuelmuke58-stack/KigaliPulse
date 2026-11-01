@@ -1,5 +1,6 @@
 import React from 'react';
 import { Home, Compass, Bookmark, Plus, LayoutDashboard, User } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface MobileBottomNavProps {
   currentView: string;
@@ -14,13 +15,14 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   savedCount,
   isLoggedIn = false,
 }) => {
-const tabs = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'create', label: 'Create', icon: Plus, isPrimary: true },
-    { id: 'saved', label: 'Saved', icon: Bookmark, badge: savedCount },
+  const { t } = useLanguage();
+  const tabs = [
+    { id: 'home', label: t('nav.home'), icon: Home },
+    { id: 'create', label: t('nav.create'), icon: Plus, isPrimary: true },
+    { id: 'saved', label: t('header.saved'), icon: Bookmark, badge: savedCount },
     isLoggedIn
       ? { id: 'organizer-dashboard', label: 'Portal', icon: LayoutDashboard }
-      : { id: 'discover', label: 'Explore', icon: Compass },
+      : { id: 'discover', label: t('nav.discover'), icon: Compass },
   ];
 
   return (
@@ -42,7 +44,7 @@ const tabs = [
                 <div className="w-13 h-13 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg flex items-center justify-center group-active:scale-95 transition-transform">
                   <Icon className="w-6 h-6 stroke-[2.2px]" />
                 </div>
-                <span className="text-base font-bold text-slate-800 mt-1">Create</span>
+                <span className="text-base font-bold text-slate-800 mt-1">{t('nav.create')}</span>
               </button>
             );
           }
