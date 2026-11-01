@@ -34,10 +34,10 @@ export const FontSizeSettings: React.FC<FontSizeSettingsProps> = ({ onTriggerToa
           <label className="block text-base font-bold text-slate-700">Typography Presets</label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { id: 'small', label: 'Small', size: '10px' },
-              { id: 'default', label: 'Default', size: '12px' },
-              { id: 'large', label: 'Large', size: '16px' },
-              { id: 'xl', label: 'Extra Large', size: '20px' },
+              { id: 'small', label: 'Small', size: '13px' },
+              { id: 'default', label: 'Default', size: '16px' },
+              { id: 'large', label: 'Large', size: '18px' },
+              { id: 'xl', label: 'Extra Large', size: '22px' },
             ].map((p) => (
               <button
                 key={p.id}
@@ -65,17 +65,17 @@ export const FontSizeSettings: React.FC<FontSizeSettingsProps> = ({ onTriggerToa
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-xs font-medium text-slate-400">10px</span>
+            <span className="text-xs font-medium text-slate-400">12px</span>
             <input
               type="range"
-              min="10"
-              max="24"
+              min="12"
+              max="26"
               step="1"
               value={fontSize}
               onChange={(e) => setFontSize(parseInt(e.target.value))}
               className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
             />
-            <span className="text-xs font-medium text-slate-400">24px</span>
+            <span className="text-xs font-medium text-slate-400">26px</span>
           </div>
         </div>
 

@@ -14,7 +14,7 @@
 }
 
 html {
-  font-size: var(--base-font-size, 22px);
+  font-size: var(--base-font-size, 16px);
   overflow-x: hidden;
   max-width: 100vw;
   width: 100%;

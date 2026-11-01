@@ -13,17 +13,17 @@ interface FontSizeContextType {
 }
 
 const PRESETS: Record<FontSizePreset, number> = {
-  small: 10,
-  default: 12,
-  large: 16,
-  xl: 20,
+  small: 13,
+  default: 16,
+  large: 18,
+  xl: 22,
 };
 
 const FontSizeContext = createContext<FontSizeContextType | undefined>(undefined);
 
 export const FontSizeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentUser, updateUserProfile } = useAuth();
-  const [fontSize, setFontSizeState] = useState<number>(12);
+  const [fontSize, setFontSizeState] = useState<number>(16);
   const [preset, setPresetState] = useState<FontSizePreset | 'custom'>('default');
 
   // Load from user profile or localStorage on mount/login
@@ -72,7 +72,7 @@ export const FontSizeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const resetToDefault = () => {
-    setFontSizeState(12);
+    setFontSizeState(16);
     setPresetState('default');
   };
 
