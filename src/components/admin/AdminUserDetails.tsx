@@ -68,7 +68,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-base font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Users</span>
@@ -78,7 +78,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <button
             type="button"
             onClick={() => onEditUser(user)}
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
           >
             <Edit2 className="w-3.5 h-3.5 text-slate-500" />
             <span>Edit User</span>
@@ -88,7 +88,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             <button
               type="button"
               onClick={() => onToggleStatus(user.id, 'Active')}
-              className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-base font-bold text-emerald-700 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold text-emerald-700 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Activate Account</span>
@@ -97,7 +97,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             <button
               type="button"
               onClick={() => onToggleStatus(user.id, 'Suspended')}
-              className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-base font-bold text-amber-700 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-bold text-amber-700 transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <Ban className="w-3.5 h-3.5" />
               <span>Suspend Account</span>
@@ -107,7 +107,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <button
             type="button"
             onClick={() => onResetPassword(user)}
-            className="px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-base font-bold text-blue-700 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200 text-xs font-bold text-blue-700 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <Key className="w-3.5 h-3.5" />
             <span>Reset Password</span>
@@ -116,7 +116,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <button
             type="button"
             onClick={() => onDeleteUser(user.id)}
-            className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-base font-bold text-rose-700 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-xs font-bold text-rose-700 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Delete User</span>
@@ -139,19 +139,19 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 {user.name}
               </h1>
-              <span className={`px-2.5 py-0.5 rounded-full text-base font-bold border ${statusBadge}`}>
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${statusBadge}`}>
                 {user.status}
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-700 text-base font-bold border border-purple-200">
+              <span className="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-700 text-xs font-bold border border-purple-200">
                 {user.role}
               </span>
             </div>
 
-            <p className="text-base sm:text-base text-slate-600 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
               {user.bio || 'Platform contributor registered on KigaliPulse.'}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 text-base text-slate-600 pt-2 font-medium">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 pt-2 font-medium">
               <div className="flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 text-slate-400" />
                 <span>{user.email}</span>
@@ -173,7 +173,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
         </div>
 
         {/* Sub-tabs Navigation */}
-        <div className="flex items-center gap-2 mt-8 pt-4 border-t border-slate-100 text-base overflow-x-auto">
+        <div className="flex items-center gap-2 mt-8 pt-4 border-t border-slate-100 text-xs overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveTab('overview')}
@@ -228,32 +228,32 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
               <h3 className="font-bold text-base text-slate-900">Identity &amp; Organizational Profile</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-500 font-semibold block mb-0.5">Full Name</span>
-                  <span className="font-bold text-slate-900 text-base">{user.name}</span>
+                  <span className="font-bold text-slate-900 text-sm">{user.name}</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-500 font-semibold block mb-0.5">Official Role</span>
-                  <span className="font-bold text-emerald-700 text-base">{user.role}</span>
+                  <span className="font-bold text-emerald-700 text-sm">{user.role}</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-500 font-semibold block mb-0.5">Department / Division</span>
-                  <span className="font-bold text-slate-900 text-base">{user.department || 'Operations'}</span>
+                  <span className="font-bold text-slate-900 text-sm">{user.department || 'Operations'}</span>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <span className="text-slate-500 font-semibold block mb-0.5">Assigned Organization</span>
-                  <span className="font-bold text-slate-900 text-base">{user.organization}</span>
+                  <span className="font-bold text-slate-900 text-sm">{user.organization}</span>
                 </div>
               </div>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-3 shadow-xs">
               <h3 className="font-bold text-base text-slate-900">Permissions Summary</h3>
-              <p className="text-base text-slate-600">
+              <p className="text-xs text-slate-600">
                 Granted based on enterprise role specification:
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-base pt-1">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs pt-1">
                 {['View Data', 'Create Records', 'Edit Content', 'Approve Submissions', 'Export Reports', 'Delete Records'].map((perm) => (
                   <div key={perm} className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -267,7 +267,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <div className="space-y-6">
             <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
               <h3 className="font-bold text-base text-slate-900">Access Metadata</h3>
-              <div className="space-y-3 text-base">
+              <div className="space-y-3 text-xs">
                 <div className="flex justify-between py-2 border-b border-slate-100">
                   <span className="text-slate-500 font-medium">Account ID</span>
                   <span className="font-mono text-slate-800 font-bold">{user.id}</span>
@@ -299,25 +299,25 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           {userLogs.length === 0 ? (
             <div className="text-center py-10 text-slate-500">
               <History className="w-8 h-8 mx-auto text-slate-400 mb-2" />
-              <p className="font-bold text-slate-900 text-base">No Activity Recorded Yet</p>
-              <p className="text-base text-slate-500 mt-1">This user has not performed administrative actions recently.</p>
+              <p className="font-bold text-slate-900 text-sm">No Activity Recorded Yet</p>
+              <p className="text-xs text-slate-500 mt-1">This user has not performed administrative actions recently.</p>
             </div>
           ) : (
             <div className="space-y-3">
               {userLogs.map((log) => (
                 <div
                   key={log.id}
-                  className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 text-base"
+                  className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 text-xs"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-slate-900">{log.action}</span>
-                      <span className="px-2 py-0.5 rounded bg-slate-100 text-[14px] text-slate-700 font-semibold border border-slate-200">
+                      <span className="px-2 py-0.5 rounded bg-slate-100 text-[10px] text-slate-700 font-semibold border border-slate-200">
                         {log.module}
                       </span>
                     </div>
                     <p className="text-slate-600 leading-snug">{log.description}</p>
-                    <div className="text-[15px] text-slate-500 flex items-center gap-3">
+                    <div className="text-[11px] text-slate-500 flex items-center gap-3">
                       <span>IP: {log.ipAddress}</span>
                       <span>Device: {log.device}</span>
                     </div>
@@ -337,12 +337,12 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           {userTransactions.length === 0 ? (
             <div className="text-center py-10 text-slate-500">
               <Receipt className="w-8 h-8 mx-auto text-slate-400 mb-2" />
-              <p className="font-bold text-slate-900 text-base">No Transactions Found</p>
-              <p className="text-base text-slate-500 mt-1">No ticket orders or financial payouts associated with this identity.</p>
+              <p className="font-bold text-slate-900 text-sm">No Transactions Found</p>
+              <p className="text-xs text-slate-500 mt-1">No ticket orders or financial payouts associated with this identity.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-base">
+              <table className="w-full text-left text-xs">
                 <thead>
                   <tr className="border-b border-slate-200 text-slate-500 font-semibold">
                     <th className="pb-3 pr-4 font-semibold">Date</th>
@@ -364,7 +364,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
                       </td>
                       <td className="py-3 pr-4 text-slate-600">{tx.paymentMethod}</td>
                       <td className="py-3">
-                        <span className="px-2 py-0.5 rounded-full text-[14px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                           {tx.status}
                         </span>
                       </td>
@@ -383,7 +383,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
             <h3 className="font-bold text-base text-slate-900">Active Device Sessions</h3>
             <div className="space-y-3">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-base">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
                     <Laptop className="w-4 h-4" />
@@ -391,24 +391,24 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
                   <div>
                     <div className="font-bold text-slate-900 flex items-center gap-2">
                       <span>MacBook Pro 16" (Kigali, RW)</span>
-                      <span className="text-[14px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
                         Current Session
                       </span>
                     </div>
-                    <div className="text-[15px] text-slate-500">Chrome 129 · IP: 197.243.18.94</div>
+                    <div className="text-[11px] text-slate-500">Chrome 129 · IP: 197.243.18.94</div>
                   </div>
                 </div>
                 <span className="text-emerald-700 font-bold">Active</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-base">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-slate-100 text-slate-600">
                     <Smartphone className="w-4 h-4" />
                   </div>
                   <div>
                     <div className="font-bold text-slate-900">iPhone 15 Pro (Kigali, RW)</div>
-                    <div className="text-[15px] text-slate-500">Safari Mobile · IP: 105.178.60.188</div>
+                    <div className="text-[11px] text-slate-500">Safari Mobile · IP: 105.178.60.188</div>
                   </div>
                 </div>
                 <span className="text-slate-500 font-medium">Yesterday</span>
@@ -418,11 +418,11 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
 
           <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
             <h3 className="font-bold text-base text-slate-900">Security Controls</h3>
-            <div className="space-y-3 text-base">
+            <div className="space-y-3 text-xs">
               <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
                 <div>
                   <div className="font-bold text-slate-900">Force Password Reset</div>
-                  <div className="text-[15px] text-slate-500">Requires user to set a new credential upon next login</div>
+                  <div className="text-[11px] text-slate-500">Requires user to set a new credential upon next login</div>
                 </div>
                 <button
                   type="button"
@@ -436,7 +436,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
               <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
                 <div>
                   <div className="font-bold text-slate-900">Revoke All Active Sessions</div>
-                  <div className="text-[15px] text-slate-500">Immediately logs out user across all mobile &amp; web devices</div>
+                  <div className="text-[11px] text-slate-500">Immediately logs out user across all mobile &amp; web devices</div>
                 </div>
                 <button
                   type="button"

@@ -182,25 +182,25 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
       tabIndex={0}
     >
       {/* Subtle Top Header Meta Strip */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center justify-between text-base border-b border-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-2 flex items-center justify-between text-xs border-b border-slate-900">
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 relative">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="font-bold tracking-wider uppercase text-[15px] text-emerald-400 flex items-center gap-1.5">
+          <span className="font-bold tracking-wider uppercase text-[11px] text-emerald-400 flex items-center gap-1.5">
             <Flame className="w-3.5 h-3.5 text-amber-400" />
             <span>Upcoming Kigali Events</span>
           </span>
-          <span className="hidden sm:inline-block text-slate-500 text-[14px]">·</span>
-          <span className="hidden sm:inline-block text-slate-400 text-[15px]">
+          <span className="hidden sm:inline-block text-slate-500 text-[10px]">·</span>
+          <span className="hidden sm:inline-block text-slate-400 text-[11px]">
             Sorted chronologically by nearest date
           </span>
         </div>
 
         {/* Counter & Play/Pause State */}
-        <div className="flex items-center gap-3 text-slate-400 text-base">
-          <span className="font-mono text-[15px] tabular-nums text-slate-300">
+        <div className="flex items-center gap-3 text-slate-400 text-xs">
+          <span className="font-mono text-[11px] tabular-nums text-slate-300">
             <span className="font-bold text-white">{currentIndex + 1}</span> / {totalSlides}
           </span>
           <button
@@ -240,26 +240,26 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
                 <div className="absolute top-4 inset-x-4 flex items-center justify-between gap-2 z-10">
                   <div className="flex items-center gap-2 flex-wrap">
                     {/* Relative Urgency Pill */}
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-base font-black tracking-wide uppercase bg-emerald-500 text-slate-950 shadow-md">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black tracking-wide uppercase bg-emerald-500 text-slate-950 shadow-md">
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>{relativeBadge}</span>
                     </span>
 
                     {/* Category Pill */}
-                    <span className="px-3 py-1 rounded-full text-base font-bold bg-slate-900/80 backdrop-blur-md text-emerald-300 border border-emerald-500/30">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-900/80 backdrop-blur-md text-emerald-300 border border-emerald-500/30">
                       {currentEvent.category}
                     </span>
 
                     {/* Nearest Soonest Tag if index is 0 */}
                     {currentIndex === 0 && (
-                      <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[15px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                         Nearest Event
                       </span>
                     )}
                   </div>
 
                   {/* Price Badge */}
-                  <div className="bg-black/70 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-base font-black text-white tabular-nums shadow-sm">
+                  <div className="bg-black/70 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-black text-white tabular-nums shadow-sm">
                     {currentEvent.priceDisplay}
                   </div>
                 </div>
@@ -267,7 +267,7 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
                 {/* Bottom Content Container */}
                 <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 md:p-8 space-y-3 z-10">
                   {/* Date & Time Row */}
-                  <div className="flex items-center gap-2 text-base sm:text-base font-semibold text-emerald-400 flex-wrap">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-emerald-400 flex-wrap">
                     <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10">
                       <Calendar className="w-4 h-4 text-emerald-400 shrink-0" />
                       <span className="text-white">{currentEvent.displayDate}</span>
@@ -289,7 +289,7 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
 
                   {/* Venue & Location Row with Action CTA */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-                    <div className="flex items-center gap-2 text-base sm:text-base text-slate-300 truncate max-w-md">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-300 truncate max-w-md">
                       <MapPin className="w-4 h-4 text-emerald-400 shrink-0" />
                       <span className="truncate">
                         {currentEvent.venue}, {currentEvent.neighborhood} ({currentEvent.district})
@@ -300,7 +300,7 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
                     <button
                       type="button"
                       onClick={() => onSelectEvent(currentEvent)}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-extrabold text-base sm:text-base transition-all shadow-lg shadow-emerald-500/20 group/btn cursor-pointer shrink-0"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-extrabold text-xs sm:text-sm transition-all shadow-lg shadow-emerald-500/20 group/btn cursor-pointer shrink-0"
                     >
                       <span>View Event</span>
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -338,11 +338,11 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
           <div className="hidden lg:flex lg:col-span-4 flex-col justify-between h-[420px] bg-slate-900/60 border border-slate-800/80 rounded-3xl p-5 backdrop-blur-md">
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                <div className="flex items-center gap-1.5 text-base font-bold uppercase tracking-wider text-emerald-400">
+                <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>Upcoming Order</span>
                 </div>
-                <span className="text-[15px] text-slate-400 font-medium">
+                <span className="text-[11px] text-slate-400 font-medium">
                   {upcomingEvents.length} upcoming
                 </span>
               </div>
@@ -368,18 +368,18 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
                         className="w-12 h-12 rounded-lg object-cover shrink-0"
                       />
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-1 text-[14px] text-emerald-400 font-semibold mb-0.5">
+                        <div className="flex items-center justify-between gap-1 text-[10px] text-emerald-400 font-semibold mb-0.5">
                           <span className="truncate">{evt.displayDate.split(',')[1] || evt.displayDate}</span>
-                          <span className="text-slate-400 font-mono text-[13px]">#{idx + 1}</span>
+                          <span className="text-slate-400 font-mono text-[9px]">#{idx + 1}</span>
                         </div>
                         <h4
-                          className={`text-base font-bold truncate ${
+                          className={`text-xs font-bold truncate ${
                             isCurrent ? 'text-white' : 'text-slate-300'
                           }`}
                         >
                           {evt.title}
                         </h4>
-                        <div className="text-[14px] text-slate-500 truncate mt-0.5">
+                        <div className="text-[10px] text-slate-500 truncate mt-0.5">
                           {evt.venue}
                         </div>
                       </div>
@@ -390,12 +390,12 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
             </div>
 
             {/* Bottom Quick Action for Active Slide */}
-            <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-base">
-              <span className="text-slate-400 text-[15px]">Currently viewing #{currentIndex + 1}</span>
+            <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+              <span className="text-slate-400 text-[11px]">Currently viewing #{currentIndex + 1}</span>
               <button
                 type="button"
                 onClick={() => onSelectEvent(currentEvent)}
-                className="text-base font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 group"
+                className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 group"
               >
                 <span>Full Details</span>
                 <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -424,12 +424,12 @@ export const UpcomingEventsHeaderSlider: React.FC<UpcomingEventsHeaderSliderProp
           </div>
 
           {/* Quick info note */}
-          <div className="text-[15px] text-slate-400 text-center sm:text-right">
+          <div className="text-[11px] text-slate-400 text-center sm:text-right">
             Click any slide or use arrows to navigate · Press{' '}
-            <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[14px] text-slate-300 font-mono">
+            <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-300 font-mono">
               ←
             </kbd>{' '}
-            <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[14px] text-slate-300 font-mono">
+            <kbd className="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px] text-slate-300 font-mono">
               →
             </kbd>
           </div>

@@ -195,21 +195,14 @@ export interface NotificationItem {
 }
 
 export interface UserProfile {
-  uid: string;
-  firstName: string;
-  lastName: string;
-  name: string; // Composite field
+  name: string;
   email: string;
-  phone?: string;
+  phone: string;
   avatar: string;
-  role: 'Standard User' | 'Business Admin' | 'SuperAdmin';
-  status?: string;
+  role: 'attendee' | 'organizer' | 'admin';
   preferredCategories: EventCategory[];
   preferredNeighborhoods: string[];
   savedEventIds: string[];
   followedOrganizerIds: string[];
   notifications: NotificationItem[];
-  preferredFontSize?: number;
-  preferredFontPreset?: string;
 }
-

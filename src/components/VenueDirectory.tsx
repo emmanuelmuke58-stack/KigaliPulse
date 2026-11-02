@@ -49,7 +49,7 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
         <h1 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Explore Kigali Venues
         </h1>
-        <p className="text-slate-500 text-base sm:text-base mt-1 max-w-2xl">
+        <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-2xl">
           Discover world-class arenas, rooftop lounges, cultural galleries, convention centers, and gardens across Kigali.
         </p>
       </div>
@@ -63,7 +63,7 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
             placeholder="Search venue by name, amenity, or address..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-transparent text-base sm:text-base font-medium focus:outline-none text-slate-800"
+            className="w-full bg-transparent text-xs sm:text-sm font-medium focus:outline-none text-slate-800"
           />
         </div>
 
@@ -73,7 +73,7 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
             aria-label="Filter by venue type"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            className="p-2.5 rounded-xl border border-slate-200 text-base font-semibold bg-slate-50 cursor-pointer"
+            className="p-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50 cursor-pointer"
           >
             {venueTypes.map((vt) => (
               <option key={vt} value={vt === 'All Types' ? 'all' : vt}>
@@ -87,7 +87,7 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
             aria-label="Filter by neighborhood"
             value={selectedNeighborhood}
             onChange={(e) => setSelectedNeighborhood(e.target.value)}
-            className="p-2.5 rounded-xl border border-slate-200 text-base font-semibold bg-slate-50 cursor-pointer"
+            className="p-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50 cursor-pointer"
           >
             <option value="all">All Neighborhoods</option>
             {KIGALI_NEIGHBORHOODS.map((h) => (
@@ -116,10 +116,10 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-md text-emerald-400 text-[15px] font-semibold px-2.5 py-0.5 rounded-md">
+                <div className="absolute top-3 left-3 bg-slate-900/85 backdrop-blur-md text-emerald-400 text-[11px] font-semibold px-2.5 py-0.5 rounded-md">
                   {venue.type}
                 </div>
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-slate-900 text-base font-bold px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md text-slate-900 text-xs font-bold px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
                   <span>{venue.rating}</span>
                 </div>
@@ -127,7 +127,7 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
 
               {/* Venue Details */}
               <div className="p-5 space-y-2">
-                <div className="flex items-center gap-1.5 text-base text-slate-500 font-medium">
+                <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
                   <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                   <span>{venue.neighborhood}, {venue.district}</span>
                 </div>
@@ -136,12 +136,12 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
                   {venue.name}
                 </h3>
 
-                <p className="text-base text-slate-600 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
                   {venue.description}
                 </p>
 
                 {/* Amenities Badges (Unboxed metadata) */}
-                <div className="pt-2 flex flex-wrap items-center gap-1 text-[15px] text-slate-500">
+                <div className="pt-2 flex flex-wrap items-center gap-1 text-[11px] text-slate-500">
                   {venue.amenities.slice(0, 3).map((amenity, idx) => (
                     <span key={idx} className="bg-slate-100 px-2 py-0.5 rounded text-slate-700">
                       {amenity}
@@ -155,7 +155,7 @@ export const VenueDirectory: React.FC<VenueDirectoryProps> = ({ onSelectVenueMod
             </div>
 
             {/* Venue Card Footer */}
-            <div className="px-5 py-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between text-base">
+            <div className="px-5 py-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between text-xs">
               <span className="text-slate-600 font-medium flex items-center gap-1">
                 <Users className="w-3.5 h-3.5 text-slate-400" />
                 <span>Cap: {venue.capacity.toLocaleString()}</span>
@@ -183,15 +183,15 @@ export const VenueDetailModal: React.FC<{
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-0 sm:p-4 md:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
     >
-      <div className="relative bg-white sm:rounded-3xl max-w-3xl w-full h-full sm:h-auto sm:max-h-[90vh] overflow-y-auto shadow-2xl border-t sm:border border-slate-200 text-slate-800 animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300">
+      <div className="relative bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 text-slate-800 animate-in fade-in zoom-in-95 duration-200">
         
         <button
           type="button"
           onClick={onClose}
           aria-label="Close venue modal"
-          className="fixed sm:absolute top-4 right-4 z-40 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md transition-colors shadow-lg"
+          className="absolute top-4 right-4 z-30 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md transition-colors"
         >
           ✕
         </button>
@@ -205,42 +205,42 @@ export const VenueDetailModal: React.FC<{
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-6 text-white space-y-1">
-            <span className="text-base font-bold text-emerald-400 uppercase tracking-wider">{venue.type}</span>
+            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">{venue.type}</span>
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold">{venue.name}</h2>
-            <p className="text-base text-slate-300">{venue.address}</p>
+            <p className="text-xs text-slate-300">{venue.address}</p>
           </div>
         </div>
 
-        <div className="p-6 sm:p-8 space-y-6 pb-24 sm:pb-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50 text-base">
+        <div className="p-6 sm:p-8 space-y-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50 text-xs">
             <div>
               <span className="text-slate-400 font-medium">Capacity</span>
-              <span className="font-bold text-slate-900 block text-base">{venue.capacity.toLocaleString()} guests</span>
+              <span className="font-bold text-slate-900 block text-sm">{venue.capacity.toLocaleString()} guests</span>
             </div>
             <div>
               <span className="text-slate-400 font-medium">Rating</span>
-              <span className="font-bold text-amber-600 block text-base">★ {venue.rating} / 5.0</span>
+              <span className="font-bold text-amber-600 block text-sm">★ {venue.rating} / 5.0</span>
             </div>
             <div>
               <span className="text-slate-400 font-medium">Phone</span>
-              <span className="font-bold text-slate-900 block text-base">{venue.phone}</span>
+              <span className="font-bold text-slate-900 block text-sm">{venue.phone}</span>
             </div>
             <div>
               <span className="text-slate-400 font-medium">Upcoming Events</span>
-              <span className="font-bold text-emerald-700 block text-base">{venue.upcomingCount} scheduled</span>
+              <span className="font-bold text-emerald-700 block text-sm">{venue.upcomingCount} scheduled</span>
             </div>
           </div>
 
           <div className="space-y-2">
             <h3 className="font-bold text-base text-slate-900">About the Venue</h3>
-            <p className="text-base sm:text-base text-slate-600 leading-relaxed">{venue.description}</p>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{venue.description}</p>
           </div>
 
           <div className="space-y-2">
-            <h3 className="font-bold text-base uppercase tracking-wider text-slate-400">Amenities &amp; Features</h3>
+            <h3 className="font-bold text-xs uppercase tracking-wider text-slate-400">Amenities &amp; Features</h3>
             <div className="flex flex-wrap gap-2">
               {venue.amenities.map((item, idx) => (
-                <span key={idx} className="px-3 py-1 bg-slate-100 rounded-lg text-base font-semibold text-slate-800">
+                <span key={idx} className="px-3 py-1 bg-slate-100 rounded-lg text-xs font-semibold text-slate-800">
                   ✓ {item}
                 </span>
               ))}
@@ -249,7 +249,7 @@ export const VenueDetailModal: React.FC<{
 
           {/* Interactive Map */}
           <div className="space-y-2">
-            <h3 className="font-bold text-base text-slate-900">Location Map</h3>
+            <h3 className="font-bold text-sm text-slate-900">Location Map</h3>
             <InteractiveKigaliMap
               lat={venue.lat}
               lng={venue.lng}
@@ -260,12 +260,12 @@ export const VenueDetailModal: React.FC<{
             />
           </div>
 
-          <div className="pt-4 border-t flex justify-between items-center text-base">
+          <div className="pt-4 border-t flex justify-between items-center text-xs">
             <a
               href={venue.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="min-h-[44px] inline-flex items-center text-emerald-700 hover:underline font-semibold gap-1.5"
+              className="text-emerald-700 hover:underline font-semibold flex items-center gap-1.5"
             >
               <Globe className="w-3.5 h-3.5" />
               <span>Official Website</span>
@@ -274,30 +274,12 @@ export const VenueDetailModal: React.FC<{
             <button
               type="button"
               onClick={onClose}
-              className="min-h-[44px] px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
+              className="px-5 py-2.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
             >
               Close View
             </button>
           </div>
         </div>
-
-        {/* Mobile Sticky Footer with Safe Area */}
-        <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 pb-[calc(1rem+env(safe-area-inset-bottom))] flex gap-3 shadow-lg z-30">
-          <a
-            href={`tel:${venue.phone}`}
-            className="flex-1 min-h-[48px] rounded-xl bg-slate-100 text-slate-900 font-bold text-base flex items-center justify-center gap-2"
-          >
-            <Phone className="w-4 h-4" />
-            <span>Call Venue</span>
-          </a>
-          <button
-            onClick={onClose}
-            className="flex-1 min-h-[48px] rounded-xl bg-emerald-600 text-white font-bold text-base"
-          >
-            Back to List
-          </button>
-        </div>
-
       </div>
     </div>
   );

@@ -18,7 +18,6 @@ import {
   CURRENT_USER,
 } from './data/mockData';
 import { getStoredEvents, saveStoredEvents, recordEventView } from './services/eventStore';
-import { useAuth } from './contexts/AuthContext';
 
 // Component Imports
 import { Header } from './components/Header';
@@ -43,16 +42,12 @@ import { SavedEventsDrawer } from './components/SavedEventsDrawer';
 import { UserProfileModal, NotificationModal } from './components/UserProfileModal';
 import { InfoModals } from './components/InfoModals';
 import { Footer } from './components/Footer';
-import { OfflineIndicator } from './components/OfflineIndicator';
 import { EventSubmission } from './types/admin';
 import { INITIAL_EVENT_SUBMISSIONS, INITIAL_ADMIN_NOTIFICATIONS } from './data/adminMockData';
-import { LoginView } from './components/LoginView';
 
 export default function App() {
   // Navigation & View State (Discover Events page is the default site page)
   const [currentView, setCurrentView] = useState<string>('discover');
-  const [intendedView, setIntendedView] = useState<string>('');
-
   // Sub-filter pass-throughs when navigating from Home to Discover
   const [discoverCategory, setDiscoverCategory] = useState<string>('');
   const [discoverLocation, setDiscoverLocation] = useState<string>('');
@@ -61,11 +56,8 @@ export default function App() {
 
   // Primary Data State (Initialized and synchronized dynamically with persistent storage)
   const [events, setEvents] = useState<EventItem[]>(() => getStoredEvents());
-  const [userEvents, setUserEvents] = useState<EventItem[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(INITIAL_AUDIT_LOGS);
-  
-  // Auth from Context
-  const { currentUser, updateUserProfile, logout, getAuthToken, loading: isAuthLoading } = useAuth();
+  const [currentUser, setCurrentUser] = useState<UserProfile>(CURRENT_USER);
 
   // Modals & Drawers State
   const [selectedEvent, setSelectedEvent] = useState<EventItem | null>(null);
@@ -81,75 +73,17 @@ export default function App() {
   const [activeQuickFilter, setActiveQuickFilter] = useState<string>('');
 
   // Create Event mode: 'visitor' (public event submission for approval) | 'wizard' (pro organizer 6-step wizard)
-  const [createViewMode, setCreateViewMode] = useState<'visitor' | 'wizard'>('wizard');
+  const [createViewMode, setCreateViewMode] = useState<'visitor' | 'wizard'>('visitor');
 
-  // Initial Auth Check (Handled by AuthContext now)
-
-  // 2. Fetch Events from backend API and merge updates
+  // Synchronize events dynamically on view switch or when approved events change
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const token = await getAuthToken();
-        const headers: any = { 'Content-Type': 'application/json' };
-        if (token) headers['Authorization'] = `Bearer ${token}`;
-
-        const res = await fetch('/api/events', { headers });
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setEvents(data);
-            saveStoredEvents(data);
-          }
-        }
-      } catch (e) {
-        console.warn('Network fetch error, using stored events:', e);
-      }
+    const syncEvents = () => {
+      setEvents(getStoredEvents());
     };
-    fetchEvents();
+    syncEvents();
+    window.addEventListener('storage', syncEvents);
+    return () => window.removeEventListener('storage', syncEvents);
   }, [currentView]);
-
-  // 3. Fetch User Events (when logged in and on a dashboard)
-  useEffect(() => {
-    if (!currentUser || !['organizer-dashboard', 'admin-dashboard'].includes(currentView)) return;
-
-    const fetchUserEvents = async () => {
-      try {
-        const token = await getAuthToken();
-        const res = await fetch('/api/events/my', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setUserEvents(data);
-        }
-      } catch (e) {
-        console.error('Failed to fetch user events', e);
-      }
-    };
-    fetchUserEvents();
-  }, [currentView, currentUser]);
-
-  // View Protection logic
-  const PROTECTED_VIEWS = ['create', 'organizer-dashboard', 'admin-dashboard'];
-  const isViewProtected = PROTECTED_VIEWS.includes(currentView);
-
-  const handleLoginSuccess = () => {
-    if (intendedView) {
-      const target = intendedView;
-      setIntendedView('');
-      setCurrentView(target);
-    } else if (currentView === 'login') {
-      setCurrentView('discover');
-    }
-  };
-
-  if (isAuthLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="w-12 h-12 border-4 border-slate-200 border-t-emerald-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   // Automatic event view tracker: opens detail modal, increments dynamic views count with session deduplication, and persists
   const handleSelectEvent = (event: EventItem) => {
@@ -161,25 +95,26 @@ export default function App() {
   // Toggle Save Event handler
   const handleToggleSave = (e: React.MouseEvent, eventId: string) => {
     e.stopPropagation();
-    if (!currentUser) {
-      setIntendedView('discover');
-      setCurrentView('login');
-      return;
-    }
-    const alreadySaved = currentUser.savedEventIds?.includes(eventId) || false;
-    const updatedSaves = alreadySaved
-      ? (currentUser.savedEventIds || []).filter((id) => id !== eventId)
-      : [...(currentUser.savedEventIds || []), eventId];
+    setCurrentUser((prev) => {
+      const exists = prev.savedEventIds.includes(eventId);
+      const updatedSaves = exists
+        ? prev.savedEventIds.filter((id) => id !== eventId)
+        : [...prev.savedEventIds, eventId];
 
-    updateUserProfile({ savedEventIds: updatedSaves }).catch(() => {});
+      return {
+        ...prev,
+        savedEventIds: updatedSaves,
+      };
+    });
 
     // Also increment saves counter on the event item and persist
     setEvents((prev) => {
       const updated = prev.map((evt) => {
         if (evt.id === eventId) {
+          const isSaved = currentUser.savedEventIds.includes(eventId);
           return {
             ...evt,
-            saves: alreadySaved ? Math.max(0, (evt.saves || 0) - 1) : (evt.saves || 0) + 1,
+            saves: isSaved ? Math.max(0, evt.saves - 1) : evt.saves + 1,
           };
         }
         return evt;
@@ -191,17 +126,17 @@ export default function App() {
 
   // Toggle Follow Organizer
   const handleToggleFollow = (organizerId: string) => {
-    if (!currentUser) {
-      setIntendedView('discover');
-      setCurrentView('login');
-      return;
-    }
-    const alreadyFollowed = currentUser.followedOrganizerIds?.includes(organizerId) || false;
-    const updatedFollows = alreadyFollowed
-      ? (currentUser.followedOrganizerIds || []).filter((id) => id !== organizerId)
-      : [...(currentUser.followedOrganizerIds || []), organizerId];
+    setCurrentUser((prev) => {
+      const exists = prev.followedOrganizerIds.includes(organizerId);
+      const updatedFollows = exists
+        ? prev.followedOrganizerIds.filter((id) => id !== organizerId)
+        : [...prev.followedOrganizerIds, organizerId];
 
-    updateUserProfile({ followedOrganizerIds: updatedFollows }).catch(() => {});
+      return {
+        ...prev,
+        followedOrganizerIds: updatedFollows,
+      };
+    });
   };
 
   // Search from Hero Section
@@ -243,42 +178,28 @@ export default function App() {
   };
 
   // Event Created from Wizard
-  const handleEventCreated = async (newEvent: EventItem) => {
-    try {
-      const token = await getAuthToken();
-      const res = await fetch('/api/events', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(newEvent),
-      });
+  const handleEventCreated = (newEvent: EventItem) => {
+    setEvents((prev) => {
+      const updated = [newEvent, ...prev];
+      saveStoredEvents(updated);
+      return updated;
+    });
 
-      if (!res.ok) throw new Error('Failed to save event');
+    // Create Audit Log
+    const newLog: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      action: 'Submitted New Event for Moderation',
+      targetType: 'Event',
+      targetTitle: newEvent.title,
+      targetId: newEvent.id,
+      user: currentUser.name,
+      role: 'Event Organizer',
+      timestamp: 'Just now',
+      notes: `Submitted with price ${newEvent.priceDisplay} at ${newEvent.venue}`,
+    };
+    setAuditLogs((prev) => [newLog, ...prev]);
 
-      const savedEvent = await res.json();
-      setEvents((prev) => [savedEvent, ...prev]);
-
-      // Create Audit Log
-      const newLog: AuditLogItem = {
-        id: `log-${Date.now()}`,
-        action: 'Submitted New Event for Moderation',
-        targetType: 'Event',
-        targetTitle: savedEvent.title,
-        targetId: savedEvent.id,
-        user: currentUser?.name || 'Unknown',
-        role: 'Event Organizer',
-        timestamp: 'Just now',
-        notes: `Submitted with price ${savedEvent.priceDisplay} at ${savedEvent.venue}`,
-      };
-      setAuditLogs((prev) => [newLog, ...prev]);
-
-      setCurrentView('organizer-dashboard');
-    } catch (e) {
-      console.error(e);
-      alert('Error saving event to server.');
-    }
+    setCurrentView('organizer-dashboard');
   };
 
   // Visitor Event Submission Handler (Persists proposal & notifies Admin)
@@ -326,227 +247,143 @@ export default function App() {
     };
     setAuditLogs((prev) => [newLog, ...prev]);
 
-    if (currentUser) {
-      const newNotifs = [
+    setCurrentUser((prev) => ({
+      ...prev,
+      notifications: [
         {
           id: `unotif-${Date.now()}`,
           title: 'Event Proposal Submitted',
           message: `Your event "${submission.name}" has been submitted and is waiting for admin approval.`,
           time: 'Just now',
           read: false,
-          type: 'update' as const,
+          type: 'update',
         },
-        ...(currentUser.notifications || []),
-      ];
-      updateUserProfile({ notifications: newNotifs }).catch(() => {});
-    }
+        ...prev.notifications,
+      ],
+    }));
   };
 
   // Super Admin: Update Event Status & Log Action
-  const handleUpdateEventStatus = async (
+  const handleUpdateEventStatus = (
     eventId: string,
     newStatus: EventStatus,
     actionName: string,
     notes?: string
   ) => {
-    try {
-      const token = await getAuthToken();
-      const res = await fetch(`/api/events/${eventId}`, {
-        method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ status: newStatus }),
+    let targetTitle = 'Event';
+
+    setEvents((prev) => {
+      const updated = prev.map((evt) => {
+        if (evt.id === eventId) {
+          targetTitle = evt.title;
+          return { ...evt, status: newStatus };
+        }
+        return evt;
       });
+      saveStoredEvents(updated);
+      return updated;
+    });
 
-      if (!res.ok) throw new Error('Failed to update event status');
-
-      const updatedEvent = await res.json();
-      
-      setEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
-      setUserEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
-
-      const log: AuditLogItem = {
-        id: `log-${Date.now()}`,
-        action: actionName,
-        targetType: 'Event',
-        targetTitle: updatedEvent.title,
-        targetId: eventId,
-        user: currentUser?.name || 'SuperAdmin',
-        role: 'Platform Administrator',
-        timestamp: 'Just now',
-        notes,
-      };
-      setAuditLogs((prev) => [log, ...prev]);
-    } catch (e) {
-      console.error(e);
-      alert('Error updating event status.');
-    }
+    const log: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      action: actionName,
+      targetType: 'Event',
+      targetTitle,
+      targetId: eventId,
+      user: 'SuperAdmin Jean-Paul',
+      role: 'Platform Administrator',
+      timestamp: 'Just now',
+      notes,
+    };
+    setAuditLogs((prev) => [log, ...prev]);
   };
 
   // Super Admin: Toggle Feature Event
-  const handleToggleFeatureEvent = async (eventId: string) => {
-    const event = events.find((e) => e.id === eventId);
-    if (!event) return;
+  const handleToggleFeatureEvent = (eventId: string) => {
+    let targetTitle = 'Event';
+    let isNowFeatured = false;
 
-    try {
-      const token = await getAuthToken();
-      const res = await fetch(`/api/events/${eventId}`, {
-        method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ isFeatured: !event.isFeatured }),
+    setEvents((prev) => {
+      const updated = prev.map((evt) => {
+        if (evt.id === eventId) {
+          targetTitle = evt.title;
+          isNowFeatured = !evt.isFeatured;
+          return { ...evt, isFeatured: isNowFeatured };
+        }
+        return evt;
       });
+      saveStoredEvents(updated);
+      return updated;
+    });
 
-      if (!res.ok) throw new Error('Failed to toggle feature');
-
-      const updatedEvent = await res.json();
-      setEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
-      setUserEvents((prev) => prev.map((e) => (e.id === eventId ? updatedEvent : e)));
-
-      const log: AuditLogItem = {
-        id: `log-${Date.now()}`,
-        action: updatedEvent.isFeatured ? 'Promoted Event to Featured Carousel' : 'Removed from Featured Carousel',
-        targetType: 'Event',
-        targetTitle: updatedEvent.title,
-        targetId: eventId,
-        user: currentUser?.name || 'SuperAdmin',
-        role: 'Platform Administrator',
-        timestamp: 'Just now',
-      };
-      setAuditLogs((prev) => [log, ...prev]);
-    } catch (e) {
-      console.error(e);
-    }
+    const log: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      action: isNowFeatured ? 'Promoted Event to Featured Carousel' : 'Removed from Featured Carousel',
+      targetType: 'Event',
+      targetTitle,
+      targetId: eventId,
+      user: 'SuperAdmin Jean-Paul',
+      role: 'Platform Administrator',
+      timestamp: 'Just now',
+    };
+    setAuditLogs((prev) => [log, ...prev]);
   };
 
   // Super Admin: Delete Event
-  const handleDeleteEvent = async (eventId: string) => {
-    if (!confirm('Are you sure you want to permanently delete this event?')) return;
+  const handleDeleteEvent = (eventId: string) => {
+    const evt = events.find((e) => e.id === eventId);
+    setEvents((prev) => {
+      const updated = prev.filter((e) => e.id !== eventId);
+      saveStoredEvents(updated);
+      return updated;
+    });
 
-    try {
-      const token = await getAuthToken();
-      const res = await fetch(`/api/events/${eventId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-
-      if (!res.ok) throw new Error('Failed to delete event');
-
-      const evt = events.find((e) => e.id === eventId);
-      setEvents((prev) => prev.filter((e) => e.id !== eventId));
-      setUserEvents((prev) => prev.filter((e) => e.id !== eventId));
-
-      const log: AuditLogItem = {
-        id: `log-${Date.now()}`,
-        action: 'Permanently Deleted Event',
-        targetType: 'Event',
-        targetTitle: evt ? evt.title : eventId,
-        targetId: eventId,
-        user: currentUser?.name || 'SuperAdmin',
-        role: 'Platform Administrator',
-        timestamp: 'Just now',
-      };
-      setAuditLogs((prev) => [log, ...prev]);
-    } catch (e) {
-      console.error(e);
-      alert('Error deleting event.');
-    }
+    const log: AuditLogItem = {
+      id: `log-${Date.now()}`,
+      action: 'Permanently Deleted Event',
+      targetType: 'Event',
+      targetTitle: evt ? evt.title : eventId,
+      targetId: eventId,
+      user: 'SuperAdmin Jean-Paul',
+      role: 'Platform Administrator',
+      timestamp: 'Just now',
+    };
+    setAuditLogs((prev) => [log, ...prev]);
   };
 
   // Saved Events List
-  const savedEventsList = (currentUser && currentUser.savedEventIds && Array.isArray(currentUser.savedEventIds))
-    ? events.filter((e) => currentUser.savedEventIds.includes(e.id))
-    : [];
-  const unreadCount = currentUser?.notifications
-    ? currentUser.notifications.filter((n) => !n.read).length
-    : 0;
+  const savedEventsList = events.filter((e) => currentUser.savedEventIds.includes(e.id));
+  const unreadCount = currentUser.notifications.filter((n) => !n.read).length;
 
   // Dedicated Enterprise Admin System Suite (Complete UI Design)
   if (currentView === 'admin-dashboard') {
-    if (!currentUser) {
-      return (
-        <div className="min-h-screen">
-          <Header
-            currentView={currentView}
-            onNavigate={setCurrentView}
-            savedCount={0}
-            onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
-            onOpenSearchModal={() => setIsSearchModalOpen(true)}
-            onOpenNotifications={() => setIsNotificationsOpen(true)}
-            unreadNotificationsCount={0}
-            currentUser={null}
-            onOpenLogin={() => setCurrentView('login')}
-            onOpenProfile={() => setIsProfileModalOpen(true)}
-            onLogout={logout}
-          />
-          <LoginView onLoginSuccess={handleLoginSuccess} onCancel={() => setCurrentView('discover')} />
-        </div>
-      );
-    }
-    if (currentUser.role !== 'SuperAdmin') {
-      setCurrentView('discover');
-      return null;
-    }
     return <AdminSystem onExitToPublicSite={() => setCurrentView('home')} />;
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans overflow-x-hidden max-w-full w-full">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
       
       {/* 1. Header (Adhering to Top Bar Contract) */}
       <Header
         currentView={currentView}
         onNavigate={(view) => {
-          if (['create', 'organizer-dashboard', 'admin-dashboard'].includes(view) && !currentUser) {
-            setIntendedView(view);
-            setCurrentView('login');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-          }
           setCurrentView(view);
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
-        savedCount={currentUser?.savedEventIds?.length || 0}
+        savedCount={currentUser.savedEventIds.length}
         onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
         onOpenSearchModal={() => setIsSearchModalOpen(true)}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
         unreadNotificationsCount={unreadCount}
         events={events}
         onSelectEvent={handleSelectEvent}
-        currentUser={currentUser}
-        onOpenLogin={() => {
-          setIntendedView('discover');
-          setCurrentView('login');
-        }}
-        onOpenProfile={() => setIsProfileModalOpen(true)}
-        onLogout={logout}
       />
 
       {/* 2. Main View Routing */}
-      <main className="flex-1 pb-20 md:pb-0 overflow-x-hidden max-w-full w-full">
+      <main className="flex-1">
         
-        {/* AUTH PROTECTION OVERLAY */}
-        {isViewProtected && !currentUser && (
-          <LoginView 
-            onLoginSuccess={handleLoginSuccess}
-            onCancel={() => setCurrentView('discover')}
-          />
-        )}
-
-        {/* LOGIN VIEW */}
-        {currentView === 'login' && (
-          <LoginView 
-            onLoginSuccess={() => setCurrentView('discover')}
-            onCancel={() => setCurrentView('discover')}
-          />
-        )}
-
         {/* HOMEPAGE VIEW */}
-        {currentView === 'home' && !isViewProtected && (
+        {currentView === 'home' && (
           <div>
             {/* Hero Section with large search bar and quick filters */}
             <HeroSection
@@ -558,7 +395,7 @@ export default function App() {
             {/* Sponsored Homepage Banner */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
               <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between p-4 sm:p-5 gap-4 shadow-sm">
-                <span className="absolute top-2 right-2 bg-black/60 text-emerald-400 text-[13px] uppercase font-black tracking-widest px-2 py-0.5 rounded">
+                <span className="absolute top-2 right-2 bg-black/60 text-emerald-400 text-[9px] uppercase font-black tracking-widest px-2 py-0.5 rounded">
                   Sponsored Partner
                 </span>
 
@@ -569,8 +406,8 @@ export default function App() {
                     className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0"
                   />
                   <div>
-                    <h3 className="font-bold text-base sm:text-base text-white">{ADVERTISEMENTS[0].title}</h3>
-                    <p className="text-base text-slate-300 mt-0.5 line-clamp-1">
+                    <h3 className="font-bold text-sm sm:text-base text-white">{ADVERTISEMENTS[0].title}</h3>
+                    <p className="text-xs text-slate-300 mt-0.5 line-clamp-1">
                       Direct 4x weekly from Kigali (KGL). Book non-stop business &amp; leisure flights with Rwanda's national flag carrier.
                     </p>
                   </div>
@@ -580,7 +417,7 @@ export default function App() {
                   href={ADVERTISEMENTS[0].destinationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base whitespace-nowrap transition-colors shrink-0 shadow"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs whitespace-nowrap transition-colors shrink-0 shadow"
                 >
                   Book Official Tickets
                 </a>
@@ -590,7 +427,7 @@ export default function App() {
             {/* Featured Events Section */}
             <FeaturedEventsSection
               events={events}
-              savedEventIds={currentUser?.savedEventIds || []}
+              savedEventIds={currentUser.savedEventIds}
               onToggleSave={handleToggleSave}
               onSelectEvent={handleSelectEvent}
               onViewAll={() => setCurrentView('discover')}
@@ -599,7 +436,7 @@ export default function App() {
             {/* Events Happening Soon */}
             <HappeningSoonSection
               events={events}
-              savedEventIds={currentUser?.savedEventIds || []}
+              savedEventIds={currentUser.savedEventIds}
               onToggleSave={handleToggleSave}
               onSelectEvent={handleSelectEvent}
               onViewAll={() => setCurrentView('discover')}
@@ -611,7 +448,7 @@ export default function App() {
         {currentView === 'discover' && (
           <DiscoverPage
             events={events}
-            savedEventIds={currentUser?.savedEventIds || []}
+            savedEventIds={currentUser.savedEventIds}
             onToggleSave={handleToggleSave}
             onSelectEvent={handleSelectEvent}
             initialCategory={discoverCategory}
@@ -644,13 +481,13 @@ export default function App() {
         {currentView === 'organizers' && (
           <OrganizerDirectory
             onSelectOrganizerModal={(org) => setSelectedOrganizer(org)}
-            followedOrganizerIds={currentUser?.followedOrganizerIds || []}
+            followedOrganizerIds={currentUser.followedOrganizerIds}
             onToggleFollow={handleToggleFollow}
           />
         )}
 
         {/* VISITOR EVENT SUBMISSION & ORGANIZER CREATION */}
-        {currentView === 'create' && currentUser && (
+        {currentView === 'create' && (
           <div className="space-y-4">
             {/* Top selector for Visitor Proposal vs Organizer Wizard */}
             <div className="max-w-4xl mx-auto px-4 pt-6">
@@ -658,31 +495,31 @@ export default function App() {
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
-                    onClick={() => setCreateViewMode('wizard')}
-                    className={`px-4 py-2 rounded-xl text-base font-bold transition-all cursor-pointer ${
-                      createViewMode === 'wizard'
-                        ? 'bg-emerald-600 text-white shadow-2xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                    }`}
-                  >
-                    Event Creator Wizard
-                  </button>
-                  <button
-                    type="button"
                     onClick={() => setCreateViewMode('visitor')}
-                    className={`px-4 py-2 rounded-xl text-base font-bold transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       createViewMode === 'visitor'
                         ? 'bg-emerald-600 text-white shadow-2xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
-                    Community Submission
+                    Visitor Event Submission
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCreateViewMode('wizard')}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      createViewMode === 'wizard'
+                        ? 'bg-emerald-600 text-white shadow-2xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    Organizer 6-Step Wizard
                   </button>
                 </div>
-                <span className="text-[15px] text-slate-500 hidden sm:inline font-medium pr-3">
-                  {createViewMode === 'wizard'
-                    ? 'Publish event details, schedule & ticket information'
-                    : 'Submit event proposal for admin review & approval'}
+                <span className="text-[11px] text-slate-500 hidden sm:inline font-medium pr-3">
+                  {createViewMode === 'visitor'
+                    ? 'Submit event proposal for admin review & approval'
+                    : 'Advanced ticketing, performer line-up & schedule setup'}
                 </span>
               </div>
             </div>
@@ -690,23 +527,35 @@ export default function App() {
             {createViewMode === 'visitor' ? (
               <VisitorCreateEvent
                 onSubmitEvent={handleVisitorEventSubmit}
-                onCancel={() => setCurrentView('discover')}
+                onCancel={() => setCurrentView('home')}
               />
             ) : (
               <CreateEventWizard
                 onEventCreated={handleEventCreated}
-                onCancel={() => setCurrentView('discover')}
+                onCancel={() => setCurrentView('home')}
               />
             )}
           </div>
         )}
 
         {/* ORGANIZER DASHBOARD */}
-        {currentView === 'organizer-dashboard' && currentUser && (
+        {currentView === 'organizer-dashboard' && (
           <OrganizerDashboard
-            events={userEvents}
+            events={events}
             currentUser={currentUser}
             onCreateEvent={() => setCurrentView('create')}
+            onSelectEvent={handleSelectEvent}
+          />
+        )}
+
+        {/* SUPER ADMIN DASHBOARD & MODERATION */}
+        {currentView === 'admin-dashboard' && (
+          <AdminDashboard
+            events={events}
+            onUpdateEventStatus={handleUpdateEventStatus}
+            onToggleFeatureEvent={handleToggleFeatureEvent}
+            onDeleteEvent={handleDeleteEvent}
+            auditLogs={auditLogs}
             onSelectEvent={handleSelectEvent}
           />
         )}
@@ -725,7 +574,7 @@ export default function App() {
             </p>
             <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-3">
               <h3 className="font-bold text-lg text-slate-900">Architected for Scalability</h3>
-              <p className="text-base sm:text-base text-slate-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Designed to answer "What is happening in Kigali?" within seconds, KigaliPulse is built on a responsive mobile-first architecture engineered to expand effortlessly from Kigali to other major Rwandan destinations (Musanze, Rubavu, Huye) and across the East African Community.
               </p>
             </div>
@@ -749,17 +598,12 @@ export default function App() {
         onNavigate={(view) => {
           if (view === 'saved') {
             setIsSavedDrawerOpen(true);
-          } else if (['create', 'organizer-dashboard'].includes(view) && !currentUser) {
-            setIntendedView(view);
-            setCurrentView('login');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
             setCurrentView(view);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }
         }}
-        savedCount={currentUser?.savedEventIds?.length || 0}
-        isLoggedIn={!!currentUser}
+        savedCount={currentUser.savedEventIds.length}
       />
 
       {/* MODALS & DRAWERS */}
@@ -768,7 +612,7 @@ export default function App() {
       <EventDetailModal
         event={selectedEvent}
         onClose={() => setSelectedEvent(null)}
-        isSaved={selectedEvent && currentUser?.savedEventIds ? currentUser.savedEventIds.includes(selectedEvent.id) : false}
+        isSaved={selectedEvent ? currentUser.savedEventIds.includes(selectedEvent.id) : false}
         onToggleSave={handleToggleSave}
         onSelectOrganizer={(orgId) => {
           const org = ORGANIZERS.find((o) => o.id === orgId);
@@ -797,7 +641,7 @@ export default function App() {
         organizer={selectedOrganizer}
         events={events}
         onClose={() => setSelectedOrganizer(null)}
-        isFollowing={selectedOrganizer && currentUser?.followedOrganizerIds ? currentUser.followedOrganizerIds.includes(selectedOrganizer.id) : false}
+        isFollowing={selectedOrganizer ? currentUser.followedOrganizerIds.includes(selectedOrganizer.id) : false}
         onToggleFollow={handleToggleFollow}
         onSelectEvent={handleSelectEvent}
       />
@@ -830,30 +674,26 @@ export default function App() {
       />
 
       {/* User Profile Modal */}
-      {currentUser && (
-        <UserProfileModal
-          isOpen={isProfileModalOpen}
-          onClose={() => setIsProfileModalOpen(false)}
-          currentUser={currentUser}
-          onUpdateProfile={(updated) => {
-            updateUserProfile(updated).catch(() => {});
-          }}
-          onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
-          onOpenOrganizerPortal={() => setCurrentView('organizer-dashboard')}
-          onOpenAdminPortal={() => setCurrentView('admin-dashboard')}
-        />
-      )}
+      <UserProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        currentUser={currentUser}
+        onUpdateProfile={(updated) => setCurrentUser(updated)}
+        onOpenSavedDrawer={() => setIsSavedDrawerOpen(true)}
+        onOpenOrganizerPortal={() => setCurrentView('organizer-dashboard')}
+        onOpenAdminPortal={() => setCurrentView('admin-dashboard')}
+      />
 
       {/* Notifications Modal */}
       <NotificationModal
         isOpen={isNotificationsOpen}
         onClose={() => setIsNotificationsOpen(false)}
-        notifications={currentUser?.notifications || []}
+        notifications={currentUser.notifications}
         onMarkAllAsRead={() => {
-          if (currentUser) {
-            const readNotifs = (currentUser.notifications || []).map((n) => ({ ...n, read: true }));
-            updateUserProfile({ notifications: readNotifs }).catch(() => {});
-          }
+          setCurrentUser((prev) => ({
+            ...prev,
+            notifications: prev.notifications.map((n) => ({ ...n, read: true })),
+          }));
         }}
       />
 
@@ -862,9 +702,6 @@ export default function App() {
         type={infoModalType}
         onClose={() => setInfoModalType(null)}
       />
-
-      {/* Global Connectivity Indicator */}
-      <OfflineIndicator />
 
     </div>
   );

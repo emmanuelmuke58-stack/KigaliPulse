@@ -145,13 +145,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
               </div>
               {!isCollapsed && (
                 <div className="min-w-0">
-                  <div className="font-extrabold text-base text-slate-900 tracking-tight flex items-center gap-1.5 truncate">
+                  <div className="font-extrabold text-sm text-slate-900 tracking-tight flex items-center gap-1.5 truncate">
                     <span>KigaliPulse</span>
-                    <span className="text-[13px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200">
+                    <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200">
                       Enterprise
                     </span>
                   </div>
-                  <div className="text-[15px] text-slate-500 font-medium truncate">Core Admin Suite</div>
+                  <div className="text-[11px] text-slate-500 font-medium truncate">Core Admin Suite</div>
                 </div>
               )}
             </div>
@@ -189,7 +189,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                   type="button"
                   onClick={() => handleNavClick(item.id)}
                   title={isCollapsed ? item.label : undefined}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-base transition-all group relative cursor-pointer ${
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-xs transition-all group relative cursor-pointer ${
                     isActive
                       ? 'bg-emerald-600 text-white font-bold shadow-md shadow-emerald-600/20'
                       : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100/80'
@@ -207,7 +207,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
                   {!isCollapsed && item.badge && (
                     <span
-                      className={`text-[14px] font-bold px-1.5 py-0.5 rounded-full shrink-0 ${
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0 ${
                         isActive
                           ? 'bg-emerald-700 text-white'
                           : item.badgeType === 'alert'
@@ -236,7 +236,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             type="button"
             onClick={onExitToPublic}
             title={isCollapsed ? 'Return to Public Site' : undefined}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-base font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors cursor-pointer"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/70 transition-colors cursor-pointer"
           >
             <ExternalLink className="w-4 h-4 shrink-0 text-emerald-600" />
             {!isCollapsed && <span className="truncate">Public Live Portal</span>}
@@ -247,7 +247,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             type="button"
             onClick={onLogoutClick}
             title={isCollapsed ? 'Sign Out' : undefined}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-base font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4 shrink-0" />
             {!isCollapsed && <span className="truncate">Sign Out</span>}

@@ -7,7 +7,6 @@ import {
   EnterpriseNotification,
   UserStatus,
   ToastMessage,
-  AdminRole,
 } from '../../types/admin';
 import {
   INITIAL_ADMIN_USERS,
@@ -16,7 +15,6 @@ import {
   INITIAL_ADMIN_ACTIVITY_LOGS,
   INITIAL_ADMIN_NOTIFICATIONS,
 } from '../../data/adminMockData';
-import { useAuth } from '../../contexts/AuthContext';
 
 import { AdminAuth } from './AdminAuth';
 import { AdminSidebar, AdminNavigationTab } from './AdminSidebar';
@@ -40,48 +38,12 @@ interface AdminSystemProps {
 }
 
 export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) => {
-  // 1. Auth from Context
-  const { currentUser: authUser, logout: authLogout, loading: isAuthLoading } = useAuth();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!authUser);
-  
-  // Map UserProfile to EnterpriseUser for compatibility with admin components
-  const [currentUser, setCurrentUser] = useState<EnterpriseUser | null>(authUser ? {
-    id: authUser.uid,
-    name: authUser.name,
-    firstName: authUser.firstName,
-    lastName: authUser.lastName,
-    email: authUser.email,
-    phone: authUser.phone || '',
-    role: authUser.role as any,
-    organization: 'KigaliPulse Platform',
-    status: 'Active',
-    avatar: authUser.avatar,
-    lastLogin: 'Just now',
-    dateCreated: '2024-01-01',
-  } : null);
+  // 1. Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem('kigali_admin_auth') === 'true';
+  });
 
-  useEffect(() => {
-    if (authUser) {
-      setIsAuthenticated(true);
-      setCurrentUser({
-        id: authUser.uid,
-        name: authUser.name,
-        firstName: authUser.firstName,
-        lastName: authUser.lastName,
-        email: authUser.email,
-        phone: authUser.phone || '',
-        role: authUser.role as any,
-        organization: 'KigaliPulse Platform',
-        status: 'Active',
-        avatar: authUser.avatar,
-        lastLogin: 'Just now',
-        dateCreated: '2024-01-01',
-      });
-    } else {
-      setIsAuthenticated(false);
-      setCurrentUser(null);
-    }
-  }, [authUser]);
+  const [currentUser, setCurrentUser] = useState<EnterpriseUser>(INITIAL_ADMIN_USERS[0]);
 
   // 2. Navigation State
   const [activeTab, setActiveTab] = useState<AdminNavigationTab>('dashboard');
@@ -190,6 +152,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
   const handleLoginSuccess = (user: EnterpriseUser) => {
     setIsAuthenticated(true);
     setCurrentUser(user);
+    localStorage.setItem('kigali_admin_auth', 'true');
     addToast('success', 'Authenticated Successfully', `Welcome back, ${user.name}. Session token active.`);
 
     // Log the event
@@ -218,13 +181,11 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
       confirmLabel: 'Sign Out',
       variant: 'danger',
       iconType: 'logout',
-      action: async () => {
-        await authLogout();
+      action: () => {
         setIsAuthenticated(false);
-        setCurrentUser(null);
+        localStorage.removeItem('kigali_admin_auth');
         setConfirmModal((prev) => ({ ...prev, isOpen: false }));
         addToast('info', 'Logged Out', 'You have been safely signed out.');
-        onExitToPublicSite();
       },
     });
   };
@@ -238,7 +199,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
       lastName: newUserData.lastName || 'User',
       email: newUserData.email || '',
       phone: newUserData.phone || '+250 788 000 000',
-      role: (newUserData.role as AdminRole) || 'Event Organizer',
+      role: newUserData.role || 'Event Organizer',
       organization: newUserData.organization || 'Kigali Partner Hub',
       status: newUserData.status || 'Active',
       avatar: newUserData.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
@@ -249,8 +210,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     };
 
     setUsers((prev) => [created, ...prev]);
-
-    if (!currentUser) return;
 
     // Log the audit event
     const newLog: EnterpriseActivityLog = {
@@ -277,8 +236,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     if (selectedUserForDetails && selectedUserForDetails.id === updatedUser.id) {
       setSelectedUserForDetails(updatedUser);
     }
-
-    if (!currentUser) return;
 
     const editLog: EnterpriseActivityLog = {
       id: `log-${Date.now()}`,
@@ -315,8 +272,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
         }
         setConfirmModal((prev) => ({ ...prev, isOpen: false }));
 
-        if (!currentUser) return;
-
         const delLog: EnterpriseActivityLog = {
           id: `log-${Date.now()}`,
           dateTime: 'Just now',
@@ -346,8 +301,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     if (selectedUserForDetails && selectedUserForDetails.id === userId) {
       setSelectedUserForDetails({ ...selectedUserForDetails, status });
     }
-
-    if (!currentUser) return;
 
     const log: EnterpriseActivityLog = {
       id: `log-${Date.now()}`,
@@ -401,24 +354,13 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
-  // IF CHECKING AUTH -> RENDER LOADING SPINNER
-  if (isAuthLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-slate-500 font-bold text-base tracking-widest uppercase">Verifying Security Session...</p>
-        </div>
-      </div>
-    );
-  }
-
   // IF NOT AUTHENTICATED -> RENDER AUTH SCREENS (Login, Forgot, Reset, etc.)
-  if (!isAuthenticated || !currentUser) {
+  if (!isAuthenticated) {
     return (
       <AdminAuth
         onLoginSuccess={handleLoginSuccess}
         onExitToPublic={onExitToPublicSite}
+        initialUser={currentUser}
       />
     );
   }
@@ -445,7 +387,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
     : [];
 
   return (
-    <div className="min-h-screen bg-slate-100/70 text-slate-900 font-sans flex flex-col lg:flex-row antialiased w-full max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-slate-100/70 text-slate-900 font-sans flex flex-col lg:flex-row antialiased">
       {/* 1. Desktop & Mobile Sidebar */}
       <AdminSidebar
         activeTab={activeTab}
@@ -465,7 +407,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
 
       {/* 2. Main Content Wrapper */}
       <div
-        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 w-full max-w-full overflow-x-hidden ${
+        className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${
           isSidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'
         }`}
       >
@@ -612,7 +554,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search anything across the enterprise system (users, orders, venues, logs)..."
-                className="w-full bg-transparent text-base text-slate-900 placeholder:text-slate-400 outline-none"
+                className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 outline-none"
               />
               <button
                 type="button"
@@ -624,7 +566,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
             </div>
 
             {/* Search results */}
-            <div className="max-h-96 overflow-y-auto space-y-4 text-base">
+            <div className="max-h-96 overflow-y-auto space-y-4 text-xs">
               {searchQuery.trim() === '' ? (
                 <div className="py-8 text-center text-slate-500">
                   Type a keyword to search across KigaliPulse Enterprise datasets.
@@ -634,7 +576,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
                   {/* Users results */}
                   {searchResultsUsers.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-[14px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                         <Users className="w-3.5 h-3.5 text-sky-600" />
                         <span>Users ({searchResultsUsers.length})</span>
                       </div>
@@ -653,7 +595,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
                             <span className="font-bold text-slate-900">{u.name}</span>
                             <span className="text-slate-500">{u.email}</span>
                           </div>
-                          <span className="px-2 py-0.5 rounded text-[14px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
                             {u.role}
                           </span>
                         </div>
@@ -664,7 +606,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
                   {/* Transactions results */}
                   {searchResultsTransactions.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-[14px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                         <Receipt className="w-3.5 h-3.5 text-emerald-600" />
                         <span>Transactions ({searchResultsTransactions.length})</span>
                       </div>
@@ -693,7 +635,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
                   {/* Businesses results */}
                   {searchResultsBusinesses.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-[14px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                         <Building2 className="w-3.5 h-3.5 text-purple-600" />
                         <span>Venues &amp; Businesses ({searchResultsBusinesses.length})</span>
                       </div>
@@ -710,7 +652,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
                             <span className="font-bold text-slate-900">{b.name}</span>
                             <span className="text-slate-500 ml-2">{b.location}</span>
                           </div>
-                          <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[14px] border border-emerald-200">{b.status}</span>
+                          <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[10px] border border-emerald-200">{b.status}</span>
                         </div>
                       ))}
                     </div>

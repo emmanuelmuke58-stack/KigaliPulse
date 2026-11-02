@@ -522,12 +522,12 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                   Event Submissions Approval
                 </h3>
                 {stats.pending > 0 && (
-                  <span className="text-base font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 animate-pulse">
+                  <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 animate-pulse">
                     {stats.pending} Pending Review
                   </span>
                 )}
               </div>
-              <p className="text-base sm:text-base text-slate-600 mt-0.5">
+              <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
                 Review visitor-submitted events, examine uploaded event posters, verify details, and approve or publish live.
               </p>
             </div>
@@ -537,7 +537,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
             <button
               type="button"
               onClick={onSelectBusinessView}
-              className="self-start sm:self-auto px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
+              className="self-start sm:self-auto px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
             >
               <span>Back to Business Events</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -547,10 +547,10 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
         {/* Visual Approval Workflow Banner */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 sm:p-4">
-          <div className="text-[15px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">
             Approval Workflow
           </div>
-          <div className="flex items-center gap-2 text-base font-semibold text-slate-700 flex-wrap">
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 flex-wrap">
             <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-800 shadow-2xs">
               Visitor creates event
             </span>
@@ -585,39 +585,39 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
       {/* 2. Key Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-          <span className="text-[15px] font-semibold text-slate-500 block">Total Submissions</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Total Submissions</span>
           <span className="text-xl font-black text-slate-900 tabular-nums">{stats.total}</span>
-          <span className="text-[14px] text-slate-500 font-medium block mt-0.5">All visitor proposals</span>
+          <span className="text-[10px] text-slate-500 font-medium block mt-0.5">All visitor proposals</span>
         </div>
 
         <div className="bg-white border border-amber-300 rounded-2xl p-4 shadow-xs bg-amber-50/40">
-          <span className="text-[15px] font-bold text-amber-800 block">Pending Approval</span>
+          <span className="text-[11px] font-bold text-amber-800 block">Pending Approval</span>
           <span className="text-xl font-black text-amber-900 tabular-nums">{stats.pending}</span>
-          <span className="text-[14px] text-amber-700 font-semibold block mt-0.5">Requires evaluation</span>
+          <span className="text-[10px] text-amber-700 font-semibold block mt-0.5">Requires evaluation</span>
         </div>
 
         <div className="bg-white border border-emerald-200 rounded-2xl p-4 shadow-xs">
-          <span className="text-[15px] font-semibold text-slate-500 block">Approved</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Approved</span>
           <span className="text-xl font-black text-emerald-700 tabular-nums">{stats.approved}</span>
-          <span className="text-[14px] text-emerald-700 font-semibold block mt-0.5">Eligible to publish</span>
+          <span className="text-[10px] text-emerald-700 font-semibold block mt-0.5">Eligible to publish</span>
         </div>
 
         <div className="bg-white border border-sky-200 rounded-2xl p-4 shadow-xs">
-          <span className="text-[15px] font-semibold text-slate-500 block">Published Live</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Published Live</span>
           <span className="text-xl font-black text-sky-700 tabular-nums">{stats.published}</span>
-          <span className="text-[14px] text-sky-700 font-semibold block mt-0.5">On public Events page</span>
+          <span className="text-[10px] text-sky-700 font-semibold block mt-0.5">On public Events page</span>
         </div>
 
         <div className="bg-white border border-purple-200 rounded-2xl p-4 shadow-xs">
-          <span className="text-[15px] font-semibold text-slate-500 block">Changes Requested</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Changes Requested</span>
           <span className="text-xl font-black text-purple-700 tabular-nums">{stats.changesRequested}</span>
-          <span className="text-[14px] text-purple-700 font-semibold block mt-0.5">Awaiting revisions</span>
+          <span className="text-[10px] text-purple-700 font-semibold block mt-0.5">Awaiting revisions</span>
         </div>
 
         <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-          <span className="text-[15px] font-semibold text-slate-500 block">Rejected</span>
+          <span className="text-[11px] font-semibold text-slate-500 block">Rejected</span>
           <span className="text-xl font-black text-rose-700 tabular-nums">{stats.rejected}</span>
-          <span className="text-[14px] text-rose-600 font-semibold block mt-0.5">Unapproved proposals</span>
+          <span className="text-[10px] text-rose-600 font-semibold block mt-0.5">Unapproved proposals</span>
         </div>
       </div>
 
@@ -632,12 +632,12 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search event name, organizer, email, or venue..."
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+              className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition-all"
             />
           </div>
 
           {/* Status Filter Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-base font-semibold">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs font-semibold">
             {(['All', 'Pending Approval', 'Approved', 'Published', 'Changes Requested', 'Rejected', 'Draft'] as const).map(
               (st) => {
                 const isActive = statusFilter === st;
@@ -659,7 +659,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                   >
                     <span>{st === 'Pending Approval' ? 'Pending' : st}</span>
                     <span
-                      className={`text-[14px] px-1.5 py-0.2 rounded-full ${
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                         isActive ? 'bg-slate-800 text-white' : 'bg-slate-200 text-slate-700'
                       }`}
                     >
@@ -678,7 +678,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50/80 text-[15px] font-extrabold uppercase tracking-wider text-slate-600">
+              <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-600">
                 <th className="py-3.5 px-4">Event</th>
                 <th className="py-3.5 px-4">Organizer</th>
                 <th className="py-3.5 px-4">Date</th>
@@ -688,13 +688,13 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 text-base">
+            <tbody className="divide-y divide-slate-100 text-xs">
               {filteredSubmissions.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-slate-500">
                     <FileText className="w-8 h-8 text-slate-300 mx-auto mb-2" />
                     <p className="font-bold text-slate-700">No event submissions found</p>
-                    <p className="text-base text-slate-500 mt-1">Try changing your search terms or status filter.</p>
+                    <p className="text-xs text-slate-500 mt-1">Try changing your search terms or status filter.</p>
                   </td>
                 </tr>
               ) : (
@@ -719,10 +719,10 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                               {sub.name}
                             </h4>
                             <div className="flex items-center gap-2 mt-0.5">
-                              <span className="text-[14px] font-bold uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                              <span className="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                                 {sub.category}
                               </span>
-                              <span className="text-[15px] text-slate-500 truncate max-w-[160px]">
+                              <span className="text-[11px] text-slate-500 truncate max-w-[160px]">
                                 {sub.location}
                               </span>
                             </div>
@@ -734,10 +734,10 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                       <td className="py-3.5 px-4">
                         <div>
                           <span className="font-bold text-slate-900 block">{sub.organizerName}</span>
-                          <span className="text-[15px] text-slate-500 block truncate max-w-[150px]">
+                          <span className="text-[11px] text-slate-500 block truncate max-w-[150px]">
                             {sub.organizerEmail}
                           </span>
-                          <span className="text-[14px] text-slate-400 block">{sub.organizerPhone}</span>
+                          <span className="text-[10px] text-slate-400 block">{sub.organizerPhone}</span>
                         </div>
                       </td>
 
@@ -746,7 +746,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                         <span className="font-extrabold text-slate-900 block">
                           {formatShortDate(sub.date)}
                         </span>
-                        <span className="text-[15px] text-slate-500 block">
+                        <span className="text-[11px] text-slate-500 block">
                           {sub.startTime} - {sub.endTime}
                         </span>
                       </td>
@@ -762,7 +762,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                             <span className="font-extrabold text-slate-900 block">
                               {sub.entryFee.toLocaleString()} {sub.currency}
                             </span>
-                            <span className="text-[14px] text-slate-400 block">
+                            <span className="text-[10px] text-slate-400 block">
                               Cap: {sub.maxCapacity} ppl
                             </span>
                           </div>
@@ -777,7 +777,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                       {/* 6. STATUS */}
                       <td className="py-3.5 px-4 whitespace-nowrap">
                         <span
-                          className={`text-[15px] px-2.5 py-1 rounded-md border inline-flex items-center gap-1 ${getStatusBadge(
+                          className={`text-[11px] px-2.5 py-1 rounded-md border inline-flex items-center gap-1 ${getStatusBadge(
                             sub.status
                           )}`}
                         >
@@ -797,7 +797,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                           <button
                             type="button"
                             onClick={() => handleOpenReview(sub)}
-                            className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-base transition-colors shadow-2xs cursor-pointer flex items-center gap-1"
+                            className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors shadow-2xs cursor-pointer flex items-center gap-1"
                           >
                             <Eye className="w-3.5 h-3.5" />
                             <span>Review</span>
@@ -807,7 +807,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                           {(sub.status === 'Approved' || sub.status === 'Published') && (
                             <span
                               title="Live directly on visitor events pages"
-                              className="px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[15px] flex items-center gap-1 shadow-2xs"
+                              className="px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[11px] flex items-center gap-1 shadow-2xs"
                             >
                               <Globe className="w-3.5 h-3.5 text-emerald-600" />
                               <span>Live on Events Page</span>
@@ -820,7 +820,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                               type="button"
                               onClick={() => handleApprove(sub)}
                               title="Approve & Direct on Events Pages"
-                              className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-colors shadow-2xs cursor-pointer flex items-center gap-1"
+                              className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-2xs cursor-pointer flex items-center gap-1"
                             >
                               <Check className="w-3.5 h-3.5" />
                               <span>Approve Direct</span>
@@ -839,7 +839,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                             </button>
 
                             {isMenuOpen && (
-                              <div className="absolute right-0 top-8 z-30 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl p-1.5 text-left text-base animate-in fade-in zoom-in-95 duration-100">
+                              <div className="absolute right-0 top-8 z-30 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl p-1.5 text-left text-xs animate-in fade-in zoom-in-95 duration-100">
                                 {/* View / Review */}
                                 <button
                                   type="button"
@@ -949,11 +949,11 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                     <h3 className="text-lg font-extrabold text-slate-900 tracking-tight">
                       Review Event Submission
                     </h3>
-                    <span className={`text-[14px] px-2.5 py-0.5 rounded border ${getStatusBadge(reviewingSubmission.status)}`}>
+                    <span className={`text-[10px] px-2.5 py-0.5 rounded border ${getStatusBadge(reviewingSubmission.status)}`}>
                       {reviewingSubmission.status}
                     </span>
                   </div>
-                  <p className="text-base text-slate-500 font-medium">
+                  <p className="text-xs text-slate-500 font-medium">
                     Submitted on {formatShortDate(reviewingSubmission.submittedAt)} · ID: {reviewingSubmission.id}
                   </p>
                 </div>
@@ -970,36 +970,36 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
             {/* Workflow Progress Banner */}
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
-              <div className="text-[15px] font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 text-center">
                 Approval Lifecycle Progression
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-base">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
                 <div className={`p-2.5 rounded-xl border flex flex-col items-center justify-center gap-1 ${
                   reviewingSubmission.status === 'Draft' ? 'bg-amber-50 border-amber-300 font-bold text-amber-900' : 'bg-white border-slate-200 font-medium text-slate-600'
                 }`}>
-                  <span className="text-[14px] font-bold">1. Draft</span>
+                  <span className="text-[10px] font-bold">1. Draft</span>
                 </div>
                 <div className={`p-2.5 rounded-xl border flex flex-col items-center justify-center gap-1 ${
                   reviewingSubmission.status === 'Pending Approval' ? 'bg-amber-100 border-amber-400 font-bold text-amber-900 ring-2 ring-amber-400/20' : 'bg-white border-slate-200 font-medium text-slate-600'
                 }`}>
-                  <span className="text-[14px] font-bold">2. Pending Approval</span>
+                  <span className="text-[10px] font-bold">2. Pending Approval</span>
                 </div>
                 <div className={`p-2.5 rounded-xl border flex flex-col items-center justify-center gap-1 ${
                   reviewingSubmission.status === 'Approved' ? 'bg-emerald-100 border-emerald-400 font-bold text-emerald-900 ring-2 ring-emerald-400/20' : 'bg-white border-slate-200 font-medium text-slate-600'
                 }`}>
-                  <span className="text-[14px] font-bold">3. Approved</span>
+                  <span className="text-[10px] font-bold">3. Approved</span>
                 </div>
                 <div className={`p-2.5 rounded-xl border flex flex-col items-center justify-center gap-1 ${
                   reviewingSubmission.status === 'Published' ? 'bg-sky-100 border-sky-400 font-bold text-sky-900 ring-2 ring-sky-400/20' : 'bg-white border-slate-200 font-medium text-slate-600'
                 }`}>
-                  <span className="text-[14px] font-bold">4. Published Live</span>
+                  <span className="text-[10px] font-bold">4. Published Live</span>
                 </div>
               </div>
             </div>
 
             {/* Uploaded Event Image (Prominently shown as requested) */}
             <div className="space-y-2">
-              <label className="block text-base font-bold uppercase tracking-wider text-slate-500">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
                 Uploaded Event Poster / Image
               </label>
               <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-950 max-h-72 flex items-center justify-center shadow-xs">
@@ -1008,7 +1008,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                   alt={reviewingSubmission.name}
                   className="w-full h-72 object-cover"
                 />
-                <div className="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[15px] px-3 py-1 rounded-lg border border-white/20 flex items-center gap-2">
+                <div className="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[11px] px-3 py-1 rounded-lg border border-white/20 flex items-center gap-2">
                   <Upload className="w-3 h-3 text-emerald-400" />
                   <span>{reviewingSubmission.imageFileName || 'Uploaded device image'}</span>
                   {reviewingSubmission.imageFileSize && <span>· {reviewingSubmission.imageFileSize}</span>}
@@ -1019,23 +1019,23 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
             {/* Complete Event Details */}
             <div className="space-y-4">
               <div>
-                <span className="text-base font-bold uppercase text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
+                <span className="text-xs font-bold uppercase text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">
                   {reviewingSubmission.category}
                 </span>
                 <h2 className="text-xl font-black text-slate-900 tracking-tight mt-2">
                   {reviewingSubmission.name}
                 </h2>
-                <p className="text-base sm:text-base text-slate-600 leading-relaxed mt-2 whitespace-pre-line bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2 whitespace-pre-line bg-slate-50 p-4 rounded-2xl border border-slate-200">
                   {reviewingSubmission.description}
                 </p>
               </div>
 
               {/* Date, Time, Location Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div className="p-3.5 rounded-xl border border-slate-200 bg-white flex items-center gap-3">
                   <Calendar className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div>
-                    <span className="text-slate-500 text-[14px] uppercase font-bold block">Event Date &amp; Time</span>
+                    <span className="text-slate-500 text-[10px] uppercase font-bold block">Event Date &amp; Time</span>
                     <span className="font-extrabold text-slate-900">
                       {reviewingSubmission.date} · {reviewingSubmission.startTime} - {reviewingSubmission.endTime}
                     </span>
@@ -1045,7 +1045,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 <div className="p-3.5 rounded-xl border border-slate-200 bg-white flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div>
-                    <span className="text-slate-500 text-[14px] uppercase font-bold block">Location / Venue</span>
+                    <span className="text-slate-500 text-[10px] uppercase font-bold block">Location / Venue</span>
                     <span className="font-extrabold text-slate-900 truncate block">
                       {reviewingSubmission.location}
                     </span>
@@ -1054,12 +1054,12 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
               </div>
 
               {/* Entry Fee & Capacity Details (Requirement) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div className="p-3.5 rounded-xl border border-slate-200 bg-white flex items-center gap-3">
                   <DollarSign className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div>
-                    <span className="text-slate-500 text-[14px] uppercase font-bold block">Entry Fee</span>
-                    <span className="font-extrabold text-slate-900 text-base">
+                    <span className="text-slate-500 text-[10px] uppercase font-bold block">Entry Fee</span>
+                    <span className="font-extrabold text-slate-900 text-sm">
                       {reviewingSubmission.feeType === 'Free'
                         ? 'Free Admission'
                         : `${reviewingSubmission.entryFee.toLocaleString()} ${reviewingSubmission.currency}`}
@@ -1070,8 +1070,8 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 <div className="p-3.5 rounded-xl border border-slate-200 bg-white flex items-center gap-3">
                   <Users className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div>
-                    <span className="text-slate-500 text-[14px] uppercase font-bold block">Maximum Capacity</span>
-                    <span className="font-extrabold text-slate-900 text-base">
+                    <span className="text-slate-500 text-[10px] uppercase font-bold block">Maximum Capacity</span>
+                    <span className="font-extrabold text-slate-900 text-sm">
                       {reviewingSubmission.maxCapacity} Attendees
                     </span>
                   </div>
@@ -1080,16 +1080,16 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
               {/* Organizer Information (Requirement) */}
               <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-2">
-                <span className="text-[15px] font-bold text-slate-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
                   Organizer Information
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-base">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                   <div>
-                    <span className="text-[14px] text-slate-500 block">Organizer Name</span>
+                    <span className="text-[10px] text-slate-500 block">Organizer Name</span>
                     <span className="font-bold text-slate-900">{reviewingSubmission.organizerName}</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-500 block">Email Address</span>
+                    <span className="text-[10px] text-slate-500 block">Email Address</span>
                     <a
                       href={`mailto:${reviewingSubmission.organizerEmail}`}
                       className="font-bold text-emerald-700 hover:underline flex items-center gap-1"
@@ -1099,7 +1099,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                     </a>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-500 block">Phone Number</span>
+                    <span className="text-[10px] text-slate-500 block">Phone Number</span>
                     <a
                       href={`tel:${reviewingSubmission.organizerPhone}`}
                       className="font-bold text-slate-900 hover:text-emerald-700 flex items-center gap-1"
@@ -1113,7 +1113,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
               {/* Previous Admin Review Notes (if Changes Requested) */}
               {reviewingSubmission.adminReviewNotes && (
-                <div className="p-4 rounded-2xl border border-purple-200 bg-purple-50 text-base space-y-1">
+                <div className="p-4 rounded-2xl border border-purple-200 bg-purple-50 text-xs space-y-1">
                   <span className="font-bold text-purple-900 flex items-center gap-1">
                     <MessageSquare className="w-3.5 h-3.5 text-purple-700" />
                     <span>Admin Feedback Notes:</span>
@@ -1133,7 +1133,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                     setReviewingSubmission(null);
                     handleOpenEdit(sub);
                   }}
-                  className="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
+                  className="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
                 >
                   <Edit2 className="w-3.5 h-3.5 text-slate-500" />
                   <span>Edit Details</span>
@@ -1146,7 +1146,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                     setReviewingSubmission(null);
                     setDeleteConfirmSubmission(sub);
                   }}
-                  className="px-3.5 py-2 rounded-xl border border-rose-200 bg-white hover:bg-rose-50 text-base font-semibold text-rose-600 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
+                  className="px-3.5 py-2 rounded-xl border border-rose-200 bg-white hover:bg-rose-50 text-xs font-semibold text-rose-600 transition-colors shadow-2xs cursor-pointer flex items-center gap-1.5"
                 >
                   <Trash2 className="w-3.5 h-3.5 text-rose-500" />
                   <span>Delete</span>
@@ -1162,7 +1162,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                     setReviewingSubmission(null);
                     handleOpenRequestChanges(sub);
                   }}
-                  className="px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 border border-purple-200 text-base font-bold text-purple-800 transition-colors cursor-pointer flex items-center gap-1.5"
+                  className="px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 border border-purple-200 text-xs font-bold text-purple-800 transition-colors cursor-pointer flex items-center gap-1.5"
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-purple-700" />
                   <span>Request Changes</span>
@@ -1173,7 +1173,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                   <button
                     type="button"
                     onClick={() => handleReject(reviewingSubmission)}
-                    className="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-base font-bold text-rose-700 transition-colors cursor-pointer flex items-center gap-1.5"
+                    className="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-xs font-bold text-rose-700 transition-colors cursor-pointer flex items-center gap-1.5"
                   >
                     <X className="w-3.5 h-3.5 text-rose-600" />
                     <span>Reject</span>
@@ -1185,7 +1185,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                   <button
                     type="button"
                     onClick={() => handleApprove(reviewingSubmission)}
-                    className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-base font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer flex items-center gap-2"
+                    className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer flex items-center gap-2"
                   >
                     <Check className="w-4 h-4" />
                     <span>Approve &amp; Put Direct on Events Pages</span>
@@ -1194,7 +1194,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
                 {/* Direct on Events Pages Status Indicator */}
                 {(reviewingSubmission.status === 'Approved' || reviewingSubmission.status === 'Published') && (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-base font-bold shadow-2xs">
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold shadow-2xs">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span>Direct Live on Public Events Pages</span>
                   </div>
@@ -1215,14 +1215,14 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-slate-900">Request Changes from Organizer</h3>
-                <p className="text-base text-slate-500 mt-0.5">
+                <p className="text-xs text-slate-500 mt-0.5">
                   For event: <span className="font-bold text-slate-800">"{requestChangesSubmission.name}"</span>
                 </p>
               </div>
             </div>
 
             <div>
-              <label className="block text-base font-bold text-slate-700 mb-1">
+              <label className="block text-xs font-bold text-slate-700 mb-1">
                 Feedback Notes for Organizer *
               </label>
               <textarea
@@ -1230,9 +1230,9 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 value={changesNotes}
                 onChange={(e) => setChangesNotes(e.target.value)}
                 placeholder="e.g. Please upload a higher resolution poster (min 1200x630px) and provide exact start and end times for the sessions..."
-                className="w-full bg-white border border-slate-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-500 rounded-xl p-3 text-base text-slate-900 outline-none"
+                className="w-full bg-white border border-slate-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-500 rounded-xl p-3 text-xs text-slate-900 outline-none"
               />
-              <p className="text-[15px] text-slate-500 mt-1">
+              <p className="text-[11px] text-slate-500 mt-1">
                 These notes will be recorded on the submission and status updated to "Changes Requested".
               </p>
             </div>
@@ -1241,14 +1241,14 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
               <button
                 type="button"
                 onClick={() => setRequestChangesSubmission(null)}
-                className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
+                className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmRequestChanges}
-                className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-base font-bold text-white transition-colors shadow-2xs cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-xs font-bold text-white transition-colors shadow-2xs cursor-pointer"
               >
                 Dispatch Feedback &amp; Request Changes
               </button>
@@ -1268,7 +1268,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-extrabold text-slate-900">Edit Event Submission</h3>
-                  <p className="text-base text-slate-500">Admin direct edit before approval</p>
+                  <p className="text-xs text-slate-500">Admin direct edit before approval</p>
                 </div>
               </div>
               <button
@@ -1282,34 +1282,34 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
             <form onSubmit={handleSaveEdit} className="space-y-4">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Event Name</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Event Name</label>
                 <input
                   type="text"
                   required
                   value={editFormData.name}
                   onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Description</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Description</label>
                 <textarea
                   rows={3}
                   required
                   value={editFormData.description}
                   onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl p-3 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl p-3 text-xs text-slate-900 outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Category</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Category</label>
                   <select
                     value={editFormData.category}
                     onChange={(e) => setEditFormData({ ...editFormData, category: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-800 outline-none cursor-pointer"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none cursor-pointer"
                   >
                     <option value="Technology & Startups">Technology &amp; Startups</option>
                     <option value="Music & Concerts">Music &amp; Concerts</option>
@@ -1321,112 +1321,112 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Location</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Location</label>
                   <input
                     type="text"
                     required
                     value={editFormData.location}
                     onChange={(e) => setEditFormData({ ...editFormData, location: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Date</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Date</label>
                   <input
                     type="date"
                     required
                     value={editFormData.date}
                     onChange={(e) => setEditFormData({ ...editFormData, date: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Start Time</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Start Time</label>
                   <input
                     type="time"
                     required
                     value={editFormData.startTime}
                     onChange={(e) => setEditFormData({ ...editFormData, startTime: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">End Time</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">End Time</label>
                   <input
                     type="time"
                     required
                     value={editFormData.endTime}
                     onChange={(e) => setEditFormData({ ...editFormData, endTime: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Organizer Name</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Organizer Name</label>
                   <input
                     type="text"
                     required
                     value={editFormData.organizerName}
                     onChange={(e) => setEditFormData({ ...editFormData, organizerName: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Organizer Email</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Organizer Email</label>
                   <input
                     type="email"
                     required
                     value={editFormData.organizerEmail}
                     onChange={(e) => setEditFormData({ ...editFormData, organizerEmail: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Organizer Phone</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Organizer Phone</label>
                   <input
                     type="text"
                     required
                     value={editFormData.organizerPhone}
                     onChange={(e) => setEditFormData({ ...editFormData, organizerPhone: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Entry Fee Type</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Entry Fee Type</label>
                   <select
                     value={editFormData.feeType}
                     onChange={(e) => setEditFormData({ ...editFormData, feeType: e.target.value as 'Free' | 'Paid' })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-800 outline-none cursor-pointer"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-800 outline-none cursor-pointer"
                   >
                     <option value="Paid">Paid Event</option>
                     <option value="Free">Free Event</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Entry Fee ({editFormData.currency})</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Entry Fee ({editFormData.currency})</label>
                   <input
                     type="number"
                     disabled={editFormData.feeType === 'Free'}
                     value={editFormData.entryFee}
                     onChange={(e) => setEditFormData({ ...editFormData, entryFee: Number(e.target.value) })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none disabled:bg-slate-100"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none disabled:bg-slate-100"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Max Capacity</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Max Capacity</label>
                   <input
                     type="number"
                     value={editFormData.maxCapacity}
                     onChange={(e) => setEditFormData({ ...editFormData, maxCapacity: Number(e.target.value) })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                   />
                 </div>
               </div>
@@ -1435,13 +1435,13 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                 <button
                   type="button"
                   onClick={() => setEditingSubmission(null)}
-                  className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
+                  className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
                 >
                   Save Submission Changes
                 </button>
@@ -1461,7 +1461,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-slate-900">Delete Event Submission</h3>
-                <p className="text-base text-slate-600 mt-1">
+                <p className="text-xs text-slate-600 mt-1">
                   Are you sure you want to permanently delete the submission{' '}
                   <span className="font-bold text-slate-900">"{deleteConfirmSubmission.name}"</span> submitted by{' '}
                   <span className="font-semibold text-slate-800">{deleteConfirmSubmission.organizerName}</span>? This action cannot be undone.
@@ -1473,14 +1473,14 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
               <button
                 type="button"
                 onClick={() => setDeleteConfirmSubmission(null)}
-                className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
+                className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDelete}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-base font-bold text-white transition-colors shadow-2xs cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-xs font-bold text-white transition-colors shadow-2xs cursor-pointer"
               >
                 Delete Submission
               </button>

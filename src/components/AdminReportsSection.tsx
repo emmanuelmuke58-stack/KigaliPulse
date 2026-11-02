@@ -318,15 +318,15 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="bg-emerald-100 text-emerald-800 text-[14px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
+              <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                 <BarChart3 className="w-3 h-3" /> Comprehensive Analytics
               </span>
-              <span className="text-base text-slate-500 font-medium">Updated live for Kigali, Rwanda</span>
+              <span className="text-xs text-slate-500 font-medium">Updated live for Kigali, Rwanda</span>
             </div>
             <h2 className="font-display text-2xl font-black text-slate-900 mt-1">
               Admin Discovery &amp; Platform Intelligence Report
             </h2>
-            <p className="text-base text-slate-500 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Real-time monitoring of event engagement, attendee conversion, geographic density across Kigali, and organizer SLAs.
             </p>
           </div>
@@ -336,7 +336,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
             <button
               type="button"
               onClick={handleShareSummary}
-              className="px-3 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-base font-semibold flex items-center gap-1.5 transition-colors"
+              className="px-3 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold flex items-center gap-1.5 transition-colors"
               title="Copy executive summary to clipboard"
             >
               {copiedToast ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Share2 className="w-3.5 h-3.5 text-slate-500" />}
@@ -346,7 +346,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
             <button
               type="button"
               onClick={handlePrint}
-              className="hidden sm:flex px-3 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-base font-semibold items-center gap-1.5 transition-colors"
+              className="hidden sm:flex px-3 py-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold items-center gap-1.5 transition-colors"
               title="Print executive report"
             >
               <Printer className="w-3.5 h-3.5 text-slate-500" />
@@ -356,7 +356,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
             <button
               type="button"
               onClick={handleExportCSV}
-              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold flex items-center gap-1.5 shadow-sm transition-colors"
+              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-colors"
               title="Download CSV dataset"
             >
               <Download className="w-3.5 h-3.5" />
@@ -368,7 +368,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         {/* Filters Row: Timeframe, District */}
         <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
           {/* Timeframe selector */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-base">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs">
             {(['today', '7d', '30d', '90d', 'ytd'] as TimeframeOption[]).map((tf) => (
               <button
                 key={tf}
@@ -395,13 +395,13 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
 
           {/* District Filter */}
           <div className="flex items-center gap-2">
-            <span className="text-base text-slate-400 font-semibold flex items-center gap-1">
+            <span className="text-xs text-slate-400 font-semibold flex items-center gap-1">
               <MapPin className="w-3.5 h-3.5 text-slate-500" /> District:
             </span>
             <select
               value={selectedDistrict}
               onChange={(e) => setSelectedDistrict(e.target.value as DistrictOption)}
-              className="text-base font-semibold bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-emerald-500"
             >
               <option value="all">All Kigali Districts</option>
               <option value="Gasabo">Gasabo (Convention, Arena, Arts)</option>
@@ -412,7 +412,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         </div>
 
         {/* Sub-tab navigation inside reports */}
-        <div className="flex items-center gap-2 overflow-x-auto pt-1 text-base font-bold border-b border-slate-100 pb-2">
+        <div className="flex items-center gap-2 overflow-x-auto pt-1 text-xs font-bold border-b border-slate-100 pb-2">
           <button
             type="button"
             onClick={() => setActiveReportSubTab('overview')}
@@ -476,13 +476,13 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         {/* Metric 1 */}
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
-            <span className="text-[14px] font-bold uppercase tracking-wider">Discovery Views</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Discovery Views</span>
             <Eye className="w-3.5 h-3.5 text-emerald-600" />
           </div>
           <div className="text-2xl font-black text-slate-900 tabular-nums">
             {totalViews.toLocaleString()}
           </div>
-          <div className="text-[15px] text-emerald-700 font-semibold flex items-center gap-0.5">
+          <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-0.5">
             <TrendingUp className="w-3 h-3" /> +28.4% MoM
           </div>
         </div>
@@ -490,13 +490,13 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         {/* Metric 2 */}
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
-            <span className="text-[14px] font-bold uppercase tracking-wider">Outbound Clicks</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Outbound Clicks</span>
             <MousePointerClick className="w-3.5 h-3.5 text-blue-600" />
           </div>
           <div className="text-2xl font-black text-slate-900 tabular-nums">
             {totalTicketClicks.toLocaleString()}
           </div>
-          <div className="text-[15px] text-slate-500 font-medium">
+          <div className="text-[11px] text-slate-500 font-medium">
             CTR: <span className="text-blue-700 font-bold">{ctrRate}%</span>
           </div>
         </div>
@@ -504,25 +504,25 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         {/* Metric 3 */}
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
-            <span className="text-[14px] font-bold uppercase tracking-wider">Influenced GMV</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Influenced GMV</span>
             <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
           </div>
           <div className="text-lg font-black text-slate-900 tabular-nums truncate" title={`RF ${grossTicketValueRF.toLocaleString()}`}>
             RF {(grossTicketValueRF / 1000000).toFixed(1)}M
           </div>
-          <div className="text-[15px] text-slate-500 font-medium">Ticket sales value</div>
+          <div className="text-[11px] text-slate-500 font-medium">Ticket sales value</div>
         </div>
 
         {/* Metric 4 */}
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
-            <span className="text-[14px] font-bold uppercase tracking-wider">Ad &amp; Promo Yield</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Ad &amp; Promo Yield</span>
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
           </div>
           <div className="text-lg font-black text-slate-900 tabular-nums truncate">
             RF {(baseRevenueRF / 1000000).toFixed(2)}M
           </div>
-          <div className="text-[15px] text-emerald-700 font-semibold flex items-center gap-0.5">
+          <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-0.5">
             <TrendingUp className="w-3 h-3" /> +18.2% pacing
           </div>
         </div>
@@ -530,25 +530,25 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         {/* Metric 5 */}
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
-            <span className="text-[14px] font-bold uppercase tracking-wider">Bookmark Saves</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Bookmark Saves</span>
             <Users className="w-3.5 h-3.5 text-purple-600" />
           </div>
           <div className="text-2xl font-black text-slate-900 tabular-nums">
             {totalSaves.toLocaleString()}
           </div>
-          <div className="text-[15px] text-slate-500 font-medium">Personal calendars</div>
+          <div className="text-[11px] text-slate-500 font-medium">Personal calendars</div>
         </div>
 
         {/* Metric 6 */}
         <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-1">
           <div className="flex items-center justify-between text-slate-400">
-            <span className="text-[14px] font-bold uppercase tracking-wider">Avg Review SLA</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Avg Review SLA</span>
             <Clock className="w-3.5 h-3.5 text-teal-600" />
           </div>
           <div className="text-2xl font-black text-slate-900 tabular-nums">
             {moderationStats.avgTurnaroundHours}h
           </div>
-          <div className="text-[15px] text-emerald-700 font-semibold flex items-center gap-0.5">
+          <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-0.5">
             <CheckCircle2 className="w-3 h-3" /> Within {moderationStats.targetSLA} SLA
           </div>
         </div>
@@ -567,11 +567,11 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
                   <h3 className="font-bold text-base text-slate-900">
                     Event Discovery-to-Attendance Conversion Funnel
                   </h3>
-                  <p className="text-base text-slate-500">
+                  <p className="text-xs text-slate-500">
                     Flow of Kigali residents and visitors from browsing to outbound ticket booking.
                   </p>
                 </div>
-                <span className="text-base font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">
+                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg">
                   {timeframeLabels[timeframe]}
                 </span>
               </div>
@@ -580,7 +580,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
               <div className="space-y-4">
                 {/* Stage 1: Page Impressions */}
                 <div>
-                  <div className="flex items-center justify-between text-base font-semibold mb-1">
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
                     <span className="text-slate-700">1. Homepage &amp; Category Explorations</span>
                     <span className="text-slate-900 font-black tabular-nums">{totalViews.toLocaleString()} views (100%)</span>
                   </div>
@@ -591,7 +591,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
 
                 {/* Stage 2: Event Detail Views */}
                 <div>
-                  <div className="flex items-center justify-between text-base font-semibold mb-1">
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
                     <span className="text-slate-700">2. Event Details Modal Opened</span>
                     <span className="text-slate-900 font-black tabular-nums">{Math.round(totalViews * 0.44).toLocaleString()} opens (44.0%)</span>
                   </div>
@@ -602,7 +602,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
 
                 {/* Stage 3: Bookmark / Save */}
                 <div>
-                  <div className="flex items-center justify-between text-base font-semibold mb-1">
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
                     <span className="text-slate-700">3. Saved to My Kigali Events</span>
                     <span className="text-slate-900 font-black tabular-nums">{totalSaves.toLocaleString()} saves (9.6%)</span>
                   </div>
@@ -613,7 +613,7 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
 
                 {/* Stage 4: Outbound Ticket Click */}
                 <div>
-                  <div className="flex items-center justify-between text-base font-semibold mb-1">
+                  <div className="flex items-center justify-between text-xs font-semibold mb-1">
                     <span className="text-slate-700">4. Outbound Ticket Link Clicked</span>
                     <span className="text-slate-900 font-black tabular-nums">{totalTicketClicks.toLocaleString()} bookings initiated ({ctrRate}%)</span>
                   </div>
@@ -625,11 +625,11 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
 
               {/* Kigali Market Observations */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
-                <div className="flex items-center gap-2 text-base font-bold text-slate-800">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                   <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                   <span>KigaliPulse Strategic Observation</span>
                 </div>
-                <p className="text-base text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   Ticket intent is highest for Friday night events in <strong>Kimihurura</strong> and Sunday daytime cultural exhibitions in <strong>Kacyiru</strong>. Outbound ticket referral conversion reached a record <strong>{ctrRate}%</strong>, with MoMo Pay and Airtel Money links experiencing lowest bounce rates.
                 </p>
               </div>
@@ -642,53 +642,53 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div>
-                    <span className="text-base font-bold text-slate-800 block">SLA Turnaround</span>
-                    <span className="text-[15px] text-slate-400">Target &lt; 4 hours</span>
+                    <span className="text-xs font-bold text-slate-800 block">SLA Turnaround</span>
+                    <span className="text-[11px] text-slate-400">Target &lt; 4 hours</span>
                   </div>
-                  <span className="text-base font-black text-emerald-700 tabular-nums">
+                  <span className="text-sm font-black text-emerald-700 tabular-nums">
                     {moderationStats.avgTurnaroundHours} hrs
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div>
-                    <span className="text-base font-bold text-slate-800 block">Listing Approval Rate</span>
-                    <span className="text-[15px] text-slate-400">Criteria compliance</span>
+                    <span className="text-xs font-bold text-slate-800 block">Listing Approval Rate</span>
+                    <span className="text-[11px] text-slate-400">Criteria compliance</span>
                   </div>
-                  <span className="text-base font-black text-slate-900 tabular-nums">
+                  <span className="text-sm font-black text-slate-900 tabular-nums">
                     {moderationStats.approvalRate}%
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div>
-                    <span className="text-base font-bold text-slate-800 block">Verified Organizers</span>
-                    <span className="text-[15px] text-slate-400">KYC &amp; phone validated</span>
+                    <span className="text-xs font-bold text-slate-800 block">Verified Organizers</span>
+                    <span className="text-[11px] text-slate-400">KYC &amp; phone validated</span>
                   </div>
-                  <span className="text-base font-black text-slate-900 tabular-nums">84 partners</span>
+                  <span className="text-sm font-black text-slate-900 tabular-nums">84 partners</span>
                 </div>
 
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div>
-                    <span className="text-base font-bold text-slate-800 block">Spam / Scam Reports</span>
-                    <span className="text-[15px] text-slate-400">Fraud prevention guard</span>
+                    <span className="text-xs font-bold text-slate-800 block">Spam / Scam Reports</span>
+                    <span className="text-[11px] text-slate-400">Fraud prevention guard</span>
                   </div>
-                  <span className="text-base font-black text-emerald-700 tabular-nums">0 active flags</span>
+                  <span className="text-sm font-black text-emerald-700 tabular-nums">0 active flags</span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-base font-bold text-slate-800 block">System Availability</span>
-                    <span className="text-[15px] text-slate-400">Cloud Run uptime</span>
+                    <span className="text-xs font-bold text-slate-800 block">System Availability</span>
+                    <span className="text-[11px] text-slate-400">Cloud Run uptime</span>
                   </div>
-                  <span className="text-base font-black text-emerald-700 tabular-nums">99.98%</span>
+                  <span className="text-sm font-black text-emerald-700 tabular-nums">99.98%</span>
                 </div>
               </div>
 
               <div className="pt-2">
                 <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200/60 flex items-start gap-2.5">
                   <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <p className="text-[15px] text-emerald-900 leading-relaxed font-medium">
+                  <p className="text-[11px] text-emerald-900 leading-relaxed font-medium">
                     All published events hold verified ticketing destination addresses and comply with Rwanda National Police public event permit regulations.
                   </p>
                 </div>
@@ -703,30 +703,30 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
               <div key={dist.name} className="p-5 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-base font-black text-slate-900">{dist.name}</span>
-                    <p className="text-[15px] text-slate-400 mt-0.5">{dist.neighborhoods}</p>
+                    <span className="text-xs font-black text-slate-900">{dist.name}</span>
+                    <p className="text-[11px] text-slate-400 mt-0.5">{dist.neighborhoods}</p>
                   </div>
-                  <span className="text-base font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
                     {dist.growth}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 py-2 border-y border-slate-100 text-center text-base">
+                <div className="grid grid-cols-3 gap-2 py-2 border-y border-slate-100 text-center text-xs">
                   <div>
-                    <span className="text-[14px] text-slate-400 block font-semibold">Share</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Share</span>
                     <span className="font-bold text-slate-900">{dist.sharePercent}%</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 block font-semibold">Views</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Views</span>
                     <span className="font-bold text-slate-900 tabular-nums">{dist.views.toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 block font-semibold">Avg Ticket</span>
-                    <span className="font-bold text-slate-900 text-[15px]">{dist.avgPrice}</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Avg Ticket</span>
+                    <span className="font-bold text-slate-900 text-[11px]">{dist.avgPrice}</span>
                   </div>
                 </div>
 
-                <div className="text-[15px] text-slate-500">
+                <div className="text-[11px] text-slate-500">
                   <span className="font-semibold text-slate-700">Hubs: </span>
                   {dist.popularVenues.join(', ')}
                 </div>
@@ -742,11 +742,11 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 className="font-bold text-lg text-slate-900">Geographic Event Distribution Across Kigali</h3>
-              <p className="text-base text-slate-500">
+              <p className="text-xs text-slate-500">
                 Density, ticket velocity, and average admission price across Kigali’s three districts.
               </p>
             </div>
-            <span className="text-base font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-xl">
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-xl">
               Total {events.length} active listings mapped
             </span>
           </div>
@@ -756,20 +756,20 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
               <div key={d.name} className="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold text-base flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">
                       <MapPin className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-base text-slate-900">{d.name}</h4>
-                      <p className="text-base text-slate-500">{d.neighborhoods} · {d.vibe}</p>
+                      <h4 className="font-bold text-sm text-slate-900">{d.name}</h4>
+                      <p className="text-xs text-slate-500">{d.neighborhoods} · {d.vibe}</p>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="text-base font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                       {d.growth} YoY
                     </span>
-                    <span className="text-base font-black text-slate-900 tabular-nums">
+                    <span className="text-sm font-black text-slate-900 tabular-nums">
                       {d.sharePercent}% of Kigali Activity
                     </span>
                   </div>
@@ -783,21 +783,21 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
                   />
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-base bg-white p-3 rounded-xl border border-slate-200/80">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-white p-3 rounded-xl border border-slate-200/80">
                   <div>
-                    <span className="text-[14px] text-slate-400 font-semibold block">Total Views</span>
+                    <span className="text-[10px] text-slate-400 font-semibold block">Total Views</span>
                     <span className="font-black text-slate-900 tabular-nums">{d.views.toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 font-semibold block">Active Events</span>
+                    <span className="text-[10px] text-slate-400 font-semibold block">Active Events</span>
                     <span className="font-black text-slate-900">{d.eventsCount} listings</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 font-semibold block">Average Ticket Price</span>
+                    <span className="text-[10px] text-slate-400 font-semibold block">Average Ticket Price</span>
                     <span className="font-black text-slate-900">{d.avgPrice}</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 font-semibold block">Key Landmark Venues</span>
+                    <span className="text-[10px] text-slate-400 font-semibold block">Key Landmark Venues</span>
                     <span className="font-semibold text-slate-700 truncate block">{d.popularVenues.join(', ')}</span>
                   </div>
                 </div>
@@ -812,15 +812,15 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
           <div>
             <h3 className="font-bold text-lg text-slate-900">Category Demand &amp; Attendee Conversion Matrix</h3>
-            <p className="text-base text-slate-500">
+            <p className="text-xs text-slate-500">
               Comparative analysis of discovery volume, engagement CTR, and ticket acquisition by interest vertical.
             </p>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-base">
+            <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider text-[14px]">
+                <tr className="border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
                   <th className="pb-3">Category</th>
                   <th className="pb-3 text-center">Audience Share</th>
                   <th className="pb-3 text-right">Views</th>
@@ -870,11 +870,11 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 className="font-bold text-lg text-slate-900">Top Performing Promoters &amp; Organizers</h3>
-              <p className="text-base text-slate-500">
+              <p className="text-xs text-slate-500">
                 Ranked by cumulative discovery engagement, ticket referrals, and compliance score.
               </p>
             </div>
-            <span className="text-base font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-xl">
+            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-xl">
               84 registered organizers
             </span>
           </div>
@@ -886,35 +886,35 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
                 className="p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-slate-300 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-white font-black text-base flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-slate-900 text-white font-black text-xs flex items-center justify-center shrink-0">
                     #{idx + 1}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-base text-slate-900">{org.name}</h4>
+                      <h4 className="font-bold text-sm text-slate-900">{org.name}</h4>
                       {org.verified && (
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 fill-emerald-100" />
                       )}
                     </div>
-                    <span className="text-base text-slate-500">{org.category} · {org.eventsHosted} events listed</span>
+                    <span className="text-xs text-slate-500">{org.category} · {org.eventsHosted} events listed</span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 text-base text-right">
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 text-xs text-right">
                   <div>
-                    <span className="text-[14px] text-slate-400 block font-semibold">Total Views</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Total Views</span>
                     <span className="font-black text-slate-900 tabular-nums">{org.totalViews.toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 block font-semibold">Ticket Clicks</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Ticket Clicks</span>
                     <span className="font-black text-emerald-700 tabular-nums">{org.outboundClicks.toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-[14px] text-slate-400 block font-semibold">Rating</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">Rating</span>
                     <span className="font-black text-slate-900">★ {org.avgRating}</span>
                   </div>
                   <div className="hidden sm:block">
-                    <span className="text-[14px] text-slate-400 block font-semibold">SLA Score</span>
+                    <span className="text-[10px] text-slate-400 block font-semibold">SLA Score</span>
                     <span className="font-black text-emerald-700">{org.slaScore}</span>
                   </div>
                 </div>
@@ -929,52 +929,52 @@ export const AdminReportsSection: React.FC<AdminReportsSectionProps> = ({ events
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-6">
           <div>
             <h3 className="font-bold text-lg text-slate-900">Content Moderation &amp; Quality SLAs</h3>
-            <p className="text-base text-slate-500">
+            <p className="text-xs text-slate-500">
               Operational metrics for event submission verification and regulatory compliance in Kigali.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 text-center">
-              <span className="text-[14px] uppercase font-bold text-slate-400 block">Submissions Evaluated</span>
+              <span className="text-[10px] uppercase font-bold text-slate-400 block">Submissions Evaluated</span>
               <span className="text-2xl font-black text-slate-900 tabular-nums mt-1 block">
                 {moderationStats.totalSubmissions}
               </span>
-              <span className="text-[15px] text-slate-500 font-medium">100% audited</span>
+              <span className="text-[11px] text-slate-500 font-medium">100% audited</span>
             </div>
 
             <div className="p-4 rounded-xl border border-emerald-200 bg-emerald-50/50 text-center">
-              <span className="text-[14px] uppercase font-bold text-emerald-700 block">Approval Ratio</span>
+              <span className="text-[10px] uppercase font-bold text-emerald-700 block">Approval Ratio</span>
               <span className="text-2xl font-black text-emerald-700 tabular-nums mt-1 block">
                 {moderationStats.approvalRate}%
               </span>
-              <span className="text-[15px] text-emerald-800 font-medium">{moderationStats.approvedCount} approved</span>
+              <span className="text-[11px] text-emerald-800 font-medium">{moderationStats.approvedCount} approved</span>
             </div>
 
             <div className="p-4 rounded-xl border border-amber-200 bg-amber-50/50 text-center">
-              <span className="text-[14px] uppercase font-bold text-amber-700 block">Changes Requested</span>
+              <span className="text-[10px] uppercase font-bold text-amber-700 block">Changes Requested</span>
               <span className="text-2xl font-black text-amber-700 tabular-nums mt-1 block">
                 {moderationStats.changesRequested}
               </span>
-              <span className="text-[15px] text-amber-800 font-medium">Organizer revised</span>
+              <span className="text-[11px] text-amber-800 font-medium">Organizer revised</span>
             </div>
 
             <div className="p-4 rounded-xl border border-blue-200 bg-blue-50/50 text-center">
-              <span className="text-[14px] uppercase font-bold text-blue-700 block">Review Speed SLA</span>
+              <span className="text-[10px] uppercase font-bold text-blue-700 block">Review Speed SLA</span>
               <span className="text-2xl font-black text-blue-700 tabular-nums mt-1 block">
                 {moderationStats.avgTurnaroundHours}h
               </span>
-              <span className="text-[15px] text-blue-800 font-medium">Target &lt; 4.0 hours</span>
+              <span className="text-[11px] text-blue-800 font-medium">Target &lt; 4.0 hours</span>
             </div>
           </div>
 
           {/* Audit Verification Log Highlight */}
           <div className="p-5 rounded-2xl border border-slate-200 bg-white space-y-3">
-            <h4 className="font-bold text-base text-slate-900 flex items-center gap-2">
+            <h4 className="font-bold text-sm text-slate-900 flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>Event Moderation Verification Standards</span>
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base text-slate-600">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span>Venue authorization confirmed for public gathering limits.</span>

@@ -472,7 +472,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-base font-semibold text-slate-500 mb-1">
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-1">
             <button
               type="button"
               onClick={() => setCurrentSubView('business-directory')}
@@ -512,7 +512,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 : 'Business → Events Management'}
             </span>
           </h2>
-          <p className="text-base sm:text-base text-slate-600 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
             {currentSubView === 'submissions'
               ? 'Review visitor-submitted events, examine uploaded posters, approve or publish live.'
               : 'Create, publish, edit, set entry fees, monitor participant capacity, and manage registrations.'}
@@ -524,7 +524,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
           {/* Business Switcher Dropdown (when in events management) */}
           {currentSubView === 'events-management' && (
             <div className="flex items-center gap-1.5 bg-white border border-slate-300 rounded-xl px-3 py-1.5 shadow-2xs">
-              <span className="text-[15px] font-bold text-slate-500 uppercase">Venue:</span>
+              <span className="text-[11px] font-bold text-slate-500 uppercase">Venue:</span>
               <select
                 value={selectedBusiness?.id || ''}
                 onChange={(e) => {
@@ -535,7 +535,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     setViewingEventDetails(null);
                   }
                 }}
-                className="text-base font-bold text-slate-900 bg-transparent outline-none cursor-pointer"
+                className="text-xs font-bold text-slate-900 bg-transparent outline-none cursor-pointer"
               >
                 {businesses.map((b) => (
                   <option key={b.id} value={b.id}>
@@ -550,7 +550,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
           <button
             type="button"
             onClick={handleOpenCreateEvent}
-            className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-base font-bold text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-xs font-bold text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create Event</span>
@@ -564,7 +564,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
         <button
           type="button"
           onClick={() => setCurrentSubView('events-management')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-base transition-all cursor-pointer whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap ${
             currentSubView === 'events-management'
               ? 'bg-slate-900 text-white shadow-2xs'
               : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -573,7 +573,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
           <Calendar className="w-4 h-4 text-emerald-500" />
           <span>Events Management</span>
           <span
-            className={`text-[14px] px-1.5 py-0.5 rounded-full ${
+            className={`text-[10px] px-1.5 py-0.5 rounded-full ${
               currentSubView === 'events-management' ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-600'
             }`}
           >
@@ -585,7 +585,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
         <button
           type="button"
           onClick={() => setCurrentSubView('submissions')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-base transition-all cursor-pointer whitespace-nowrap relative ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap relative ${
             currentSubView === 'submissions'
               ? 'bg-slate-900 text-white shadow-2xs'
               : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -593,7 +593,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
         >
           <FileText className="w-4 h-4 text-amber-500" />
           <span>Event Submissions</span>
-          <span className="text-[14px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold border border-amber-300">
             {pendingSubmissionsCount} Pending
           </span>
         </button>
@@ -602,7 +602,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
         <button
           type="button"
           onClick={() => setCurrentSubView('business-directory')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-base transition-all cursor-pointer whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap ${
             currentSubView === 'business-directory'
               ? 'bg-slate-900 text-white shadow-2xs'
               : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -611,7 +611,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
           <Building2 className="w-4 h-4 text-slate-400" />
           <span>Business Directory</span>
           <span
-            className={`text-[14px] px-1.5 py-0.5 rounded-full ${
+            className={`text-[10px] px-1.5 py-0.5 rounded-full ${
               currentSubView === 'business-directory' ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-600'
             }`}
           >
@@ -639,7 +639,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 value={businessSearchTerm}
                 onChange={(e) => setBusinessSearchTerm(e.target.value)}
                 placeholder="Search business venue, district, or category..."
-                className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+                className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition-all"
               />
             </div>
           </div>
@@ -658,10 +658,10 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 >
                   <div>
                     <div className="flex items-start justify-between gap-3 mb-2">
-                      <span className="text-base font-semibold px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="text-xs font-semibold px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
                         {biz.category}
                       </span>
-                      <span className="text-[15px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
+                      <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1">
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                         <span>{biz.status}</span>
                       </span>
@@ -670,9 +670,9 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
                       {biz.name}
                     </h3>
-                    <p className="text-base text-slate-500 mt-0.5 font-medium">{biz.ownerName}</p>
+                    <p className="text-xs text-slate-500 mt-0.5 font-medium">{biz.ownerName}</p>
 
-                    <div className="mt-4 space-y-2 text-base text-slate-700">
+                    <div className="mt-4 space-y-2 text-xs text-slate-700">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                         <span className="truncate">{biz.location}</span>
@@ -690,8 +690,8 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                     <div>
-                      <span className="text-slate-500 block text-[14px] uppercase font-semibold">Active Events</span>
-                      <span className="font-extrabold text-slate-900 text-base">{bEventsCount} Events</span>
+                      <span className="text-slate-500 block text-[10px] uppercase font-semibold">Active Events</span>
+                      <span className="font-extrabold text-slate-900 text-sm">{bEventsCount} Events</span>
                     </div>
 
                     <button
@@ -700,7 +700,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                         setSelectedBusiness(biz);
                         setCurrentSubView('events-management');
                       }}
-                      className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                      className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                     >
                       <span>Manage Events</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -728,14 +728,14 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
                       {selectedBusiness.name}
                     </h3>
-                    <span className="text-[14px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-200">
                       {selectedBusiness.category}
                     </span>
-                    <span className="text-[14px] font-semibold text-slate-500">
+                    <span className="text-[10px] font-semibold text-slate-500">
                       Owner: {selectedBusiness.ownerName}
                     </span>
                   </div>
-                  <p className="text-base text-slate-600 flex items-center gap-1.5">
+                  <p className="text-xs text-slate-600 flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-slate-400" />
                     <span>{selectedBusiness.location}</span>
                     <span className="text-slate-300">·</span>
@@ -750,7 +750,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 <button
                   type="button"
                   onClick={handleOpenCreateEvent}
-                  className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-base font-bold text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-xs font-bold text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>Create Event</span>
@@ -762,41 +762,41 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
           {/* 4 Key Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-              <span className="text-[15px] font-semibold text-slate-500 block">Total Events</span>
+              <span className="text-[11px] font-semibold text-slate-500 block">Total Events</span>
               <span className="text-xl font-black text-slate-900 tabular-nums">{businessStats.total}</span>
-              <span className="text-[14px] text-slate-500 font-medium block mt-0.5">under this venue</span>
+              <span className="text-[10px] text-slate-500 font-medium block mt-0.5">under this venue</span>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-              <span className="text-[15px] font-semibold text-slate-500 block">Published</span>
+              <span className="text-[11px] font-semibold text-slate-500 block">Published</span>
               <span className="text-xl font-black text-emerald-700 tabular-nums">{businessStats.published}</span>
-              <span className="text-[14px] text-emerald-700 font-semibold block mt-0.5">Live &amp; Bookable</span>
+              <span className="text-[10px] text-emerald-700 font-semibold block mt-0.5">Live &amp; Bookable</span>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-              <span className="text-[15px] font-semibold text-slate-500 block">Drafts</span>
+              <span className="text-[11px] font-semibold text-slate-500 block">Drafts</span>
               <span className="text-xl font-black text-slate-700 tabular-nums">{businessStats.draft}</span>
-              <span className="text-[14px] text-slate-500 font-medium block mt-0.5">Unpublished</span>
+              <span className="text-[10px] text-slate-500 font-medium block mt-0.5">Unpublished</span>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-              <span className="text-[15px] font-semibold text-slate-500 block">Completed</span>
+              <span className="text-[11px] font-semibold text-slate-500 block">Completed</span>
               <span className="text-xl font-black text-sky-700 tabular-nums">{businessStats.completed}</span>
-              <span className="text-[14px] text-sky-700 font-semibold block mt-0.5">Past events</span>
+              <span className="text-[10px] text-sky-700 font-semibold block mt-0.5">Past events</span>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-              <span className="text-[15px] font-semibold text-slate-500 block">Registered Participants</span>
+              <span className="text-[11px] font-semibold text-slate-500 block">Registered Participants</span>
               <span className="text-xl font-black text-purple-700 tabular-nums">{businessStats.totalAttendees}</span>
-              <span className="text-[14px] text-slate-500 font-medium block mt-0.5">Across all events</span>
+              <span className="text-[10px] text-slate-500 font-medium block mt-0.5">Across all events</span>
             </div>
 
             <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
-              <span className="text-[15px] font-semibold text-slate-500 block">Estimated Revenue</span>
+              <span className="text-[11px] font-semibold text-slate-500 block">Estimated Revenue</span>
               <span className="text-xl font-black text-emerald-700 tabular-nums">
                 {(businessStats.totalRevenueEst / 1000).toFixed(0)}k RWF
               </span>
-              <span className="text-[14px] text-slate-500 font-medium block mt-0.5">From entry fees</span>
+              <span className="text-[10px] text-slate-500 font-medium block mt-0.5">From entry fees</span>
             </div>
           </div>
 
@@ -811,12 +811,12 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   value={eventSearchTerm}
                   onChange={(e) => setEventSearchTerm(e.target.value)}
                   placeholder="Search event name, location, or description..."
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition-all"
                 />
               </div>
 
               {/* Status Filter Tabs (Draft, Published, Completed, Cancelled) */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-base font-semibold">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs font-semibold">
                 {(['All', 'Published', 'Draft', 'Completed', 'Cancelled'] as const).map((st) => {
                   const isActive = eventStatusFilter === st;
                   const count =
@@ -837,7 +837,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     >
                       <span>{st}</span>
                       <span
-                        className={`text-[14px] px-1.5 py-0.2 rounded-full ${
+                        className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                           isActive ? 'bg-emerald-700 text-white' : 'bg-slate-200 text-slate-700'
                         }`}
                       >
@@ -855,7 +855,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
             <div className="bg-white border border-slate-200/90 rounded-3xl p-12 text-center text-slate-500 shadow-xs">
               <Calendar className="w-10 h-10 text-slate-400 mx-auto mb-2" />
               <h3 className="font-bold text-slate-900 text-base">No Events Found</h3>
-              <p className="text-base text-slate-500 mt-1 max-w-sm mx-auto">
+              <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
                 {eventSearchTerm || eventStatusFilter !== 'All'
                   ? 'No events match your current filter criteria.'
                   : `There are no events yet for ${selectedBusiness?.name || 'this business'}.`}
@@ -863,7 +863,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
               <button
                 type="button"
                 onClick={handleOpenCreateEvent}
-                className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base inline-flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+                className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs inline-flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Create First Event</span>
@@ -894,12 +894,12 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
                         {/* Top Badges */}
                         <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                          <span className="text-[14px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-xs text-slate-900 px-2.5 py-1 rounded-lg border border-white/40 shadow-xs">
+                          <span className="text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-xs text-slate-900 px-2.5 py-1 rounded-lg border border-white/40 shadow-xs">
                             {event.category}
                           </span>
 
                           <span
-                            className={`text-[14px] font-bold px-2.5 py-1 rounded-lg border shadow-xs ${getStatusBadge(
+                            className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border shadow-xs ${getStatusBadge(
                               event.status
                             )} bg-white/95`}
                           >
@@ -909,7 +909,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
                         {/* Bottom Image Overlay: Date & Location */}
                         <div className="absolute bottom-3 left-3 right-3 text-white">
-                          <div className="text-base font-bold flex items-center gap-1.5 drop-shadow-sm">
+                          <div className="text-xs font-bold flex items-center gap-1.5 drop-shadow-sm">
                             <Calendar className="w-3.5 h-3.5 text-emerald-400" />
                             <span>
                               {event.date} · {event.startTime} - {event.endTime}
@@ -927,23 +927,23 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                           >
                             {event.name}
                           </h4>
-                          <p className="text-base text-slate-600 mt-1 line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed">
                             {event.description}
                           </p>
                         </div>
 
                         {/* Location */}
-                        <div className="flex items-center gap-1.5 text-base text-slate-700 font-medium">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-700 font-medium">
                           <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                           <span className="truncate">{event.location}</span>
                         </div>
 
                         {/* Entry Fee & Capacity Block (Requirements check: Entry Fee: 10,000 RWF | Capacity: 100 people) */}
                         <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                          <div className="flex items-center justify-between text-base">
+                          <div className="flex items-center justify-between text-xs">
                             <span className="text-slate-500 font-medium">Entry Fee:</span>
                             <span
-                              className={`font-black text-base px-2 py-0.5 rounded-lg border ${
+                              className={`font-black text-xs px-2 py-0.5 rounded-lg border ${
                                 event.feeType === 'Free'
                                   ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                                   : 'bg-slate-900 text-white border-slate-900'
@@ -956,7 +956,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                           </div>
 
                           <div className="space-y-1">
-                            <div className="flex items-center justify-between text-[15px] text-slate-600 font-semibold">
+                            <div className="flex items-center justify-between text-[11px] text-slate-600 font-semibold">
                               <span>Capacity: {event.maxCapacity} people</span>
                               <span className="text-slate-900 font-bold">
                                 {attendeeCount} / {event.maxCapacity} registered ({fillPercent}%)
@@ -986,7 +986,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                       <button
                         type="button"
                         onClick={() => setViewingEventDetails(event)}
-                        className="text-base font-bold text-slate-700 hover:text-emerald-700 flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="text-xs font-bold text-slate-700 hover:text-emerald-700 flex items-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <Eye className="w-4 h-4 text-slate-400" />
                         <span>View Details</span>
@@ -999,7 +999,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                           <button
                             type="button"
                             onClick={() => handleTogglePublish(event)}
-                            className={`px-2.5 py-1 rounded-lg text-base font-bold border transition-colors cursor-pointer ${
+                            className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
                               event.status === 'Published'
                                 ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200'
                                 : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200'
@@ -1033,7 +1033,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                         {/* Dropdown Menu (View | Edit | Publish/Unpublish | Update | Delete) */}
                         {isMenuOpen && (
                           <div className="absolute right-0 bottom-full mb-2 w-48 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-xl z-20 animate-in fade-in zoom-in-95 duration-100">
-                            <div className="p-2 border-b border-slate-100 text-[14px] font-bold text-slate-400 uppercase tracking-wider">
+                            <div className="p-2 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                               Event Actions
                             </div>
 
@@ -1043,7 +1043,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                                 setOpenActionMenuId(null);
                                 setViewingEventDetails(event);
                               }}
-                              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-base font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                             >
                               <Eye className="w-4 h-4 text-slate-500" />
                               <span>View Details</span>
@@ -1052,7 +1052,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                             <button
                               type="button"
                               onClick={() => handleOpenEditEvent(event)}
-                              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-base font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                             >
                               <Edit2 className="w-4 h-4 text-slate-500" />
                               <span>Edit Event</span>
@@ -1061,7 +1061,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                             <button
                               type="button"
                               onClick={() => handleTogglePublish(event)}
-                              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-base font-semibold text-emerald-700 hover:bg-emerald-50 transition-colors text-left cursor-pointer"
+                              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-emerald-700 hover:bg-emerald-50 transition-colors text-left cursor-pointer"
                             >
                               {event.status === 'Published' ? (
                                 <>
@@ -1077,7 +1077,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                             </button>
 
                             {/* Update Status Submenu */}
-                            <div className="px-3 py-1.5 border-t border-slate-100 text-[14px] font-bold text-slate-400 uppercase">
+                            <div className="px-3 py-1.5 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase">
                               Update Status
                             </div>
                             <div className="grid grid-cols-2 gap-1 px-1">
@@ -1086,7 +1086,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                                   key={st}
                                   type="button"
                                   onClick={() => handleQuickStatusChange(event.id, st)}
-                                  className={`text-[14px] font-bold px-2 py-1 rounded-md text-left transition-colors cursor-pointer ${
+                                  className={`text-[10px] font-bold px-2 py-1 rounded-md text-left transition-colors cursor-pointer ${
                                     event.status === st
                                       ? 'bg-slate-900 text-white'
                                       : 'text-slate-600 hover:bg-slate-100'
@@ -1104,7 +1104,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                                   setOpenActionMenuId(null);
                                   setDeleteConfirmEvent(event);
                                 }}
-                                className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-base font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors text-left cursor-pointer"
+                                className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors text-left cursor-pointer"
                               >
                                 <Trash2 className="w-4 h-4" />
                                 <span>Delete Event</span>
@@ -1136,7 +1136,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   <h3 className="text-lg font-extrabold text-slate-900 tracking-tight">
                     {editingEvent ? 'Edit Event' : 'Create Event'}
                   </h3>
-                  <p className="text-base text-slate-500 font-medium">
+                  <p className="text-xs text-slate-500 font-medium">
                     Under <span className="font-bold text-slate-700">{selectedBusiness?.name}</span>
                   </p>
                 </div>
@@ -1154,7 +1154,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
             <form onSubmit={handleFormSubmit} className="space-y-5">
               {/* Event Name */}
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Event Name *</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Event Name *</label>
                 <input
                   type="text"
                   required
@@ -1163,19 +1163,19 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   placeholder="e.g. Kigali International Tech & Music Gala"
                   className={`w-full bg-white border ${
                     formErrors.name ? 'border-rose-500' : 'border-slate-300'
-                  } focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none`}
+                  } focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none`}
                 />
-                {formErrors.name && <p className="text-[15px] text-rose-600 mt-1">{formErrors.name}</p>}
+                {formErrors.name && <p className="text-[11px] text-rose-600 mt-1">{formErrors.name}</p>}
               </div>
 
               {/* Category & Status */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Event Category *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Event Category *</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-xs text-slate-700 outline-none cursor-pointer"
                   >
                     <option value="Music & Entertainment">Music &amp; Entertainment</option>
                     <option value="Sports & Athletics">Sports &amp; Athletics</option>
@@ -1188,11 +1188,11 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 </div>
 
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Event Status *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Event Status *</label>
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as BusinessEventStatus })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-xs text-slate-700 outline-none cursor-pointer"
                   >
                     <option value="Published">Published (Public &amp; Bookable)</option>
                     <option value="Draft">Draft (Private / Work in Progress)</option>
@@ -1204,7 +1204,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
               {/* Event Description */}
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Event Description *</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Event Description *</label>
                 <textarea
                   rows={3}
                   required
@@ -1213,56 +1213,56 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   placeholder="Provide an overview of the event highlights, schedule, performers, and attendee guidelines..."
                   className={`w-full bg-white border ${
                     formErrors.description ? 'border-rose-500' : 'border-slate-300'
-                  } focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2 text-base text-slate-900 outline-none`}
+                  } focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2 text-xs text-slate-900 outline-none`}
                 />
-                {formErrors.description && <p className="text-[15px] text-rose-600 mt-1">{formErrors.description}</p>}
+                {formErrors.description && <p className="text-[11px] text-rose-600 mt-1">{formErrors.description}</p>}
               </div>
 
               {/* Event Date, Start Time, End Time */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Event Date *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Event Date *</label>
                   <input
                     type="date"
                     required
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-xs text-slate-900 outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Start Time *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Start Time *</label>
                   <input
                     type="time"
                     required
                     value={formData.startTime}
                     onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-xs text-slate-900 outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">End Time</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">End Time</label>
                   <input
                     type="time"
                     value={formData.endTime}
                     onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-base text-slate-900 outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2.5 text-xs text-slate-900 outline-none"
                   />
                 </div>
               </div>
 
               {/* Location */}
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Location / Venue *</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Location / Venue *</label>
                 <input
                   type="text"
                   required
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                   placeholder="e.g. BK Arena Main Auditorium, Remera"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none"
                 />
               </div>
 
@@ -1270,8 +1270,8 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <label className="block text-base font-bold text-slate-900">Set Entry Fee *</label>
-                    <p className="text-[15px] text-slate-500">Configure ticket pricing and currency</p>
+                    <label className="block text-xs font-bold text-slate-900">Set Entry Fee *</label>
+                    <p className="text-[11px] text-slate-500">Configure ticket pricing and currency</p>
                   </div>
 
                   {/* Free vs Paid Toggle */}
@@ -1279,7 +1279,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     <button
                       type="button"
                       onClick={() => setFormData({ ...formData, feeType: 'Free', entryFee: 0 })}
-                      className={`px-3 py-1 rounded-lg text-base font-bold transition-all cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         formData.feeType === 'Free'
                           ? 'bg-emerald-600 text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -1290,7 +1290,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     <button
                       type="button"
                       onClick={() => setFormData({ ...formData, feeType: 'Paid', entryFee: formData.entryFee || 10000 })}
-                      className={`px-3 py-1 rounded-lg text-base font-bold transition-all cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         formData.feeType === 'Paid'
                           ? 'bg-emerald-600 text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -1304,7 +1304,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 {formData.feeType === 'Paid' && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     <div>
-                      <label className="block text-base font-bold text-slate-700 mb-1">Custom Amount</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">Custom Amount</label>
                       <input
                         type="number"
                         min={100}
@@ -1312,16 +1312,16 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                         value={formData.entryFee}
                         onChange={(e) => setFormData({ ...formData, entryFee: Number(e.target.value) })}
                         placeholder="e.g. 10000"
-                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-base text-slate-900 font-bold outline-none"
+                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 font-bold outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-base font-bold text-slate-700 mb-1">Currency Selection</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">Currency Selection</label>
                       <select
                         value={formData.currency}
                         onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 font-bold outline-none cursor-pointer"
+                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-700 font-bold outline-none cursor-pointer"
                       >
                         <option value="RWF">RWF (Rwandan Franc)</option>
                         <option value="USD">USD (United States Dollar)</option>
@@ -1330,9 +1330,9 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     </div>
 
                     {/* Preview Banner */}
-                    <div className="sm:col-span-2 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-base text-emerald-900 font-semibold flex items-center justify-between">
+                    <div className="sm:col-span-2 p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 font-semibold flex items-center justify-between">
                       <span>Price Preview:</span>
-                      <span className="font-extrabold text-base text-emerald-800">
+                      <span className="font-extrabold text-sm text-emerald-800">
                         Entry Fee: {formData.entryFee.toLocaleString()} {formData.currency}
                       </span>
                     </div>
@@ -1342,7 +1342,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
               {/* Maximum Capacity (Requirements check: Set maximum number of attendees - Example: Capacity: 100 people) */}
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Maximum Number of Attendees (Capacity) *</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Maximum Number of Attendees (Capacity) *</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="number"
@@ -1352,27 +1352,27 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                     value={formData.maxCapacity}
                     onChange={(e) => setFormData({ ...formData, maxCapacity: Number(e.target.value) })}
                     placeholder="e.g. 100"
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 font-bold outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 font-bold outline-none"
                   />
-                  <span className="text-base text-slate-500 font-bold shrink-0">People</span>
+                  <span className="text-xs text-slate-500 font-bold shrink-0">People</span>
                 </div>
-                <p className="text-[15px] text-slate-500 mt-1">Example: Capacity: 100 people</p>
+                <p className="text-[11px] text-slate-500 mt-1">Example: Capacity: 100 people</p>
               </div>
 
               {/* Upload Event Image / Poster */}
               <div className="space-y-2">
-                <label className="block text-base font-bold text-slate-700">Upload Event Image / Poster URL *</label>
+                <label className="block text-xs font-bold text-slate-700">Upload Event Image / Poster URL *</label>
                 <input
                   type="url"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                   placeholder="https://images.unsplash.com/..."
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none"
                 />
 
                 {/* Quick Poster Presets */}
                 <div>
-                  <span className="text-[14px] font-bold text-slate-500 uppercase tracking-wider block mb-1">
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">
                     Quick Preset Posters:
                   </span>
                   <div className="flex items-center gap-1.5 flex-wrap">
@@ -1381,7 +1381,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                         key={p.label}
                         type="button"
                         onClick={() => setFormData({ ...formData, image: p.url })}
-                        className={`text-[14px] font-semibold px-2 py-1 rounded-lg border transition-colors cursor-pointer ${
+                        className={`text-[10px] font-semibold px-2 py-1 rounded-lg border transition-colors cursor-pointer ${
                           formData.image === p.url
                             ? 'bg-emerald-50 text-emerald-700 border-emerald-300 font-bold'
                             : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
@@ -1402,7 +1402,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[14px] px-2 py-0.5 rounded font-bold">
+                    <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded font-bold">
                       Poster Preview
                     </div>
                   </div>
@@ -1414,13 +1414,13 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsEventFormOpen(false)}
-                  className="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
+                  className="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer"
                 >
                   {editingEvent ? 'Update Event' : 'Create & Save Event'}
                 </button>
@@ -1439,7 +1439,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
               <button
                 type="button"
                 onClick={() => setViewingEventDetails(null)}
-                className="inline-flex items-center gap-1.5 text-base font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Events Management</span>
@@ -1450,7 +1450,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 <button
                   type="button"
                   onClick={() => handleTogglePublish(viewingEventDetails)}
-                  className={`px-3 py-1.5 rounded-xl text-base font-bold border transition-colors cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-colors cursor-pointer ${
                     viewingEventDetails.status === 'Published'
                       ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200'
                       : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200'
@@ -1465,7 +1465,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   onClick={() => {
                     handleOpenEditEvent(viewingEventDetails);
                   }}
-                  className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                 >
                   <Edit2 className="w-3.5 h-3.5" />
                   <span>Edit</span>
@@ -1475,7 +1475,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 <button
                   type="button"
                   onClick={() => setDeleteConfirmEvent(viewingEventDetails)}
-                  className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-base font-bold text-rose-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-xs font-bold text-rose-700 transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span>Delete</span>
@@ -1503,11 +1503,11 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
               <div className="absolute bottom-4 left-4 right-4 text-white">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[14px] font-bold uppercase tracking-wider bg-white/90 text-slate-900 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-bold uppercase tracking-wider bg-white/90 text-slate-900 px-2 py-0.5 rounded">
                     {viewingEventDetails.category}
                   </span>
                   <span
-                    className={`text-[14px] font-bold px-2 py-0.5 rounded ${getStatusBadge(
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded ${getStatusBadge(
                       viewingEventDetails.status
                     )} bg-white`}
                   >
@@ -1517,7 +1517,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight drop-shadow-sm">
                   {viewingEventDetails.name}
                 </h2>
-                <p className="text-base text-slate-200 mt-1 flex items-center gap-2">
+                <p className="text-xs text-slate-200 mt-1 flex items-center gap-2">
                   <span>Host: {viewingEventDetails.businessName}</span>
                   <span>·</span>
                   <span>Created: {viewingEventDetails.createdAt}</span>
@@ -1528,42 +1528,42 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
             {/* Key Information Grid (Requirements check: Event information, entry fee, number of registrations, event status) */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[14px] uppercase font-bold text-slate-500 block mb-0.5">Entry Fee</span>
-                <span className="text-base font-black text-emerald-700">
+                <span className="text-[10px] uppercase font-bold text-slate-500 block mb-0.5">Entry Fee</span>
+                <span className="text-sm font-black text-emerald-700">
                   {viewingEventDetails.feeType === 'Free'
                     ? 'Free'
                     : `${viewingEventDetails.entryFee.toLocaleString()} ${viewingEventDetails.currency}`}
                 </span>
-                <span className="text-[14px] text-slate-500 block mt-0.5">Per participant</span>
+                <span className="text-[10px] text-slate-500 block mt-0.5">Per participant</span>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[14px] uppercase font-bold text-slate-500 block mb-0.5">Capacity</span>
-                <span className="text-base font-black text-slate-900">{viewingEventDetails.maxCapacity} people</span>
-                <span className="text-[14px] text-slate-500 block mt-0.5">Venue limit</span>
+                <span className="text-[10px] uppercase font-bold text-slate-500 block mb-0.5">Capacity</span>
+                <span className="text-sm font-black text-slate-900">{viewingEventDetails.maxCapacity} people</span>
+                <span className="text-[10px] text-slate-500 block mt-0.5">Venue limit</span>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[14px] uppercase font-bold text-slate-500 block mb-0.5">Registrations</span>
-                <span className="text-base font-black text-purple-700">
+                <span className="text-[10px] uppercase font-bold text-slate-500 block mb-0.5">Registrations</span>
+                <span className="text-sm font-black text-purple-700">
                   {viewingEventDetails.attendees?.length || 0} registered
                 </span>
-                <span className="text-[14px] text-slate-500 block mt-0.5">
+                <span className="text-[10px] text-slate-500 block mt-0.5">
                   {Math.max(0, viewingEventDetails.maxCapacity - (viewingEventDetails.attendees?.length || 0))} slots remaining
                 </span>
               </div>
 
               <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
-                <span className="text-[14px] uppercase font-bold text-slate-500 block mb-0.5">Event Status</span>
-                <span className={`text-base font-extrabold px-2 py-0.5 rounded-md border inline-block ${getStatusBadge(viewingEventDetails.status)}`}>
+                <span className="text-[10px] uppercase font-bold text-slate-500 block mb-0.5">Event Status</span>
+                <span className={`text-xs font-extrabold px-2 py-0.5 rounded-md border inline-block ${getStatusBadge(viewingEventDetails.status)}`}>
                   {viewingEventDetails.status}
                 </span>
-                <span className="text-[14px] text-slate-500 block mt-0.5">Current visibility</span>
+                <span className="text-[10px] text-slate-500 block mt-0.5">Current visibility</span>
               </div>
             </div>
 
             {/* Time & Location details */}
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-base">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
               <div className="flex items-center gap-2 text-slate-700">
                 <Calendar className="w-4 h-4 text-emerald-600" />
                 <span className="font-bold text-slate-900">Date &amp; Time:</span>
@@ -1580,8 +1580,8 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
             {/* Description */}
             <div>
-              <h4 className="text-base font-bold text-slate-900 uppercase tracking-wider mb-1.5">Event Description</h4>
-              <p className="text-base text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-1.5">Event Description</h4>
+              <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-100">
                 {viewingEventDetails.description}
               </p>
             </div>
@@ -1590,18 +1590,18 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
             <div className="space-y-3 pt-2">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-100">
                 <div>
-                  <h4 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <h4 className="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                     <Users className="w-4 h-4 text-emerald-600" />
                     <span>Registered Participants ({viewingEventDetails.attendees?.length || 0})</span>
                   </h4>
-                  <p className="text-base text-slate-500">Attendee roster, ticketing tiers, and payment statuses.</p>
+                  <p className="text-xs text-slate-500">Attendee roster, ticketing tiers, and payment statuses.</p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => handleExportAttendeesCSV(viewingEventDetails)}
-                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5 text-slate-500" />
                     <span>Export CSV</span>
@@ -1610,7 +1610,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   <button
                     type="button"
                     onClick={() => setIsAddAttendeeModalOpen(true)}
-                    className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                   >
                     <UserPlus className="w-3.5 h-3.5" />
                     <span>Add Participant</span>
@@ -1626,13 +1626,13 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                   value={attendeeSearchTerm}
                   onChange={(e) => setAttendeeSearchTerm(e.target.value)}
                   placeholder="Search attendee by name, email, or ticket..."
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl pl-9 pr-3 py-1.5 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 outline-none"
                 />
               </div>
 
               {/* Attendees Table */}
               <div className="border border-slate-200 rounded-2xl overflow-hidden">
-                <table className="w-full text-left text-base">
+                <table className="w-full text-left text-xs">
                   <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
                     <tr>
                       <th className="py-2.5 px-3">Participant</th>
@@ -1647,8 +1647,8 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                       <tr>
                         <td colSpan={5} className="py-8 text-center text-slate-500">
                           <Users className="w-6 h-6 text-slate-400 mx-auto mb-1" />
-                          <p className="font-bold text-base text-slate-800">No Participants Registered Yet</p>
-                          <p className="text-[15px] text-slate-400 mt-0.5">
+                          <p className="font-bold text-xs text-slate-800">No Participants Registered Yet</p>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
                             Click "+ Add Participant" to manually register an attendee.
                           </p>
                         </td>
@@ -1666,17 +1666,17 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                             <td className="py-2.5 px-3 font-bold text-slate-900">{att.name}</td>
                             <td className="py-2.5 px-3 text-slate-600 font-medium">
                               <div>{att.email}</div>
-                              <div className="text-[14px] text-slate-400">{att.phone}</div>
+                              <div className="text-[10px] text-slate-400">{att.phone}</div>
                             </td>
                             <td className="py-2.5 px-3">
-                              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-[14px] border border-slate-200">
+                              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-[10px] border border-slate-200">
                                 {att.ticketType}
                               </span>
                             </td>
                             <td className="py-2.5 px-3 text-slate-500 tabular-nums">{att.registrationDate}</td>
                             <td className="py-2.5 px-3 text-right">
                               <span
-                                className={`px-2 py-0.5 rounded-full text-[14px] font-bold border ${
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                                   att.paymentStatus === 'Paid'
                                     ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                                     : att.paymentStatus === 'Free'
@@ -1715,46 +1715,46 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
 
             <form onSubmit={handleAddAttendee} className="space-y-3">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Full Name *</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
                 <input
                   type="text"
                   required
                   value={newAttendee.name}
                   onChange={(e) => setNewAttendee({ ...newAttendee, name: e.target.value })}
                   placeholder="e.g. Diane Mugisha"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Email Address *</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
                 <input
                   type="email"
                   required
                   value={newAttendee.email}
                   onChange={(e) => setNewAttendee({ ...newAttendee, email: e.target.value })}
                   placeholder="diane@example.rw"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Phone Number</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
                 <input
                   type="text"
                   value={newAttendee.phone}
                   onChange={(e) => setNewAttendee({ ...newAttendee, phone: e.target.value })}
                   placeholder="+250 788 000 000"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Ticket Type</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Ticket Type</label>
                 <select
                   value={newAttendee.ticketType}
                   onChange={(e) => setNewAttendee({ ...newAttendee, ticketType: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none cursor-pointer"
                 >
                   <option value="Standard Admission">Standard Admission</option>
                   <option value="VIP Guest">VIP Guest</option>
@@ -1764,7 +1764,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Payment Status</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Payment Status</label>
                 <select
                   value={newAttendee.paymentStatus}
                   onChange={(e) =>
@@ -1773,7 +1773,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                       paymentStatus: e.target.value as 'Paid' | 'Free' | 'Pending',
                     })
                   }
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none cursor-pointer"
                 >
                   <option value="Paid">Paid</option>
                   <option value="Free">Free</option>
@@ -1785,13 +1785,13 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
                 <button
                   type="button"
                   onClick={() => setIsAddAttendeeModalOpen(false)}
-                  className="px-3.5 py-2 rounded-xl border border-slate-300 text-base font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white shadow-2xs cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white shadow-2xs cursor-pointer"
                 >
                   Confirm Registration
                 </button>
@@ -1811,7 +1811,7 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-slate-900">Delete Event</h3>
-                <p className="text-base text-slate-600 mt-1">
+                <p className="text-xs text-slate-600 mt-1">
                   Are you sure you want to permanently delete{' '}
                   <span className="font-bold text-slate-900">"{deleteConfirmEvent.name}"</span>? This action cannot be
                   undone and will remove all attendee registrations for this event.
@@ -1823,14 +1823,14 @@ export const AdminBusinesses: React.FC<AdminBusinessesProps> = ({
               <button
                 type="button"
                 onClick={() => setDeleteConfirmEvent(null)}
-                className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
+                className="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmDelete}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-base font-bold text-white transition-colors shadow-2xs cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-xs font-bold text-white transition-colors shadow-2xs cursor-pointer"
               >
                 Delete Event
               </button>

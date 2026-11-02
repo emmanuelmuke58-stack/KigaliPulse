@@ -1,4 +1,4 @@
-export type AdminRole = 'SuperAdmin' | 'Business Admin' | 'Standard User' | 'Moderator' | 'Venue Manager' | 'Event Organizer' | 'Admin';
+export type AdminRole = 'Super Admin' | 'Admin' | 'Moderator' | 'Event Organizer' | 'Venue Manager' | 'Standard User';
 
 export type UserStatus = 'Active' | 'Pending' | 'Suspended' | 'Inactive';
 

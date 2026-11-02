@@ -91,7 +91,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
         </button>
 
         <div>
-          <div className="flex items-center gap-1.5 text-[15px] font-bold text-emerald-700 uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
             <span>Admin Suite</span>
             <span className="text-slate-300">/</span>
             <span className="capitalize text-slate-500 font-semibold">{activeTab.replace('-', ' ')}</span>
@@ -107,13 +107,13 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
         <button
           type="button"
           onClick={onOpenGlobalSearch}
-          className="w-full flex items-center justify-between px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 text-base text-slate-500 hover:text-slate-800 transition-all cursor-pointer shadow-2xs"
+          className="w-full flex items-center justify-between px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-white border border-slate-200 hover:border-slate-300 text-xs text-slate-500 hover:text-slate-800 transition-all cursor-pointer shadow-2xs"
         >
           <div className="flex items-center gap-2">
             <Search className="w-3.5 h-3.5 text-slate-400" />
             <span className="text-slate-500">Search users, transactions, venues, logs...</span>
           </div>
-          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[14px] font-mono font-bold bg-white text-slate-600 rounded border border-slate-200 shadow-2xs">
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-bold bg-white text-slate-600 rounded border border-slate-200 shadow-2xs">
             ⌘K
           </kbd>
         </button>
@@ -122,7 +122,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
       {/* Right: Date context, Notification bell & User Profile Dropdown */}
       <div className="flex items-center gap-2 sm:gap-3">
         {/* Date context indicator */}
-        <div className="hidden xl:flex items-center gap-1.5 text-base text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+        <div className="hidden xl:flex items-center gap-1.5 text-xs text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
           <Calendar className="w-3.5 h-3.5 text-emerald-600" />
           <span className="font-medium">Kigali (GMT+2) · {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
         </div>
@@ -146,7 +146,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
         >
           <Bell className="w-5 h-5" />
           {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-rose-500 text-[14px] font-bold text-white flex items-center justify-center animate-pulse">
+            <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-rose-500 text-[10px] font-bold text-white flex items-center justify-center animate-pulse">
               {unreadCount}
             </span>
           )}
@@ -166,11 +166,11 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
               className="w-8 h-8 rounded-lg object-cover border border-slate-300 shadow-2xs"
             />
             <div className="hidden sm:block text-left">
-              <div className="text-base font-bold text-slate-900 leading-tight flex items-center gap-1.5">
+              <div className="text-xs font-bold text-slate-900 leading-tight flex items-center gap-1.5">
                 <span>{currentUser.name}</span>
                 <ChevronDown className="w-3 h-3 text-slate-400" />
               </div>
-              <div className="text-[14px] text-emerald-700 font-semibold">{currentUser.role}</div>
+              <div className="text-[10px] text-emerald-700 font-semibold">{currentUser.role}</div>
             </div>
           </button>
 
@@ -178,9 +178,9 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
           {isProfileDropdownOpen && (
             <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-xl z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="p-3 border-b border-slate-100 mb-1">
-                <p className="text-base font-bold text-slate-900 truncate">{currentUser.name}</p>
-                <p className="text-[15px] text-slate-500 truncate">{currentUser.email}</p>
-                <span className="inline-block mt-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[14px] font-bold border border-emerald-200">
+                <p className="text-xs font-bold text-slate-900 truncate">{currentUser.name}</p>
+                <p className="text-[11px] text-slate-500 truncate">{currentUser.email}</p>
+                <span className="inline-block mt-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
                   {currentUser.role}
                 </span>
               </div>
@@ -192,7 +192,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
                     setIsProfileDropdownOpen(false);
                     onSelectTab('profile');
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-base font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                 >
                   <User className="w-4 h-4 text-slate-500" />
                   <span>My Profile</span>
@@ -204,7 +204,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
                     setIsProfileDropdownOpen(false);
                     onSelectTab('settings');
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-base font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                 >
                   <Settings className="w-4 h-4 text-slate-500" />
                   <span>Account Settings</span>
@@ -216,7 +216,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
                     setIsProfileDropdownOpen(false);
                     onSelectTab('settings');
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-base font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors text-left cursor-pointer"
                 >
                   <Key className="w-4 h-4 text-slate-500" />
                   <span>Change Password</span>
@@ -230,7 +230,7 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
                     setIsProfileDropdownOpen(false);
                     onLogoutClick();
                   }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-base font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors text-left cursor-pointer"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 transition-colors text-left cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
