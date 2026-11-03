@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   EventItem,
   VenueItem,
@@ -46,8 +46,8 @@ import { EventSubmission } from './types/admin';
 import { INITIAL_EVENT_SUBMISSIONS, INITIAL_ADMIN_NOTIFICATIONS } from './data/adminMockData';
 
 export default function App() {
-  // Navigation & View State (Discover Events page is the default site page)
-  const [currentView, setCurrentView] = useState<string>('discover');
+  // Navigation & View State
+  const [currentView, setCurrentView] = useState<string>('home');
   // Sub-filter pass-throughs when navigating from Home to Discover
   const [discoverCategory, setDiscoverCategory] = useState<string>('');
   const [discoverLocation, setDiscoverLocation] = useState<string>('');
@@ -74,16 +74,6 @@ export default function App() {
 
   // Create Event mode: 'visitor' (public event submission for approval) | 'wizard' (pro organizer 6-step wizard)
   const [createViewMode, setCreateViewMode] = useState<'visitor' | 'wizard'>('visitor');
-
-  // Synchronize events dynamically on view switch or when approved events change
-  useEffect(() => {
-    const syncEvents = () => {
-      setEvents(getStoredEvents());
-    };
-    syncEvents();
-    window.addEventListener('storage', syncEvents);
-    return () => window.removeEventListener('storage', syncEvents);
-  }, [currentView]);
 
   // Automatic event view tracker: opens detail modal, increments dynamic views count with session deduplication, and persists
   const handleSelectEvent = (event: EventItem) => {
@@ -357,7 +347,17 @@ export default function App() {
 
   // Dedicated Enterprise Admin System Suite (Complete UI Design)
   if (currentView === 'admin-dashboard') {
-    return <AdminSystem onExitToPublicSite={() => setCurrentView('home')} />;
+    return (
+      <AdminSystem 
+        onExitToPublicSite={() => setCurrentView('home')} 
+        events={events}
+        onUpdateEventStatus={handleUpdateEventStatus}
+        onToggleFeatureEvent={handleToggleFeatureEvent}
+        onDeleteEvent={handleDeleteEvent}
+        auditLogs={auditLogs}
+        onSelectEvent={handleSelectEvent}
+      />
+    );
   }
 
   return (

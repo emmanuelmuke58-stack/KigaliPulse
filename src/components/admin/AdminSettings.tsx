@@ -30,6 +30,9 @@ import {
   ROLE_PERMISSIONS_MATRIX,
 } from '../../data/adminMockData';
 
+import { useFontSize } from '../../contexts/FontSizeContext';
+import { FontSizeSettings } from '../FontSizeSettings';
+
 interface AdminSettingsProps {
   currentUser: EnterpriseUser;
   onUpdateCurrentUser: (user: EnterpriseUser) => void;
@@ -41,9 +44,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
   onUpdateCurrentUser,
   onTriggerToast,
 }) => {
+  const { fontSize, preset, setFontSize, setPreset, resetToDefault, savePreferences } = useFontSize();
+
   // Active sub-section tab
   const [activeSection, setActiveSection] = useState<
-    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system'
+    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system' | 'font'
   >('general');
 
   // Form states
@@ -108,18 +113,19 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
           <Settings className="w-6 h-6 text-emerald-600" />
           <span>Enterprise System Settings</span>
         </h2>
-        <p className="text-xs sm:text-sm text-slate-600 mt-1">
+        <p className="text-base sm:text-base text-slate-600 mt-1">
           Configure multi-tenant security policies, notifications, branding, and role-based permissions.
         </p>
       </div>
 
       {/* 2. Secondary Settings Navigation Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200 text-xs">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200 text-base">
         {[
           { id: 'general', label: 'General', icon: Sliders },
           { id: 'account', label: 'Account Profile', icon: User },
           { id: 'security', label: 'Security & 2FA', icon: Lock },
           { id: 'notifications', label: 'Notification Rules', icon: Bell },
+          { id: 'font', label: 'Font Size', icon: Sparkles },
           { id: 'roles', label: 'Roles & Permissions', icon: Shield },
           { id: 'system', label: 'System & Maintenance', icon: Database },
         ].map((tab) => {
@@ -150,49 +156,49 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
           <div>
             <h3 className="text-lg font-bold text-slate-900">General Application Settings</h3>
-            <p className="text-xs text-slate-600">Configure core platform naming, branding, and regional localization.</p>
+            <p className="text-base text-slate-600">Configure core platform naming, branding, and regional localization.</p>
           </div>
 
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Application Name</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Application Name</label>
                 <input
                   type="text"
                   value={general.appName}
                   onChange={(e) => setGeneral({ ...general, appName: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Company / Operating Entity</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Company / Operating Entity</label>
                 <input
                   type="text"
                   value={general.companyName}
                   onChange={(e) => setGeneral({ ...general, companyName: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Support Email</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Support Email</label>
                 <input
                   type="email"
                   value={general.supportEmail}
                   onChange={(e) => setGeneral({ ...general, supportEmail: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Time Zone</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Time Zone</label>
                 <select
                   value={general.timeZone}
                   onChange={(e) => setGeneral({ ...general, timeZone: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
                 >
                   <option value="Africa/Kigali (GMT+02:00)">Africa/Kigali (GMT+02:00) Central Africa Time</option>
                   <option value="Africa/Nairobi (GMT+03:00)">Africa/Nairobi (GMT+03:00) East Africa Time</option>
@@ -203,11 +209,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Default Currency</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Default Currency</label>
                 <select
                   value={general.defaultCurrency}
                   onChange={(e) => setGeneral({ ...general, defaultCurrency: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
                 >
                   <option value="RWF (Rwandan Franc)">RWF (Rwandan Franc)</option>
                   <option value="USD (United States Dollar)">USD (United States Dollar)</option>
@@ -215,11 +221,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Date Format</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Date Format</label>
                 <select
                   value={general.dateFormat}
                   onChange={(e) => setGeneral({ ...general, dateFormat: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
                 >
                   <option value="DD/MM/YYYY (24h)">DD/MM/YYYY (24h)</option>
                   <option value="YYYY-MM-DD (ISO)">YYYY-MM-DD (ISO)</option>
@@ -228,11 +234,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Language</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Language</label>
                 <select
                   value={general.language}
                   onChange={(e) => setGeneral({ ...general, language: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
                 >
                   <option value="English (UK / Rwanda)">English (UK / Rwanda)</option>
                   <option value="Kinyarwanda">Kinyarwanda</option>
@@ -246,7 +252,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             <button
               type="button"
               onClick={() => handleSave('General')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-xs text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               <span>Save General Settings</span>
@@ -260,7 +266,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
           <div>
             <h3 className="text-lg font-bold text-slate-900">Administrator Account Details</h3>
-            <p className="text-xs text-slate-600">Manage your active identity credentials, contact channels, and avatar.</p>
+            <p className="text-base text-slate-600">Manage your active identity credentials, contact channels, and avatar.</p>
           </div>
 
           <div className="flex items-center gap-5">
@@ -271,12 +277,12 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               className="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500/40 shadow-sm"
             />
             <div>
-              <div className="text-xs font-bold text-slate-900">Administrator Profile Photo</div>
-              <p className="text-[11px] text-slate-500 mt-0.5">JPG, PNG or GIF up to 5MB</p>
+              <div className="text-base font-bold text-slate-900">Administrator Profile Photo</div>
+              <p className="text-[15px] text-slate-500 mt-0.5">JPG, PNG or GIF up to 5MB</p>
               <button
                 type="button"
                 onClick={() => onTriggerToast('info', 'Photo Upload', 'Photo updated with default avatar.')}
-                className="mt-2 text-xs font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
+                className="mt-2 text-base font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
               >
                 Change Photo
               </button>
@@ -286,44 +292,44 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
           <div className="space-y-4 pt-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Full Name</label>
                 <input
                   type="text"
                   value={accountForm.name}
                   onChange={(e) => setAccountForm({ ...accountForm, name: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Official Email</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Official Email</label>
                 <input
                   type="email"
                   value={accountForm.email}
                   onChange={(e) => setAccountForm({ ...accountForm, email: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Phone Number</label>
                 <input
                   type="text"
                   value={accountForm.phone}
                   onChange={(e) => setAccountForm({ ...accountForm, phone: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Department</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Department</label>
                 <input
                   type="text"
                   value={accountForm.department}
                   onChange={(e) => setAccountForm({ ...accountForm, department: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none transition-all"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
                 />
               </div>
             </div>
@@ -333,7 +339,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             <button
               type="button"
               onClick={() => handleSave('Account')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-xs text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               <span>Update Profile</span>
@@ -354,41 +360,41 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
             <form onSubmit={handlePasswordSave} className="space-y-3 max-w-md">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Current Password</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Current Password</label>
                 <input
                   type="password"
                   value={passwordState.currentPassword}
                   onChange={(e) => setPasswordState({ ...passwordState, currentPassword: e.target.value })}
                   placeholder="••••••••••••"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">New Password</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">New Password</label>
                 <input
                   type="password"
                   value={passwordState.newPassword}
                   onChange={(e) => setPasswordState({ ...passwordState, newPassword: e.target.value })}
                   placeholder="At least 8 characters"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Confirm New Password</label>
+                <label className="block text-base font-bold text-slate-700 mb-1">Confirm New Password</label>
                 <input
                   type="password"
                   value={passwordState.confirmPassword}
                   onChange={(e) => setPasswordState({ ...passwordState, confirmPassword: e.target.value })}
                   placeholder="Repeat new password"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white shadow-sm cursor-pointer"
+                className="mt-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white shadow-sm cursor-pointer"
               >
                 Update Password
               </button>
@@ -402,11 +408,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               <span>Multi-Factor Authentication &amp; Sessions</span>
             </h3>
 
-            <div className="space-y-4 text-xs">
+            <div className="space-y-4 text-base">
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                 <div>
                   <div className="font-bold text-slate-900">Require Two-Factor Authentication (2FA)</div>
-                  <div className="text-slate-500 text-[11px]">Enforce hardware token or authenticator app for staff</div>
+                  <div className="text-slate-500 text-[15px]">Enforce hardware token or authenticator app for staff</div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -422,7 +428,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                 <div>
                   <div className="font-bold text-slate-900">Login Security Alerts</div>
-                  <div className="text-slate-500 text-[11px]">Receive instant notification on new device / IP logins</div>
+                  <div className="text-slate-500 text-[15px]">Receive instant notification on new device / IP logins</div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -438,7 +444,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                 <div>
                   <div className="font-bold text-slate-900">Administrative Session Timeout</div>
-                  <div className="text-slate-500 text-[11px]">Automatic lock after inactivity</div>
+                  <div className="text-slate-500 text-[15px]">Automatic lock after inactivity</div>
                 </div>
                 <select
                   value={security.sessionTimeoutMinutes}
@@ -461,10 +467,10 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
           <div>
             <h3 className="text-lg font-bold text-slate-900">Notification Preferences</h3>
-            <p className="text-xs text-slate-600">Toggle administrative alerts across platform communication channels.</p>
+            <p className="text-base text-slate-600">Toggle administrative alerts across platform communication channels.</p>
           </div>
 
-          <div className="space-y-3 text-xs">
+          <div className="space-y-3 text-base">
             {[
               {
                 id: 'emailAlerts',
@@ -503,7 +509,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               >
                 <div>
                   <div className="font-bold text-slate-900">{item.title}</div>
-                  <div className="text-slate-500 text-[11px] mt-0.5">{item.desc}</div>
+                  <div className="text-slate-500 text-[15px] mt-0.5">{item.desc}</div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -524,7 +530,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             <button
               type="button"
               onClick={() => handleSave('Notifications')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-xs text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               <span>Save Notification Rules</span>
@@ -533,25 +539,30 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         </div>
       )}
 
+      {/* SECTION: FONT SIZE MANAGEMENT */}
+      {activeSection === 'font' && (
+        <FontSizeSettings onTriggerToast={onTriggerToast} />
+      )}
+
       {/* SECTION 5: ROLES & PERMISSIONS MATRIX */}
       {activeSection === 'roles' && (
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-lg font-bold text-slate-900">Roles &amp; Permissions Matrix</h3>
-              <p className="text-xs text-slate-600">Configured access-control privileges across all enterprise modules.</p>
+              <p className="text-base text-slate-600">Configured access-control privileges across all enterprise modules.</p>
             </div>
             <button
               type="button"
               onClick={() => onTriggerToast('info', 'Roles Config', 'Role permission changes synchronized.')}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-xs text-white transition-all shadow-sm cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all shadow-sm cursor-pointer"
             >
               Sync Matrix
             </button>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-base">
               <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
                 <tr>
                   <th className="p-4 font-semibold">Role Name</th>
@@ -569,7 +580,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                   <tr key={item.role} className="hover:bg-slate-50/80 transition-colors">
                     <td className="p-4">
                       <div className="font-bold text-slate-900">{item.role}</div>
-                      <div className="text-[11px] text-slate-500 max-w-xs">{item.description}</div>
+                      <div className="text-[15px] text-slate-500 max-w-xs">{item.description}</div>
                     </td>
                     <td className="py-4 pr-4 font-bold text-emerald-700 tabular-nums">
                       {item.userCount} accounts
@@ -617,14 +628,14 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
           <div>
             <h3 className="text-lg font-bold text-slate-900">System Infrastructure &amp; Maintenance</h3>
-            <p className="text-xs text-slate-600">Emergency controls, database backups, and maintenance mode toggles.</p>
+            <p className="text-base text-slate-600">Emergency controls, database backups, and maintenance mode toggles.</p>
           </div>
 
-          <div className="space-y-4 text-xs">
+          <div className="space-y-4 text-base">
             <div className="flex items-center justify-between p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900">
               <div>
                 <div className="font-bold text-slate-900">Platform Maintenance Mode</div>
-                <div className="text-[11px] text-amber-800 mt-0.5">
+                <div className="text-[15px] text-amber-800 mt-0.5">
                   Temporarily display maintenance screen to public users while keeping admin access live
                 </div>
               </div>
@@ -642,7 +653,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
               <div>
                 <div className="font-bold text-slate-900">Relational Database Backup</div>
-                <div className="text-[11px] text-slate-500 mt-0.5">
+                <div className="text-[15px] text-slate-500 mt-0.5">
                   Last verified snapshot: {system.lastBackupDate}
                 </div>
               </div>
@@ -651,7 +662,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                 onClick={() =>
                   onTriggerToast('success', 'Backup Initiated', 'PostgreSQL cloud snapshot triggered successfully.')
                 }
-                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Create Backup Now</span>
@@ -663,7 +674,7 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             <button
               type="button"
               onClick={() => handleSave('System')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-xs text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               <span>Save System Settings</span>

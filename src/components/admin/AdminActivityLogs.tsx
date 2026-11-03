@@ -90,7 +90,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
             <History className="w-6 h-6 text-emerald-600" />
             <span>Activity Logs &amp; Audit Trail</span>
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+          <p className="text-base sm:text-base text-slate-600 mt-1">
             Immutable administrative event trail for compliance, security audits, and permission verification.
           </p>
         </div>
@@ -98,7 +98,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
         <button
           type="button"
           onClick={handleExport}
-          className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center gap-2 cursor-pointer shadow-2xs self-start sm:self-auto"
+          className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center gap-2 cursor-pointer shadow-2xs self-start sm:self-auto"
         >
           <Download className="w-4 h-4 text-slate-500" />
           <span>Export Audit Logs</span>
@@ -118,7 +118,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                 setCurrentPage(1);
               }}
               placeholder="Search user, action, description, IP..."
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+              className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all"
             />
           </div>
 
@@ -129,7 +129,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                 setModuleFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none cursor-pointer"
+              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer"
             >
               <option value="all">All Modules</option>
               <option value="Users">Users</option>
@@ -149,7 +149,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                 setStatusFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none cursor-pointer"
+              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer"
             >
               <option value="all">All Statuses</option>
               <option value="Completed">Completed</option>
@@ -164,7 +164,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
       {/* 3. Table */}
       <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-base">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
               <tr>
                 <th className="p-4 font-semibold">Date &amp; Time</th>
@@ -182,8 +182,8 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                 <tr>
                   <td colSpan={8} className="py-12 text-center text-slate-500">
                     <History className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="font-bold text-slate-900 text-sm">No Activity Records Found</p>
-                    <p className="text-xs text-slate-500 mt-1">Try clearing or adjusting your search filters.</p>
+                    <p className="font-bold text-slate-900 text-base">No Activity Records Found</p>
+                    <p className="text-base text-slate-500 mt-1">Try clearing or adjusting your search filters.</p>
                   </td>
                 </tr>
               ) : (
@@ -206,23 +206,23 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                           />
                           <div>
                             <div className="font-bold text-slate-900">{log.userName}</div>
-                            <div className="text-[10px] text-slate-500 font-medium">{log.userRole}</div>
+                            <div className="text-[14px] text-slate-500 font-medium">{log.userRole}</div>
                           </div>
                         </div>
                       </td>
                       <td className="py-4 pr-4 font-bold text-slate-900 whitespace-nowrap">{log.action}</td>
                       <td className="py-4 pr-4">
-                        <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-semibold text-[10px]">
+                        <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-semibold text-[14px]">
                           {log.module}
                         </span>
                       </td>
                       <td className="py-4 pr-4 text-slate-600 max-w-xs truncate font-medium">{log.description}</td>
-                      <td className="py-4 pr-4 text-slate-500 text-[11px] whitespace-nowrap">
+                      <td className="py-4 pr-4 text-slate-500 text-[15px] whitespace-nowrap">
                         <div className="font-mono text-slate-700">{log.ipAddress}</div>
-                        <div className="text-slate-400 text-[10px]">{log.device}</div>
+                        <div className="text-slate-400 text-[14px]">{log.device}</div>
                       </td>
                       <td className="py-4 pr-4">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${badge}`}>
+                        <span className={`px-2 py-0.5 rounded-full text-[14px] font-bold border ${badge}`}>
                           {log.status}
                         </span>
                       </td>
@@ -230,7 +230,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                         <button
                           type="button"
                           onClick={() => setSelectedLogForDetails(log)}
-                          className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-xs font-semibold inline-flex items-center gap-1 transition-colors cursor-pointer shadow-2xs"
+                          className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-base font-semibold inline-flex items-center gap-1 transition-colors cursor-pointer shadow-2xs"
                         >
                           <Eye className="w-3.5 h-3.5 text-slate-500" />
                           <span>Details</span>
@@ -245,7 +245,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
         </div>
 
         {/* Pagination Bar */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
+        <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-base text-slate-600 font-medium">
           <div>
             Showing {(currentPage - 1) * rowsPerPage + 1} to{' '}
             {Math.min(currentPage * rowsPerPage, filteredLogs.length)} of {filteredLogs.length} entries
@@ -285,7 +285,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900">Audit Event Details</h3>
-                  <p className="text-xs text-slate-500 font-mono">{selectedLogForDetails.id}</p>
+                  <p className="text-base text-slate-500 font-mono">{selectedLogForDetails.id}</p>
                 </div>
               </div>
               <button
@@ -297,7 +297,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
               </button>
             </div>
 
-            <div className="space-y-2.5 text-xs">
+            <div className="space-y-2.5 text-base">
               <div className="flex justify-between py-1.5 border-b border-slate-100">
                 <span className="text-slate-500 font-medium">Timestamp</span>
                 <span className="text-slate-900 font-bold">{selectedLogForDetails.dateTime}</span>
@@ -334,7 +334,7 @@ export const AdminActivityLogs: React.FC<AdminActivityLogsProps> = ({
               <button
                 type="button"
                 onClick={() => setSelectedLogForDetails(null)}
-                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-xs text-white transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
+                className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-colors shadow-md shadow-emerald-600/20 cursor-pointer"
               >
                 Close Details
               </button>

@@ -20,6 +20,7 @@ import {
 
 export type AdminNavigationTab =
   | 'dashboard'
+  | 'event-management'
   | 'users'
   | 'businesses'
   | 'transactions'
@@ -59,8 +60,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   const navItems = [
     {
       id: 'dashboard' as AdminNavigationTab,
-      label: 'Dashboard',
+      label: 'System Overview',
       icon: LayoutDashboard,
+    },
+    {
+      id: 'event-management' as AdminNavigationTab,
+      label: 'Event Intelligence',
+      icon: BarChart3,
     },
     {
       id: 'users' as AdminNavigationTab,

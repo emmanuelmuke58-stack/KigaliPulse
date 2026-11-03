@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Bookmark, PlusCircle, Menu, X, Sparkles, Bell, BarChart3 } from 'lucide-react';
+import { Search, Bookmark, Menu, X, Sparkles, Bell } from 'lucide-react';
 import { EventItem } from '../types';
 import { CompactHeaderEventSlider } from './CompactHeaderEventSlider';
 
@@ -126,30 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Create Event CTA */}
-          <button
-            type="button"
-            onClick={() => handleNavClick('create')}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors shadow-sm whitespace-nowrap"
-          >
-            <PlusCircle className="w-3.5 h-3.5" />
-            <span>Create Event</span>
-          </button>
 
-          {/* Admin Reports & Governance Button */}
-          <button
-            type="button"
-            onClick={() => handleNavClick('admin-dashboard')}
-            className={`hidden lg:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl border transition-colors whitespace-nowrap ${
-              currentView === 'admin-dashboard'
-                ? 'bg-slate-900 text-white border-slate-900 shadow-xs'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
-            }`}
-            title="Open Admin Reports & Governance"
-          >
-            <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Admin Reports</span>
-          </button>
 
           {/* Mobile Hamburger Toggle */}
           <button
@@ -196,27 +173,13 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={() => handleNavClick('organizer-dashboard')}
-              className="flex-1 py-2 text-center text-xs font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
+              className="flex-1 py-2.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
             >
               Organizer Hub
             </button>
-            <button
-              type="button"
-              onClick={() => handleNavClick('admin-dashboard')}
-              className="flex-1 py-2 text-center text-xs font-semibold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
-            >
-              Admin Moderation
-            </button>
           </div>
 
-          <button
-            type="button"
-            onClick={() => handleNavClick('create')}
-            className="w-full mt-2 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
-          >
-            <PlusCircle className="w-4 h-4" />
-            <span>Submit New Event</span>
-          </button>
+
         </div>
       )}
     </header>

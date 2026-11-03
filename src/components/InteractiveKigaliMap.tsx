@@ -38,13 +38,13 @@ export const InteractiveKigaliMap: React.FC<KigaliMapProps> = ({
     <div className="relative w-full rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 text-white shadow-inner">
       {/* Map Header Toolbar */}
       <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
-        <div className="pointer-events-auto bg-slate-900/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-xs font-medium flex items-center gap-2">
+        <div className="pointer-events-auto bg-slate-900/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-base font-medium flex items-center gap-2">
           <Compass className="w-3.5 h-3.5 text-emerald-400 animate-spin-slow" />
           <span>Kigali Interactive City Grid</span>
           <span className="text-slate-400">· {neighborhood}, {district}</span>
         </div>
 
-        <div className="pointer-events-auto flex items-center gap-1.5 bg-slate-900/85 backdrop-blur-md p-1 rounded-xl border border-white/10 text-xs">
+        <div className="pointer-events-auto flex items-center gap-1.5 bg-slate-900/85 backdrop-blur-md p-1 rounded-xl border border-white/10 text-base">
           <button
             type="button"
             onClick={() => setMapMode('streets')}
@@ -180,7 +180,7 @@ export const InteractiveKigaliMap: React.FC<KigaliMapProps> = ({
         >
           <div className="relative group cursor-pointer flex flex-col items-center">
             {/* Popover Card */}
-            <div className="mb-1 px-3 py-1.5 bg-white text-slate-900 rounded-xl shadow-xl border border-slate-200 text-xs font-bold whitespace-nowrap animate-bounce flex items-center gap-1.5">
+            <div className="mb-1 px-3 py-1.5 bg-white text-slate-900 rounded-xl shadow-xl border border-slate-200 text-base font-bold whitespace-nowrap animate-bounce flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
               <span>{venueName}</span>
             </div>
@@ -196,7 +196,7 @@ export const InteractiveKigaliMap: React.FC<KigaliMapProps> = ({
       </div>
 
       {/* Map Bottom Action Bar */}
-      <div className="bg-slate-900/95 backdrop-blur-md px-4 py-3 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+      <div className="bg-slate-900/95 backdrop-blur-md px-4 py-3 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-base">
         <div className="space-y-0.5">
           <div className="font-semibold text-white flex items-center gap-1.5">
             <MapPin className="w-3.5 h-3.5 text-emerald-400" />

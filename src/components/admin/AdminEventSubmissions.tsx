@@ -34,7 +34,7 @@ import {
 } from 'lucide-react';
 import { EventSubmission, SubmissionStatus } from '../../types/admin';
 import { INITIAL_EVENT_SUBMISSIONS } from '../../data/adminMockData';
-import { getStoredEvents, saveStoredEvents, convertSubmissionToEventItem } from '../../services/eventStore';
+import { getStoredEvents, saveStoredEvents } from '../../services/eventStore';
 import { EventItem, EventCategory } from '../../types';
 
 interface AdminEventSubmissionsProps {
@@ -170,7 +170,7 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
     setReviewingSubmission(submission);
   };
 
-  // Action: Approve (Direct on Events Pages)
+  // Action: Approve
   const handleApprove = (submission: EventSubmission) => {
     setActiveMenuId(null);
     const updated = submissions.map((s) => {
@@ -195,23 +195,10 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
       });
     }
 
-    // DIRECT ON EVENTS PAGES: sync immediately to public events store
-    try {
-      const publicEvent = convertSubmissionToEventItem({
-        ...submission,
-        status: 'Approved',
-      });
-      const stored = getStoredEvents();
-      const updatedPublicEvents = [publicEvent, ...stored.filter((e) => e.id !== publicEvent.id)];
-      saveStoredEvents(updatedPublicEvents);
-    } catch (err) {
-      console.error('Failed to sync approved event direct to events page', err);
-    }
-
     onTriggerToast(
       'success',
-      'Event Approved & Direct on Events Pages!',
-      `"${submission.name}" is approved and immediately live on all public events pages.`
+      'Event Approved',
+      `"${submission.name}" is approved. It is now eligible for publishing to the visitor events page.`
     );
   };
 
@@ -238,17 +225,6 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
         reviewedAt: new Date().toISOString().split('T')[0],
         reviewedBy: 'SuperAdmin Jean-Paul',
       });
-    }
-
-    // Remove from public events pages if it was previously approved/published
-    try {
-      const pubId = `pub-${submission.id}`;
-      const stored = getStoredEvents();
-      if (stored.some((e) => e.id === pubId)) {
-        saveStoredEvents(stored.filter((e) => e.id !== pubId));
-      }
-    } catch (err) {
-      console.error('Failed to remove rejected event from events pages', err);
     }
 
     onTriggerToast('error', 'Event Rejected', `"${submission.name}" proposal has been rejected.`);
@@ -291,18 +267,6 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
 
     setRequestChangesSubmission(null);
     setChangesNotes('');
-
-    // Remove from public events pages if it was previously approved/published
-    try {
-      const pubId = `pub-${requestChangesSubmission.id}`;
-      const stored = getStoredEvents();
-      if (stored.some((e) => e.id === pubId)) {
-        saveStoredEvents(stored.filter((e) => e.id !== pubId));
-      }
-    } catch (err) {
-      console.error('Failed to remove event from events pages:', err);
-    }
-
     onTriggerToast(
       'warning',
       'Changes Requested',
@@ -359,18 +323,6 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
         if (reviewingSubmission?.id === s.id) {
           setReviewingSubmission(updatedSub);
         }
-
-        // If currently approved or published, keep public events page in sync
-        if (s.status === 'Approved' || s.status === 'Published') {
-          try {
-            const publicEvent = convertSubmissionToEventItem(updatedSub);
-            const stored = getStoredEvents();
-            saveStoredEvents([publicEvent, ...stored.filter((ev) => ev.id !== publicEvent.id)]);
-          } catch (err) {
-            console.error('Failed to sync edited event to public events pages:', err);
-          }
-        }
-
         return updatedSub;
       }
       return s;
@@ -385,24 +337,11 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
   const handleConfirmDelete = () => {
     if (!deleteConfirmSubmission) return;
     const name = deleteConfirmSubmission.name;
-    const subId = deleteConfirmSubmission.id;
-    setSubmissions((prev) => prev.filter((s) => s.id !== subId));
-    if (reviewingSubmission?.id === subId) {
+    setSubmissions((prev) => prev.filter((s) => s.id !== deleteConfirmSubmission.id));
+    if (reviewingSubmission?.id === deleteConfirmSubmission.id) {
       setReviewingSubmission(null);
     }
     setDeleteConfirmSubmission(null);
-
-    // Remove from public events pages if present
-    try {
-      const pubId = `pub-${subId}`;
-      const stored = getStoredEvents();
-      if (stored.some((e) => e.id === pubId)) {
-        saveStoredEvents(stored.filter((e) => e.id !== pubId));
-      }
-    } catch (err) {
-      console.error('Failed to remove deleted event from events pages:', err);
-    }
-
     onTriggerToast('info', 'Submission Deleted', `"${name}" proposal has been removed.`);
   };
 
@@ -490,6 +429,12 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
       saves: 12,
       clicks: 22,
       createdAt: submission.submittedAt,
+      capacity: 0,
+      ticketsSold: 0,
+      revenue: 0,
+      attendeeCount: 0,
+      ticketCategories: [],
+      salesHistory: [],
     };
 
     try {
@@ -803,27 +748,28 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                             <span>Review</span>
                           </button>
 
-                          {/* Direct Live indicator if status is Approved or Published */}
-                          {(sub.status === 'Approved' || sub.status === 'Published') && (
-                            <span
-                              title="Live directly on visitor events pages"
-                              className="px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[11px] flex items-center gap-1 shadow-2xs"
+                          {/* Quick Publish CTA if status is Approved */}
+                          {sub.status === 'Approved' && (
+                            <button
+                              type="button"
+                              onClick={() => handlePublishToPublic(sub)}
+                              title="Publish Live to Public Events Directory"
+                              className="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-2xs cursor-pointer flex items-center gap-1"
                             >
-                              <Globe className="w-3.5 h-3.5 text-emerald-600" />
-                              <span>Live on Events Page</span>
-                            </span>
+                              <Globe className="w-3.5 h-3.5" />
+                              <span className="hidden xl:inline">Publish</span>
+                            </button>
                           )}
 
-                          {/* Quick Approve button if Pending (Direct on Events Pages) */}
+                          {/* Quick Approve button if Pending */}
                           {sub.status === 'Pending Approval' && (
                             <button
                               type="button"
                               onClick={() => handleApprove(sub)}
-                              title="Approve & Direct on Events Pages"
-                              className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-2xs cursor-pointer flex items-center gap-1"
+                              title="Approve Event"
+                              className="p-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-colors cursor-pointer"
                             >
-                              <Check className="w-3.5 h-3.5" />
-                              <span>Approve Direct</span>
+                              <Check className="w-4 h-4" />
                             </button>
                           )}
 
@@ -1180,23 +1126,34 @@ export const AdminEventSubmissions: React.FC<AdminEventSubmissionsProps> = ({
                   </button>
                 )}
 
-                {/* Approve Event: Direct on Events Pages */}
+                {/* Approve (marks Approved, eligible for publishing) */}
                 {reviewingSubmission.status !== 'Approved' && reviewingSubmission.status !== 'Published' && (
                   <button
                     type="button"
                     onClick={() => handleApprove(reviewingSubmission)}
-                    className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer flex items-center gap-2"
+                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer flex items-center gap-1.5"
                   >
-                    <Check className="w-4 h-4" />
-                    <span>Approve &amp; Put Direct on Events Pages</span>
+                    <Check className="w-3.5 h-3.5" />
+                    <span>Approve Event</span>
                   </button>
                 )}
 
-                {/* Direct on Events Pages Status Indicator */}
-                {(reviewingSubmission.status === 'Approved' || reviewingSubmission.status === 'Published') && (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold shadow-2xs">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>Direct Live on Public Events Pages</span>
+                {/* Publish Live CTA (Workflow: approved event becomes eligible for publishing -> published event appears on visitor page) */}
+                {reviewingSubmission.status === 'Approved' && (
+                  <button
+                    type="button"
+                    onClick={() => handlePublishToPublic(reviewingSubmission)}
+                    className="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 active:scale-95 text-xs font-bold text-white transition-all shadow-md shadow-sky-600/20 cursor-pointer flex items-center gap-2"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span>Publish to Public Events Page</span>
+                  </button>
+                )}
+
+                {reviewingSubmission.status === 'Published' && (
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-50 text-sky-800 border border-sky-200 text-xs font-bold">
+                    <CheckCircle2 className="w-4 h-4 text-sky-600" />
+                    <span>Live on Public Events Page</span>
                   </div>
                 )}
               </div>

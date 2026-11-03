@@ -216,13 +216,13 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
           </div>
 
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            <span className="text-base font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
               {isDraft ? 'Draft Saved' : 'Submission Received'}
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-3">
               {isDraft ? 'Draft Saved Successfully' : 'Event Submitted Successfully'}
             </h1>
-            <p className="text-sm sm:text-base text-slate-600 mt-2 max-w-lg mx-auto leading-relaxed">
+            <p className="text-base sm:text-base text-slate-600 mt-2 max-w-lg mx-auto leading-relaxed">
               {isDraft
                 ? 'Your event draft has been saved. You can complete it and submit for approval at any time.'
                 : 'Your event has been submitted and is waiting for admin approval.'}
@@ -231,18 +231,18 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
 
           {/* Approval Workflow Stepper: Draft → Pending Approval → Approved → Published */}
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 text-left space-y-4">
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider text-center">
+            <div className="text-base font-bold text-slate-500 uppercase tracking-wider text-center">
               Event Approval Lifecycle
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-base">
               {/* Step 1: Draft */}
               <div className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 ${
                 submittedEvent.status === 'Draft'
                   ? 'bg-amber-50 text-amber-900 border-amber-300 font-bold'
                   : 'bg-white text-slate-700 border-slate-200 font-semibold'
               }`}>
-                <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold">1</div>
+                <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[14px] font-bold">1</div>
                 <span>Draft</span>
               </div>
 
@@ -252,7 +252,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   ? 'bg-emerald-50 text-emerald-900 border-emerald-300 font-black shadow-xs ring-2 ring-emerald-500/20'
                   : 'bg-white text-slate-500 border-slate-200 font-medium'
               }`}>
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[14px] font-bold ${
                   submittedEvent.status === 'Pending Approval' ? 'bg-emerald-600 text-white animate-pulse' : 'bg-slate-200'
                 }`}>2</div>
                 <span>Pending Approval</span>
@@ -260,18 +260,18 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
 
               {/* Step 3: Approved */}
               <div className="p-3 rounded-xl border bg-white text-slate-400 border-slate-200 flex flex-col items-center justify-center gap-1.5 font-medium opacity-60">
-                <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">3</div>
+                <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[14px] font-bold">3</div>
                 <span>Approved</span>
               </div>
 
               {/* Step 4: Published */}
               <div className="p-3 rounded-xl border bg-white text-slate-400 border-slate-200 flex flex-col items-center justify-center gap-1.5 font-medium opacity-60">
-                <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold">4</div>
+                <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[14px] font-bold">4</div>
                 <span>Published</span>
               </div>
             </div>
 
-            <div className="text-[11px] text-slate-500 text-center leading-snug">
+            <div className="text-[15px] text-slate-500 text-center leading-snug">
               Status Progression: <span className="font-bold text-slate-800">Draft → Pending Approval → Approved → Published</span>
             </div>
           </div>
@@ -284,21 +284,21 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
               className="w-full sm:w-28 h-28 rounded-xl object-cover border border-slate-200 shrink-0"
             />
             <div className="flex-1 min-w-0 space-y-1">
-              <span className="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <span className="text-[14px] font-bold uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                 {submittedEvent.category}
               </span>
               <h4 className="text-base font-extrabold text-slate-900 truncate mt-1">
                 {submittedEvent.name}
               </h4>
-              <p className="text-xs text-slate-600 flex items-center gap-1.5">
+              <p className="text-base text-slate-600 flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-slate-400" />
                 <span>{submittedEvent.date} · {submittedEvent.startTime} - {submittedEvent.endTime}</span>
               </p>
-              <p className="text-xs text-slate-600 flex items-center gap-1.5">
+              <p className="text-base text-slate-600 flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-slate-400" />
                 <span>{submittedEvent.location}</span>
               </p>
-              <div className="flex items-center gap-3 pt-1 text-xs">
+              <div className="flex items-center gap-3 pt-1 text-base">
                 <span className="font-bold text-emerald-700">
                   {submittedEvent.feeType === 'Free' ? 'Free Entry' : `Entry Fee: ${submittedEvent.entryFee.toLocaleString()} ${submittedEvent.currency}`}
                 </span>
@@ -332,7 +332,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                 });
                 handleRemoveImage();
               }}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors shadow-2xs cursor-pointer"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors shadow-2xs cursor-pointer"
             >
               Submit Another Event
             </button>
@@ -340,7 +340,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
             <button
               type="button"
               onClick={onCancel}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white transition-all shadow-md shadow-emerald-600/20 cursor-pointer flex items-center justify-center gap-1.5"
             >
               <span>Return to Public Events</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -358,13 +358,13 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
         <button
           type="button"
           onClick={onCancel}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-base font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Events Feed</span>
         </button>
 
-        <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+        <span className="text-base font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
           Visitor Portal · Event Submission
         </span>
       </div>
@@ -373,25 +373,25 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
       <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-xl space-y-8">
         {/* Title Header */}
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
+          <div className="flex items-center gap-2 text-base font-bold uppercase tracking-wider text-emerald-700 mb-1">
             <Sparkles className="w-4 h-4 text-emerald-600" />
             <span>Submit Your Event to KigaliPulse</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Create &amp; Submit Public Event
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+          <p className="text-base sm:text-base text-slate-600 mt-1.5 leading-relaxed">
             Fill in the event details, entry fee, capacity, and upload a poster. Submitted events are promptly reviewed by KigaliPulse administrators before public publishing.
           </p>
         </div>
 
         {/* Global Error Notice if any */}
         {Object.keys(errors).length > 0 && (
-          <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5 animate-in fade-in">
+          <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-base flex items-start gap-2.5 animate-in fade-in">
             <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             <div>
               <div className="font-bold">Please correct the highlighted fields before submitting:</div>
-              <ul className="list-disc list-inside mt-1 space-y-0.5 text-[11px] text-rose-600">
+              <ul className="list-disc list-inside mt-1 space-y-0.5 text-[15px] text-rose-600">
                 {Object.values(errors).map((err, i) => (
                   <li key={i}>{err}</li>
                 ))}
@@ -405,14 +405,14 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
           <div className="space-y-5">
             <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <FileText className="w-4 h-4 text-emerald-600" />
-              <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">
                 1. Event Information
               </h3>
             </div>
 
             {/* Event Name */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
+              <label className="block text-base font-bold text-slate-800 mb-1.5">
                 Event Name *
               </label>
               <input
@@ -422,21 +422,21 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                 placeholder="e.g. Startup Founders Talk"
                 className={`w-full bg-white border ${
                   errors.name ? 'border-rose-500' : 'border-slate-300'
-                } focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none transition-all`}
+                } focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-4 py-2.5 text-base text-slate-900 outline-none transition-all`}
               />
-              {errors.name && <p className="text-[11px] text-rose-600 mt-1">{errors.name}</p>}
+              {errors.name && <p className="text-[15px] text-rose-600 mt-1">{errors.name}</p>}
             </div>
 
             {/* Event Category & Date */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   Event Category *
                 </label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 outline-none cursor-pointer"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-800 outline-none cursor-pointer"
                 >
                   <option value="Technology & Startups">Technology &amp; Startups</option>
                   <option value="Business & Finance">Business &amp; Leadership</option>
@@ -450,7 +450,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   Event Date *
                 </label>
                 <input
@@ -459,42 +459,42 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                   className={`w-full bg-white border ${
                     errors.date ? 'border-rose-500' : 'border-slate-300'
-                  } focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none`}
+                  } focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none`}
                 />
-                {errors.date && <p className="text-[11px] text-rose-600 mt-1">{errors.date}</p>}
+                {errors.date && <p className="text-[15px] text-rose-600 mt-1">{errors.date}</p>}
               </div>
             </div>
 
             {/* Start Time & End Time */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   Start Time *
                 </label>
                 <input
                   type="time"
                   value={formData.startTime}
                   onChange={(e) => setFormData({ ...formData, startTime: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   End Time
                 </label>
                 <input
                   type="time"
                   value={formData.endTime}
                   onChange={(e) => setFormData({ ...formData, endTime: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none"
                 />
               </div>
             </div>
 
             {/* Location */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
+              <label className="block text-base font-bold text-slate-800 mb-1.5">
                 Location / Venue *
               </label>
               <div className="relative">
@@ -506,15 +506,15 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   placeholder="e.g. Norrsken House Kigali, Downtown / BK Arena VIP Room"
                   className={`w-full bg-white border ${
                     errors.location ? 'border-rose-500' : 'border-slate-300'
-                  } focus:border-emerald-600 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-900 outline-none`}
+                  } focus:border-emerald-600 rounded-xl pl-10 pr-4 py-2.5 text-base text-slate-900 outline-none`}
                 />
               </div>
-              {errors.location && <p className="text-[11px] text-rose-600 mt-1">{errors.location}</p>}
+              {errors.location && <p className="text-[15px] text-rose-600 mt-1">{errors.location}</p>}
             </div>
 
             {/* Event Description */}
             <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1.5">
+              <label className="block text-base font-bold text-slate-800 mb-1.5">
                 Event Description *
               </label>
               <textarea
@@ -524,9 +524,9 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                 placeholder="Describe what attendees should expect, key speakers, agenda breakdown, and venue amenities..."
                 className={`w-full bg-white border ${
                   errors.description ? 'border-rose-500' : 'border-slate-300'
-                } focus:border-emerald-600 rounded-xl px-4 py-2.5 text-xs text-slate-900 outline-none`}
+                } focus:border-emerald-600 rounded-xl px-4 py-2.5 text-base text-slate-900 outline-none`}
               />
-              {errors.description && <p className="text-[11px] text-rose-600 mt-1">{errors.description}</p>}
+              {errors.description && <p className="text-[15px] text-rose-600 mt-1">{errors.description}</p>}
             </div>
           </div>
 
@@ -534,14 +534,14 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <User className="w-4 h-4 text-emerald-600" />
-              <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">
                 2. Organizer Information
               </h3>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   Organizer Name *
                 </label>
                 <input
@@ -551,13 +551,13 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   placeholder="e.g. John Doe"
                   className={`w-full bg-white border ${
                     errors.organizerName ? 'border-rose-500' : 'border-slate-300'
-                  } focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none`}
+                  } focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none`}
                 />
-                {errors.organizerName && <p className="text-[11px] text-rose-600 mt-1">{errors.organizerName}</p>}
+                {errors.organizerName && <p className="text-[15px] text-rose-600 mt-1">{errors.organizerName}</p>}
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   Organizer Email *
                 </label>
                 <input
@@ -567,13 +567,13 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   placeholder="john.doe@example.rw"
                   className={`w-full bg-white border ${
                     errors.organizerEmail ? 'border-rose-500' : 'border-slate-300'
-                  } focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none`}
+                  } focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none`}
                 />
-                {errors.organizerEmail && <p className="text-[11px] text-rose-600 mt-1">{errors.organizerEmail}</p>}
+                {errors.organizerEmail && <p className="text-[15px] text-rose-600 mt-1">{errors.organizerEmail}</p>}
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">
+                <label className="block text-base font-bold text-slate-800 mb-1.5">
                   Organizer Phone
                 </label>
                 <input
@@ -581,7 +581,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   value={formData.organizerPhone}
                   onChange={(e) => setFormData({ ...formData, organizerPhone: e.target.value })}
                   placeholder="+250 788 512 345"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 outline-none"
+                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none"
                 />
               </div>
             </div>
@@ -591,7 +591,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <DollarSign className="w-4 h-4 text-emerald-600" />
-              <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">
                 3. Entry Fee &amp; Capacity
               </h3>
             </div>
@@ -600,7 +600,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
               {/* Entry Fee Configuration */}
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-slate-900">
+                  <label className="block text-base font-bold text-slate-900">
                     Entry Fee *
                   </label>
 
@@ -609,7 +609,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     <button
                       type="button"
                       onClick={() => setFormData({ ...formData, feeType: 'Free', entryFee: 0 })}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-base font-bold transition-all cursor-pointer ${
                         formData.feeType === 'Free'
                           ? 'bg-emerald-600 text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -620,7 +620,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     <button
                       type="button"
                       onClick={() => setFormData({ ...formData, feeType: 'Paid', entryFee: formData.entryFee || 10000 })}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-base font-bold transition-all cursor-pointer ${
                         formData.feeType === 'Paid'
                           ? 'bg-emerald-600 text-white shadow-xs'
                           : 'text-slate-600 hover:text-slate-900'
@@ -634,7 +634,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                 {formData.feeType === 'Paid' ? (
                   <div className="grid grid-cols-2 gap-2 pt-1">
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">Custom Amount</label>
+                      <label className="block text-[15px] font-bold text-slate-600 mb-1">Custom Amount</label>
                       <input
                         type="number"
                         min={500}
@@ -642,16 +642,16 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                         value={formData.entryFee}
                         onChange={(e) => setFormData({ ...formData, entryFee: Number(e.target.value) })}
                         placeholder="10000"
-                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-900 font-bold outline-none"
+                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 font-bold outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-slate-600 mb-1">Currency</label>
+                      <label className="block text-[15px] font-bold text-slate-600 mb-1">Currency</label>
                       <select
                         value={formData.currency}
                         onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-xs text-slate-800 font-bold outline-none cursor-pointer"
+                        className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-800 font-bold outline-none cursor-pointer"
                       >
                         <option value="RWF">RWF</option>
                         <option value="USD">USD</option>
@@ -659,13 +659,13 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     </div>
 
                     <div className="col-span-2 pt-1">
-                      <span className="inline-block text-xs font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg">
+                      <span className="inline-block text-base font-extrabold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg">
                         Entry Fee: {formData.entryFee.toLocaleString()} {formData.currency}
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="text-xs text-emerald-700 font-bold py-2">
+                  <div className="text-base text-emerald-700 font-bold py-2">
                     ✓ This event is free admission for all participants.
                   </div>
                 )}
@@ -673,7 +673,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
 
               {/* Maximum Capacity */}
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                <label className="block text-xs font-bold text-slate-900">
+                <label className="block text-base font-bold text-slate-900">
                   Maximum Capacity *
                 </label>
                 <div className="flex items-center gap-3">
@@ -684,11 +684,11 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     value={formData.maxCapacity}
                     onChange={(e) => setFormData({ ...formData, maxCapacity: Number(e.target.value) })}
                     placeholder="100"
-                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-xs text-slate-900 font-bold outline-none"
+                    className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2 text-base text-slate-900 font-bold outline-none"
                   />
-                  <span className="text-xs text-slate-500 font-bold shrink-0">People</span>
+                  <span className="text-base text-slate-500 font-bold shrink-0">People</span>
                 </div>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[15px] text-slate-500">
                   Example: <span className="font-semibold text-slate-700">Capacity: 100 people</span>
                 </p>
               </div>
@@ -699,7 +699,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
               <ImageIcon className="w-4 h-4 text-emerald-600" />
-              <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              <h3 className="text-base font-extrabold text-slate-900 uppercase tracking-wider">
                 4. Event Image / Poster Upload
               </h3>
             </div>
@@ -727,18 +727,18 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                   <button
                     type="button"
                     onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
-                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs inline-flex items-center gap-2 shadow-sm cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base inline-flex items-center gap-2 shadow-sm cursor-pointer"
                   >
                     <Upload className="w-4 h-4" />
                     <span>Upload Event Image</span>
                   </button>
-                  <p className="text-xs text-slate-600 mt-2 font-medium">
+                  <p className="text-base text-slate-600 mt-2 font-medium">
                     Upload directly from your device, or drag and drop your poster here
                   </p>
                 </div>
 
                 {/* Requirements info banner */}
-                <div className="pt-2 text-[11px] text-slate-500 space-y-1">
+                <div className="pt-2 text-[15px] text-slate-500 space-y-1">
                   <div className="font-semibold text-slate-700">
                     Supported formats: <span className="font-bold text-slate-900">JPG, PNG, WEBP</span> (Max 5MB)
                   </div>
@@ -750,7 +750,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
             ) : (
               /* Image Preview Card */
               <div className="bg-slate-50 border border-slate-200 rounded-3xl p-4 sm:p-5 space-y-3">
-                <div className="flex items-center justify-between text-xs">
+                <div className="flex items-center justify-between text-base">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
                     <span className="font-bold text-slate-900 truncate max-w-xs">{imageFileName || 'Uploaded Event Poster'}</span>
@@ -762,7 +762,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-xs font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-300 text-base font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Replace</span>
@@ -787,19 +787,19 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     alt="Event Poster Preview"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-xs text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                  <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-xs text-white text-[14px] font-bold px-2.5 py-1 rounded-lg">
                     Poster Preview (16:9)
                   </div>
                 </div>
 
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[15px] text-slate-500">
                   Image ready for review. Make sure all text and headline artists are legible on mobile and desktop.
                 </p>
               </div>
             )}
 
             {imageError && (
-              <p className="text-xs text-rose-600 font-medium flex items-center gap-1.5">
+              <p className="text-base text-rose-600 font-medium flex items-center gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5" />
                 <span>{imageError}</span>
               </p>
@@ -807,7 +807,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
 
             {/* Poster Presets Option */}
             <div className="pt-2">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">
+              <span className="text-[15px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">
                 Or pick from sample event posters:
               </span>
               <div className="flex items-center gap-2 flex-wrap">
@@ -816,7 +816,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                     key={p.label}
                     type="button"
                     onClick={() => handleSelectPreset(p)}
-                    className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs cursor-pointer"
                   >
                     {p.label}
                   </button>
@@ -830,7 +830,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
             <button
               type="button"
               onClick={onCancel}
-              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-semibold text-slate-700 transition-colors cursor-pointer shadow-2xs"
             >
               Cancel
             </button>
@@ -841,7 +841,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                 type="button"
                 disabled={isSubmitting}
                 onClick={() => handleSubmit('Draft')}
-                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-bold text-slate-800 transition-all shadow-2xs flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-initial px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-base font-bold text-slate-800 transition-all shadow-2xs flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Save className="w-4 h-4 text-slate-500" />
                 <span>Save as Draft</span>
@@ -852,7 +852,7 @@ export const VisitorCreateEvent: React.FC<VisitorCreateEventProps> = ({
                 type="button"
                 disabled={isSubmitting}
                 onClick={() => handleSubmit('Pending Approval')}
-                className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-xs font-bold text-white transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-base font-bold text-white transition-all shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>{isSubmitting ? 'Submitting...' : 'Submit for Approval'}</span>

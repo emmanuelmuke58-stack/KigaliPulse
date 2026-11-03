@@ -14,14 +14,14 @@ export const CategoryBrowseSection: React.FC<CategoryBrowseSectionProps> = ({
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       {/* Section Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
+        <div className="inline-flex items-center gap-1.5 text-base font-bold uppercase tracking-wider text-emerald-700 mb-1">
           <Tag className="w-3.5 h-3.5" />
           <span>Curated Disciplines</span>
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
           Browse Kigali by Category
         </h2>
-        <p className="text-slate-500 text-xs sm:text-sm mt-1">
+        <p className="text-slate-500 text-base sm:text-base mt-1">
           From sunset afro-fusion to tech hackathons, find your exact scene in the capital.
         </p>
       </div>
@@ -39,16 +39,16 @@ export const CategoryBrowseSection: React.FC<CategoryBrowseSectionProps> = ({
               <span className="text-2xl sm:text-3xl select-none group-hover:scale-110 transition-transform">
                 {cat.icon}
               </span>
-              <span className="text-[11px] font-semibold text-slate-400 group-hover:text-emerald-700 transition-colors">
+              <span className="text-[15px] font-semibold text-slate-400 group-hover:text-emerald-700 transition-colors">
                 {cat.eventCount} Events
               </span>
             </div>
 
             <div>
-              <h3 className="font-bold text-sm text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
+              <h3 className="font-bold text-base text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
                 {cat.name}
               </h3>
-              <p className="text-[11px] text-slate-500 mt-1 line-clamp-1">
+              <p className="text-[15px] text-slate-500 mt-1 line-clamp-1">
                 {cat.description}
               </p>
             </div>

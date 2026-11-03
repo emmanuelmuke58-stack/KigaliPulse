@@ -9,6 +9,11 @@ import {
   ToastMessage,
 } from '../../types/admin';
 import {
+  EventItem,
+  EventStatus,
+  AuditLogItem,
+} from '../../types';
+import {
   INITIAL_ADMIN_USERS,
   INITIAL_ADMIN_BUSINESSES,
   INITIAL_ADMIN_TRANSACTIONS,
@@ -31,13 +36,33 @@ import { AdminNotifications } from './AdminNotifications';
 import { AdminActivityLogs } from './AdminActivityLogs';
 import { AdminConfirmModal } from './AdminConfirmModal';
 import { AdminToast } from './AdminToast';
+import { AdminDashboard } from '../AdminDashboard';
 import { Search, X, Users, Receipt, Building2, History } from 'lucide-react';
 
 interface AdminSystemProps {
   onExitToPublicSite: () => void;
+  events: EventItem[];
+  onUpdateEventStatus: (
+    eventId: string,
+    newStatus: EventStatus,
+    actionName: string,
+    notes?: string
+  ) => void;
+  onToggleFeatureEvent: (eventId: string) => void;
+  onDeleteEvent: (eventId: string) => void;
+  auditLogs: AuditLogItem[];
+  onSelectEvent: (event: EventItem) => void;
 }
 
-export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) => {
+export const AdminSystem: React.FC<AdminSystemProps> = ({ 
+  onExitToPublicSite,
+  events,
+  onUpdateEventStatus,
+  onToggleFeatureEvent,
+  onDeleteEvent,
+  auditLogs: platformAuditLogs,
+  onSelectEvent
+}) => {
   // 1. Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('kigali_admin_auth') === 'true';
@@ -427,6 +452,18 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
 
         {/* Main Body View */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+          {/* EVENT MANAGEMENT DASHBOARD (New Requested Feature) */}
+          {activeTab === 'event-management' && (
+            <AdminDashboard
+              events={events}
+              onUpdateEventStatus={onUpdateEventStatus}
+              onToggleFeatureEvent={onToggleFeatureEvent}
+              onDeleteEvent={onDeleteEvent}
+              auditLogs={platformAuditLogs}
+              onSelectEvent={onSelectEvent}
+            />
+          )}
+
           {/* USER DETAILS DRILLDOWN VIEW */}
           {selectedUserForDetails ? (
             <AdminUserDetails
@@ -445,10 +482,10 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) 
               {activeTab === 'dashboard' && (
                 <AdminDashboardOverview
                   users={users}
-                  businesses={businesses}
                   transactions={transactions}
                   activityLogs={activityLogs}
                   onNavigateTab={(tab) => setActiveTab(tab)}
+                  events={events}
                 />
               )}
 

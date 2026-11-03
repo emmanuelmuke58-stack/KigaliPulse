@@ -337,6 +337,20 @@ export const EVENTS: EventItem[] = [
     saves: 830,
     clicks: 1940,
     createdAt: '2026-09-10',
+    capacity: 500,
+    ticketsSold: 420,
+    revenue: 6300000,
+    attendeeCount: 380,
+    ticketCategories: [
+      { id: 'cat1', name: 'Regular', price: 15000, capacity: 400, sold: 350 },
+      { id: 'cat2', name: 'VIP', price: 30000, capacity: 100, sold: 70 },
+    ],
+    salesHistory: [
+      { date: '2026-09-10', ticketsSold: 20, revenue: 300000, attendees: 0 },
+      { date: '2026-09-15', ticketsSold: 80, revenue: 1200000, attendees: 0 },
+      { date: '2026-09-20', ticketsSold: 150, revenue: 2250000, attendees: 0 },
+      { date: '2026-09-25', ticketsSold: 170, revenue: 2550000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-2',
@@ -395,6 +409,20 @@ export const EVENTS: EventItem[] = [
     saves: 1120,
     clicks: 3100,
     createdAt: '2026-09-08',
+    capacity: 1200,
+    ticketsSold: 980,
+    revenue: 44100000,
+    attendeeCount: 850,
+    ticketCategories: [
+      { id: 'cat1', name: 'Delegate', price: 45000, capacity: 1000, sold: 850 },
+      { id: 'cat2', name: 'VIP/Investor', price: 150000, capacity: 200, sold: 130 },
+    ],
+    salesHistory: [
+      { date: '2026-09-08', ticketsSold: 50, revenue: 2250000, attendees: 0 },
+      { date: '2026-09-15', ticketsSold: 200, revenue: 9000000, attendees: 0 },
+      { date: '2026-09-22', ticketsSold: 350, revenue: 15750000, attendees: 0 },
+      { date: '2026-09-29', ticketsSold: 380, revenue: 17100000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-3',
@@ -451,6 +479,20 @@ export const EVENTS: EventItem[] = [
     saves: 1450,
     clicks: 4200,
     createdAt: '2026-09-12',
+    capacity: 10000,
+    ticketsSold: 8500,
+    revenue: 42500000,
+    attendeeCount: 7800,
+    ticketCategories: [
+      { id: 'cat1', name: 'Regular', price: 5000, capacity: 8000, sold: 7200 },
+      { id: 'cat2', name: 'VIP', price: 15000, capacity: 1500, sold: 1100 },
+      { id: 'cat3', name: 'Courtside', price: 50000, capacity: 500, sold: 200 },
+    ],
+    salesHistory: [
+      { date: '2026-09-12', ticketsSold: 1000, revenue: 5000000, attendees: 0 },
+      { date: '2026-09-18', ticketsSold: 3000, revenue: 15000000, attendees: 0 },
+      { date: '2026-09-22', ticketsSold: 4500, revenue: 22500000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-4',
@@ -504,6 +546,18 @@ export const EVENTS: EventItem[] = [
     saves: 680,
     clicks: 1100,
     createdAt: '2026-09-15',
+    capacity: 100,
+    ticketsSold: 85,
+    revenue: 0,
+    attendeeCount: 70,
+    ticketCategories: [
+      { id: 'cat1', name: 'Free RSVP', price: 0, capacity: 100, sold: 85 },
+    ],
+    salesHistory: [
+      { date: '2026-09-15', ticketsSold: 20, revenue: 0, attendees: 0 },
+      { date: '2026-09-20', ticketsSold: 40, revenue: 0, attendees: 0 },
+      { date: '2026-09-25', ticketsSold: 25, revenue: 0, attendees: 0 },
+    ],
   },
   {
     id: 'evt-5',
@@ -558,6 +612,18 @@ export const EVENTS: EventItem[] = [
     saves: 530,
     clicks: 870,
     createdAt: '2026-09-14',
+    capacity: 200,
+    ticketsSold: 180,
+    revenue: 1800000,
+    attendeeCount: 150,
+    ticketCategories: [
+      { id: 'cat1', name: 'General', price: 10000, capacity: 200, sold: 180 },
+    ],
+    salesHistory: [
+      { date: '2026-09-14', ticketsSold: 30, revenue: 300000, attendees: 0 },
+      { date: '2026-09-21', ticketsSold: 100, revenue: 1000000, attendees: 0 },
+      { date: '2026-09-28', ticketsSold: 50, revenue: 500000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-6',
@@ -610,6 +676,19 @@ export const EVENTS: EventItem[] = [
     saves: 720,
     clicks: 1400,
     createdAt: '2026-09-16',
+    capacity: 150,
+    ticketsSold: 120,
+    revenue: 3000000,
+    attendeeCount: 110,
+    ticketCategories: [
+      { id: 'cat1', name: 'Brunch Only', price: 25000, capacity: 100, sold: 80 },
+      { id: 'cat2', name: 'Brunch + Drinks', price: 40000, capacity: 50, sold: 40 },
+    ],
+    salesHistory: [
+      { date: '2026-09-16', ticketsSold: 20, revenue: 500000, attendees: 0 },
+      { date: '2026-09-25', ticketsSold: 60, revenue: 1500000, attendees: 0 },
+      { date: '2026-10-01', ticketsSold: 40, revenue: 1000000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-7',
@@ -663,6 +742,18 @@ export const EVENTS: EventItem[] = [
     saves: 410,
     clicks: 620,
     createdAt: '2026-09-17',
+    capacity: 500,
+    ticketsSold: 450,
+    revenue: 0,
+    attendeeCount: 380,
+    ticketCategories: [
+      { id: 'cat1', name: 'Free RSVP', price: 0, capacity: 500, sold: 450 },
+    ],
+    salesHistory: [
+      { date: '2026-09-17', ticketsSold: 100, revenue: 0, attendees: 0 },
+      { date: '2026-09-20', ticketsSold: 200, revenue: 0, attendees: 0 },
+      { date: '2026-09-25', ticketsSold: 150, revenue: 0, attendees: 0 },
+    ],
   },
   {
     id: 'evt-8',
@@ -670,8 +761,8 @@ export const EVENTS: EventItem[] = [
     slug: 'kigali-farmers-and-artisans-market',
     category: 'Markets & Shopping',
     categoryCode: 'markets',
-    date: '2026-09-26',
-    displayDate: 'Saturday, Sep 26, 2026',
+    date: '2026-10-03',
+    displayDate: 'Saturday, Oct 3, 2026',
     time: '09:00 – 16:00',
     venue: 'Mundi Center',
     venueId: 'venue-7',
@@ -716,6 +807,18 @@ export const EVENTS: EventItem[] = [
     saves: 620,
     clicks: 980,
     createdAt: '2026-09-18',
+    capacity: 2000,
+    ticketsSold: 1200,
+    revenue: 0,
+    attendeeCount: 950,
+    ticketCategories: [
+      { id: 'cat1', name: 'Free Entry', price: 0, capacity: 2000, sold: 1200 },
+    ],
+    salesHistory: [
+      { date: '2026-09-18', ticketsSold: 300, revenue: 0, attendees: 0 },
+      { date: '2026-09-25', ticketsSold: 500, revenue: 0, attendees: 0 },
+      { date: '2026-10-01', ticketsSold: 400, revenue: 0, attendees: 0 },
+    ],
   },
   {
     id: 'evt-9',
@@ -769,6 +872,18 @@ export const EVENTS: EventItem[] = [
     saves: 520,
     clicks: 1150,
     createdAt: '2026-09-19',
+    capacity: 60,
+    ticketsSold: 45,
+    revenue: 1575000,
+    attendeeCount: 40,
+    ticketCategories: [
+      { id: 'cat1', name: 'General Admission', price: 35000, capacity: 60, sold: 45 },
+    ],
+    salesHistory: [
+      { date: '2026-09-19', ticketsSold: 10, revenue: 350000, attendees: 0 },
+      { date: '2026-09-26', ticketsSold: 20, revenue: 700000, attendees: 0 },
+      { date: '2026-10-03', ticketsSold: 15, revenue: 525000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-10',
@@ -776,8 +891,8 @@ export const EVENTS: EventItem[] = [
     slug: 'kigali-nightscape-afro-house-rooftop',
     category: 'Nightlife & Parties',
     categoryCode: 'nightlife',
-    date: '2026-09-26',
-    displayDate: 'Saturday, Sep 26, 2026',
+    date: '2026-10-09',
+    displayDate: 'Friday, Oct 9, 2026',
     time: '21:00 – 04:00',
     venue: 'Papy Club Rooftop Lounge',
     venueId: 'venue-1',
@@ -822,6 +937,19 @@ export const EVENTS: EventItem[] = [
     saves: 890,
     clicks: 2100,
     createdAt: '2026-09-20',
+    capacity: 300,
+    ticketsSold: 250,
+    revenue: 2500000,
+    attendeeCount: 210,
+    ticketCategories: [
+      { id: 'cat1', name: 'Regular', price: 10000, capacity: 250, sold: 210 },
+      { id: 'cat2', name: 'VIP Table', price: 50000, capacity: 50, sold: 40 },
+    ],
+    salesHistory: [
+      { date: '2026-09-20', ticketsSold: 50, revenue: 500000, attendees: 0 },
+      { date: '2026-09-27', ticketsSold: 100, revenue: 1000000, attendees: 0 },
+      { date: '2026-10-04', ticketsSold: 100, revenue: 1000000, attendees: 0 },
+    ],
   },
   {
     id: 'evt-11',
@@ -874,6 +1002,18 @@ export const EVENTS: EventItem[] = [
     saves: 1600,
     clicks: 3400,
     createdAt: '2026-09-18',
+    capacity: 9000,
+    ticketsSold: 8200,
+    revenue: 0,
+    attendeeCount: 7500,
+    ticketCategories: [
+      { id: 'cat1', name: 'Standard Delegate', price: 0, capacity: 9000, sold: 8200 },
+    ],
+    salesHistory: [
+      { date: '2026-09-18', ticketsSold: 2000, revenue: 0, attendees: 0 },
+      { date: '2026-09-25', ticketsSold: 3000, revenue: 0, attendees: 0 },
+      { date: '2026-10-02', ticketsSold: 3200, revenue: 0, attendees: 0 },
+    ],
   },
   {
     id: 'evt-12',
@@ -928,6 +1068,17 @@ export const EVENTS: EventItem[] = [
     saves: 590,
     clicks: 1200,
     createdAt: '2026-09-20',
+    capacity: 100,
+    ticketsSold: 80,
+    revenue: 0,
+    attendeeCount: 75,
+    ticketCategories: [
+      { id: 'cat1', name: 'Developer RSVP', price: 0, capacity: 100, sold: 80 },
+    ],
+    salesHistory: [
+      { date: '2026-09-20', ticketsSold: 30, revenue: 0, attendees: 0 },
+      { date: '2026-09-27', ticketsSold: 50, revenue: 0, attendees: 0 },
+    ],
   },
 ];
 

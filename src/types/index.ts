@@ -40,6 +40,22 @@ export interface PerformerOrSpeaker {
   avatar?: string;
 }
 
+export interface TicketCategory {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  capacity: number;
+  sold: number;
+}
+
+export interface SalesRecord {
+  date: string; // YYYY-MM-DD
+  ticketsSold: number;
+  revenue: number;
+  attendees: number;
+}
+
 export interface EventItem {
   id: string;
   title: string;
@@ -83,6 +99,13 @@ export interface EventItem {
   saves: number;
   clicks: number;
   createdAt: string;
+  // Performance Metrics
+  capacity: number;
+  ticketsSold: number;
+  revenue: number;
+  attendeeCount: number;
+  ticketCategories: TicketCategory[];
+  salesHistory: SalesRecord[];
 }
 
 export interface CategoryItem {
@@ -205,4 +228,6 @@ export interface UserProfile {
   savedEventIds: string[];
   followedOrganizerIds: string[];
   notifications: NotificationItem[];
+  preferredFontSize?: number;
+  preferredFontPreset?: string;
 }

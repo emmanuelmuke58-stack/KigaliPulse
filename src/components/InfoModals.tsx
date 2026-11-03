@@ -13,16 +13,16 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-0 sm:p-6"
     >
-      <div className="relative bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-slate-200 p-6 sm:p-8 space-y-6 text-slate-800 animate-in fade-in zoom-in-95 duration-150">
+      <div className="relative bg-white sm:rounded-3xl max-w-2xl w-full h-full sm:h-auto sm:max-h-[85vh] overflow-y-auto shadow-2xl border-t sm:border border-slate-200 p-6 sm:p-8 space-y-6 text-slate-800 animate-in fade-in slide-in-from-bottom sm:zoom-in-95 duration-300 pt-[calc(1rem+env(safe-area-inset-top))] sm:pt-8">
         
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-slate-100"
+          className="fixed sm:absolute top-4 right-4 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:text-slate-900 hover:bg-slate-200 transition-colors shadow-sm"
         >
           <X className="w-5 h-5" />
         </button>
@@ -30,20 +30,20 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
         {/* ABOUT KIGALIPULSE */}
         {type === 'about' && (
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-base font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Platform Vision</span>
             </div>
             <h2 className="font-display text-2xl font-extrabold text-slate-900">
               About KigaliPulse
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-base sm:text-base text-slate-600 leading-relaxed">
               KigaliPulse was built with one urgent premise: answering <em>"What is happening in Kigali?"</em> in three seconds or less.
             </p>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <p className="text-base sm:text-base text-slate-600 leading-relaxed">
               Whether you are a Kigali native looking for weekend live music at Inema, an international tech founder attending a summit at the Convention Centre, or a family exploring the farmers markets in Gikondo, KigaliPulse provides a modern, verified, mobile-first index of the capital.
             </p>
-            <div className="p-4 rounded-2xl bg-slate-50 border space-y-2 text-xs">
+            <div className="p-4 rounded-2xl bg-slate-50 border space-y-2 text-base">
               <h4 className="font-bold text-slate-900">Expansion Roadmap: Kigali → Rwanda → East Africa</h4>
               <p className="text-slate-600 leading-relaxed">
                 The architecture of KigaliPulse is crafted to seamlessly scale from Kigali’s urban hills to Musanze, Rubavu, Huye, and cross-border EAC hubs without rewriting interface ergonomics.
@@ -58,11 +58,11 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
             <h2 className="font-display text-2xl font-extrabold text-slate-900">
               Contact KigaliPulse Office
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-base sm:text-base text-slate-600">
               Have inquiries regarding partnerships, event moderation, press, or ticketing integrations?
             </p>
 
-            <div className="space-y-3 pt-2 text-xs">
+            <div className="space-y-3 pt-2 text-base">
               <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border">
                 <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
@@ -92,7 +92,7 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
 
         {/* TERMS & CONDITIONS */}
         {type === 'terms' && (
-          <div className="space-y-4 text-xs text-slate-600 leading-relaxed">
+          <div className="space-y-4 text-base text-slate-600 leading-relaxed">
             <h2 className="font-display text-2xl font-extrabold text-slate-900">Terms &amp; Conditions</h2>
             <p>
               Welcome to KigaliPulse. By browsing or submitting events to our platform, you agree to comply with Rwandan commercial guidelines, copyright standards, and the following rules:
@@ -110,7 +110,7 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
 
         {/* PRIVACY POLICY */}
         {type === 'privacy' && (
-          <div className="space-y-4 text-xs text-slate-600 leading-relaxed">
+          <div className="space-y-4 text-base text-slate-600 leading-relaxed">
             <h2 className="font-display text-2xl font-extrabold text-slate-900">Privacy Policy</h2>
             <p>
               KigaliPulse respects your privacy and adheres to Law No. 058/2021 relating to the protection of personal data and privacy in the Republic of Rwanda.
@@ -130,7 +130,7 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors"
+            className="px-5 py-2.5 bg-slate-900 text-white rounded-xl text-base font-bold hover:bg-slate-800 transition-colors"
           >
             Acknowledge &amp; Close
           </button>
