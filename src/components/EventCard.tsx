@@ -208,9 +208,11 @@ export const EventCard: React.FC<EventCardProps> = ({
               <Users className="w-4 h-4" />
               <span>{event.saves * 2 + 50}+ Attending</span>
             </div>
-            <div className="flex items-center gap-2 text-slate-400 font-bold text-[11px] uppercase tracking-wider">
-              <Eye className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 text-slate-500 font-bold text-[12px]">
+              <Eye className="w-3.5 h-3.5 text-slate-400" />
               <span>{event.views?.toLocaleString() || 0} Views</span>
+              <span className="mx-1 text-slate-200">·</span>
+              <span className="text-emerald-700 font-black tracking-tight">{event.priceDisplay}</span>
             </div>
           </div>
           

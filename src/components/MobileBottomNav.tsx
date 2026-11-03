@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Compass, Bookmark, LayoutDashboard } from 'lucide-react';
+import { Home, Compass, Bookmark, LayoutDashboard, LogIn } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface MobileBottomNavProps {
@@ -18,10 +18,11 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   const { t } = useLanguage();
   const tabs = [
     { id: 'home', label: t('nav.home'), icon: Home },
+    { id: 'discover', label: t('nav.discover'), icon: Compass },
     { id: 'saved', label: t('header.saved'), icon: Bookmark, badge: savedCount },
     isLoggedIn
       ? { id: 'organizer-dashboard', label: 'Portal', icon: LayoutDashboard }
-      : { id: 'discover', label: t('nav.discover'), icon: Compass },
+      : { id: 'admin-dashboard', label: 'Sign In', icon: LogIn },
   ];
 
   return (

@@ -26,6 +26,8 @@ export const AdminProfile: React.FC<AdminProfileProps> = ({
   onNavigateTab,
   onLogoutClick,
 }) => {
+  if (!currentUser) return null;
+
   return (
     <div className="space-y-6 max-w-4xl">
       {/* 1. Header */}

@@ -146,6 +146,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
             <button onClick={() => onNavigate('advertise')} className="text-slate-500 hover:text-white transition-colors">Advertise</button>
             <button onClick={() => onOpenInfo('terms')} className="text-slate-500 hover:text-white transition-colors">Terms</button>
             <button onClick={() => onOpenInfo('privacy')} className="text-slate-500 hover:text-white transition-colors">Privacy</button>
+            <button onClick={() => onNavigate('admin-dashboard')} className="text-slate-600 hover:text-emerald-500 transition-colors flex items-center gap-1.5 ml-2 group">
+              <span className="w-1 h-1 rounded-full bg-slate-700 group-hover:bg-emerald-500" />
+              <span>Admin Access</span>
+            </button>
           </div>
 
           <div className="text-[14px] text-slate-500 font-medium text-center lg:text-right">

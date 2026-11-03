@@ -13,7 +13,38 @@ import {
   EventSubmission,
 } from '../types/admin';
 
-export const INITIAL_ADMIN_USERS: EnterpriseUser[] = [];
+export const INITIAL_ADMIN_USERS: EnterpriseUser[] = [
+  {
+    id: 'usr-1',
+    name: 'Emmanuel Muke',
+    firstName: 'Emmanuel',
+    lastName: 'Muke',
+    email: 'emmanuelmuke58@gmail.com',
+    phone: '+250 788 355 111',
+    role: 'SuperAdmin',
+    organization: 'KigaliPulse Media Group',
+    status: 'Active',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    lastLogin: 'Just now',
+    dateCreated: '2024-01-15',
+    department: 'Executive Operations',
+  },
+  {
+    id: 'usr-2',
+    name: 'Claudine Uwase',
+    firstName: 'Claudine',
+    lastName: 'Uwase',
+    email: 'claudine@techinnovate.africa',
+    phone: '+250 788 444 222',
+    role: 'Admin',
+    organization: 'KigaliPulse Media Group',
+    status: 'Active',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
+    lastLogin: '2h ago',
+    dateCreated: '2024-02-20',
+    department: 'Digital Moderation',
+  },
+];
 
 
 export const INITIAL_ADMIN_BUSINESSES: EnterpriseBusiness[] = [

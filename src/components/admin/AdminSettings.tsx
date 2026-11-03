@@ -13,6 +13,10 @@ import {
   Globe,
   Clock,
   Sparkles,
+  Plus,
+  Edit2,
+  Trash2,
+  Tag,
   Save,
 } from 'lucide-react';
 import {
@@ -29,6 +33,8 @@ import {
   DEFAULT_SYSTEM_SETTINGS,
   ROLE_PERMISSIONS_MATRIX,
 } from '../../data/adminMockData';
+import { CATEGORIES as INITIAL_CATEGORIES } from '../../data/mockData';
+import { CategoryItem, EventCategory } from '../../types';
 
 import { useFontSize } from '../../contexts/FontSizeContext';
 import { FontSizeSettings } from '../FontSizeSettings';
@@ -46,9 +52,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 }) => {
   const { fontSize, preset, setFontSize, setPreset, resetToDefault, savePreferences } = useFontSize();
 
+  if (!currentUser) return null;
+
   // Active sub-section tab
   const [activeSection, setActiveSection] = useState<
-    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system' | 'font'
+    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system' | 'font' | 'categories'
   >('general');
 
   // Form states
@@ -58,6 +66,18 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
     DEFAULT_NOTIFICATION_SETTINGS
   );
   const [system, setSystem] = useState<SystemSettingsState>(DEFAULT_SYSTEM_SETTINGS);
+
+  // Category Management state
+  const [categories, setCategories] = useState<CategoryItem[]>(INITIAL_CATEGORIES);
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<CategoryItem | null>(null);
+  const [newCategory, setNewCategory] = useState<Partial<CategoryItem>>({
+    name: '',
+    icon: '📍',
+    description: '',
+    color: 'emerald',
+    eventCount: 0,
+  });
 
   // Account form state
   const [accountForm, setAccountForm] = useState({
@@ -74,6 +94,8 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
     newPassword: '',
     confirmPassword: '',
   });
+
+  const isAuthorized = ['Admin', 'SuperAdmin'].includes(currentUser.role);
 
   // Save handler
   const handleSave = (sectionName: string) => {
@@ -105,6 +127,33 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
     onTriggerToast('success', 'Password Updated', 'Your administrative password was changed.');
   };
 
+  const handleAddCategory = () => {
+    if (!newCategory.name) return;
+    const id = newCategory.name.toLowerCase().replace(/\s+/g, '-') as EventCategory;
+    const category: CategoryItem = {
+      ...(newCategory as CategoryItem),
+      id,
+    };
+    setCategories([...categories, category]);
+    setNewCategory({ name: '', icon: '📍', description: '', color: 'emerald', eventCount: 0 });
+    setIsAddingCategory(false);
+    onTriggerToast('success', 'Category Created', `"${category.name}" has been added to the platform.`);
+  };
+
+  const handleUpdateCategory = () => {
+    if (!editingCategory) return;
+    setCategories(categories.map(c => c.id === editingCategory.id ? editingCategory : c));
+    setEditingCategory(null);
+    onTriggerToast('success', 'Category Updated', `Changes to "${editingCategory.name}" were saved.`);
+  };
+
+  const handleDeleteCategory = (id: string) => {
+    if (window.confirm('Are you sure you want to delete this category? This will affect existing events.')) {
+      setCategories(categories.filter(c => c.id !== id));
+      onTriggerToast('warning', 'Category Deleted', 'The category has been removed from the system.');
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* 1. Header */}
@@ -123,12 +172,13 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         {[
           { id: 'general', label: 'General', icon: Sliders },
           { id: 'account', label: 'Account Profile', icon: User },
+          { id: 'categories', label: 'Categories', icon: Tag, roles: ['Admin', 'SuperAdmin'] },
           { id: 'security', label: 'Security & 2FA', icon: Lock },
           { id: 'notifications', label: 'Notification Rules', icon: Bell },
           { id: 'font', label: 'Font Size', icon: Sparkles },
           { id: 'roles', label: 'Roles & Permissions', icon: Shield },
           { id: 'system', label: 'System & Maintenance', icon: Database },
-        ].map((tab) => {
+        ].filter(tab => !tab.roles || tab.roles.includes(currentUser.role)).map((tab) => {
           const Icon = tab.icon;
           const isActive = activeSection === tab.id;
           return (
@@ -150,6 +200,148 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
       </div>
 
       {/* 3. SECTION CONTENT */}
+
+      {/* SECTION: CATEGORY MANAGEMENT */}
+      {activeSection === 'categories' && isAuthorized && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-lg font-bold text-slate-900">Platform Category Management</h3>
+              <p className="text-base text-slate-600">Create and manage event taxonomies used across the ecosystem.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsAddingCategory(true)}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-white transition-all flex items-center gap-2 shadow-sm cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>New Category</span>
+            </button>
+          </div>
+
+          {/* Add/Edit Modal (Simplified Inline UI for this brief) */}
+          {(isAddingCategory || editingCategory) && (
+            <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl p-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="flex items-center justify-between">
+                <h4 className="font-bold text-slate-900">{isAddingCategory ? 'Add New Category' : 'Edit Category'}</h4>
+                <button 
+                  onClick={() => { setIsAddingCategory(false); setEditingCategory(null); }}
+                  className="text-slate-400 hover:text-slate-600 font-bold"
+                >
+                  Cancel
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Name</label>
+                  <input
+                    type="text"
+                    value={isAddingCategory ? newCategory.name : editingCategory?.name}
+                    onChange={(e) => isAddingCategory 
+                      ? setNewCategory({...newCategory, name: e.target.value})
+                      : setEditingCategory({...editingCategory!, name: e.target.value})}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none"
+                    placeholder="e.g. Comedy Nights"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Icon (Emoji)</label>
+                  <input
+                    type="text"
+                    value={isAddingCategory ? newCategory.icon : editingCategory?.icon}
+                    onChange={(e) => isAddingCategory 
+                      ? setNewCategory({...newCategory, icon: e.target.value})
+                      : setEditingCategory({...editingCategory!, icon: e.target.value})}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none text-center"
+                    maxLength={2}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-1">Color Palette</label>
+                  <select
+                    value={isAddingCategory ? newCategory.color : editingCategory?.color}
+                    onChange={(e) => isAddingCategory 
+                      ? setNewCategory({...newCategory, color: e.target.value})
+                      : setEditingCategory({...editingCategory!, color: e.target.value})}
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none"
+                  >
+                    <option value="emerald">Emerald Green</option>
+                    <option value="purple">Royal Purple</option>
+                    <option value="blue">Ocean Blue</option>
+                    <option value="rose">Soft Rose</option>
+                    <option value="amber">Warm Amber</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Description</label>
+                <textarea
+                  value={isAddingCategory ? newCategory.description : editingCategory?.description}
+                  onChange={(e) => isAddingCategory 
+                    ? setNewCategory({...newCategory, description: e.target.value})
+                    : setEditingCategory({...editingCategory!, description: e.target.value})}
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none min-h-[80px]"
+                  placeholder="Describe what kind of events belong here..."
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  onClick={isAddingCategory ? handleAddCategory : handleUpdateCategory}
+                  className="px-6 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-colors"
+                >
+                  {isAddingCategory ? 'Create Category' : 'Save Changes'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {categories.map((cat) => (
+              <div 
+                key={cat.id}
+                className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between group hover:border-emerald-300 transition-all hover:shadow-lg hover:shadow-slate-100"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-xl shadow-inner">
+                      {cat.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900">{cat.name}</h4>
+                      <span className="text-[10px] uppercase font-black tracking-widest text-slate-400">
+                        {cat.eventCount} active events
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button 
+                      onClick={() => setEditingCategory(cat)}
+                      className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteCategory(cat.id)}
+                      className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500 transition-colors"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-500 mt-3 line-clamp-2 leading-relaxed">
+                  {cat.description}
+                </p>
+                <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-${cat.color}-50 text-${cat.color}-700`}>
+                    {cat.color}
+                  </span>
+                  <span className="text-[10px] text-slate-300 font-mono">ID: {cat.id}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* SECTION 1: GENERAL */}
       {activeSection === 'general' && (

@@ -78,6 +78,8 @@ export const AdminTopNav: React.FC<AdminTopNavProps> = ({
     }
   };
 
+  if (!currentUser) return null;
+
   return (
     <header className="sticky top-0 z-30 h-20 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 px-6 sm:px-8 flex items-center justify-between shadow-sm">
       {/* Left: Mobile Menu button & Title / Breadcrumbs */}
