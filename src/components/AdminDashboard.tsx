@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
   ShieldAlert,
   CheckCircle,
@@ -22,34 +22,10 @@ import {
   BarChart3,
   Eye,
   ExternalLink,
-  Search,
-  Ticket,
-  ChevronDown,
 } from 'lucide-react';
 import { EventItem, EventStatus, AdvertisementItem, AuditLogItem } from '../types';
 import { ADVERTISEMENTS, INITIAL_AUDIT_LOGS } from '../data/mockData';
 import { AdminReportsSection } from './AdminReportsSection';
-import {
-  BarChart as ReBarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts';
-import { format, parseISO } from 'date-fns';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 interface AdminDashboardProps {
   events: EventItem[];
@@ -76,35 +52,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [activeTab, setActiveTab] = useState<string>('reports');
   const [ads, setAds] = useState<AdvertisementItem[]>(ADVERTISEMENTS);
   const [moderationNote, setModerationNote] = useState<string>('');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedEventForNote, setSelectedEventForNote] = useState<string | null>(null);
 
-  // Statistics Calculation
-  const stats = useMemo(() => {
-    const totalEvents = events.length;
-    const pendingCount = events.filter((e) => e.status === 'Pending Approval').length;
-    const totalTicketsSold = events.reduce((acc, e) => acc + (e.ticketsSold || 0), 0);
-    const totalRevenue = events.reduce((acc, e) => acc + (e.revenue || 0), 0);
-    const totalAttendees = events.reduce((acc, e) => acc + (e.attendeeCount || 0), 0);
-    const avgConversion = totalEvents > 0 ? (events.reduce((acc, e) => acc + (e.clicks > 0 ? (e.ticketsSold / e.clicks) : 0), 0) / totalEvents * 100).toFixed(1) : 0;
-
-    return {
-      totalEvents,
-      pendingCount,
-      totalTicketsSold,
-      totalRevenue,
-      totalAttendees,
-      avgConversion,
-    };
-  }, [events]);
-
-  const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#ec4899'];
-
-  const filteredEvents = useMemo(() => {
-    return events.filter(e => 
-      e.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      e.organizer.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [events, searchQuery]);
+  // Statistics
+  const totalUsers = 4820;
+  const totalOrganizers = 84;
+  const totalEvents = events.length;
+  const pendingEvents = events.filter((e) => e.status === 'Pending Approval');
+  const publishedEvents = events.filter((e) => e.status === 'Published');
+  const featuredEvents = events.filter((e) => e.isFeatured);
+  const eventsToday = events.filter((e) => e.date === '2026-09-24').length;
+  const upcomingEvents = events.filter((e) => new Date(e.date) >= new Date('2026-09-24')).length;
+  const totalAdRevenue = 'RF 1,620,000';
 
   const handleModerationAction = (
     eventId: string,
@@ -114,286 +73,408 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   ) => {
     onUpdateEventStatus(eventId, status, actionLabel, note || moderationNote);
     setModerationNote('');
+    setSelectedEventForNote(null);
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       
-      {/* 1. Super Admin Top Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-100 pb-10">
-        <div className="space-y-1">
+      {/* Super Admin Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-6">
+        <div>
           <div className="flex items-center gap-2">
-            <span className="bg-red-100 text-red-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-widest flex items-center gap-1.5">
-              <ShieldAlert className="w-3.5 h-3.5" /> Super Admin Center
+            <span className="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
+              <ShieldAlert className="w-3 h-3" /> Super Admin Center
             </span>
-            <span className="text-slate-300">•</span>
-            <span className="text-xs font-bold text-slate-500">System-wide Governance</span>
           </div>
-          <h1 className="font-black text-4xl text-slate-900 leading-tight">
-            Platform Intelligence Center
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 mt-1">
+            Platform Intelligence &amp; Governance Center
           </h1>
-          <p className="text-slate-500 text-sm font-medium">
-            Monitor <span className="text-slate-900 font-bold">RF {stats.totalRevenue.toLocaleString()}</span> in total ticket revenue across the ecosystem.
+          <p className="text-xs text-slate-500 mt-0.5">
+            Audit public listings, evaluate discovery analytics reports, verify organizers, and govern ad inventory.
           </p>
         </div>
 
         {/* Tab Controls */}
-        <div className="flex items-center flex-wrap gap-2 bg-slate-100 p-2 rounded-2xl text-xs font-black">
-          {[
-            { id: 'reports', label: 'Analytics', icon: BarChart3 },
-            { id: 'moderation', label: 'Moderation', icon: FileCheck, badge: stats.pendingCount },
-            { id: 'advertisements', label: 'Ad System', icon: Megaphone },
-            { id: 'audit-logs', label: 'Audit Logs', icon: History },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={cn(
-                "px-5 py-3 rounded-xl transition-all flex items-center gap-2",
-                activeTab === tab.id 
-                  ? "bg-white text-emerald-800 shadow-md scale-100" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-              )}
-            >
-              <tab.icon className={cn("w-4 h-4", activeTab === tab.id ? "text-emerald-600" : "text-slate-400")} />
-              <span>{tab.label}</span>
-              {tab.badge !== undefined && tab.badge > 0 && (
-                <span className="bg-red-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">
-                  {tab.badge}
-                </span>
-              )}
-            </button>
-          ))}
+        <div className="flex items-center flex-wrap gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold">
+          <button
+            type="button"
+            onClick={() => setActiveTab('reports')}
+            className={`px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 ${
+              activeTab === 'reports' ? 'bg-white text-emerald-800 shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Admin Reports</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('moderation')}
+            className={`px-3.5 py-2 rounded-lg transition-colors ${
+              activeTab === 'moderation' ? 'bg-white text-slate-900 shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Event Moderation ({pendingEvents.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('advertisements')}
+            className={`px-3.5 py-2 rounded-lg transition-colors ${
+              activeTab === 'advertisements' ? 'bg-white text-slate-900 shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Ad System ({ads.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('audit-logs')}
+            className={`px-3.5 py-2 rounded-lg transition-colors ${
+              activeTab === 'audit-logs' ? 'bg-white text-slate-900 shadow-sm font-black' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            Audit Logs ({auditLogs.length})
+          </button>
         </div>
       </div>
 
-      {/* 2. Global KPIs (8 metrics) */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-        {[
-          { label: 'Total Events', value: stats.totalEvents },
-          { label: 'Pending Appr', value: stats.pendingCount, alert: stats.pendingCount > 0 },
-          { label: 'Tickets Sold', value: stats.totalTicketsSold.toLocaleString() },
-          { label: 'Total Revenue', value: `RF ${(stats.totalRevenue / 1000000).toFixed(1)}M` },
-          { label: 'Conversion', value: `${stats.avgConversion}%` },
-          { label: 'Ad Revenue', value: 'RF 1.6M' },
-          { label: 'Organizers', value: '84' },
-          { label: 'Active Ads', value: '12' },
-        ].map((item, idx) => (
-          <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1 group hover:border-emerald-200 transition-colors">
-            <span className={cn(
-              "text-[9px] uppercase font-black tracking-widest block",
-              item.alert ? "text-amber-600" : "text-slate-400"
-            )}>
-              {item.label}
-            </span>
-            <div className={cn(
-              "text-xl font-black tabular-nums",
-              item.alert ? "text-amber-600" : "text-slate-900"
-            )}>
-              {item.value}
-            </div>
-          </div>
-        ))}
+      {/* Admin Statistics Row (8 Key Metrics) */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Users</span>
+          <span className="text-xl font-black text-slate-900 tabular-nums">{totalUsers.toLocaleString()}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Organizers</span>
+          <span className="text-xl font-black text-slate-900 tabular-nums">{totalOrganizers}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Events</span>
+          <span className="text-xl font-black text-slate-900 tabular-nums">{totalEvents}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-amber-600 block">Pending</span>
+          <span className="text-xl font-black text-amber-600 tabular-nums">{pendingEvents.length}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-emerald-700 block">Published</span>
+          <span className="text-xl font-black text-emerald-700 tabular-nums">{publishedEvents.length}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Events Today</span>
+          <span className="text-xl font-black text-slate-900 tabular-nums">{eventsToday}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-slate-400 block">Upcoming</span>
+          <span className="text-xl font-black text-slate-900 tabular-nums">{upcomingEvents}</span>
+        </div>
+        <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-sm text-center">
+          <span className="text-[10px] uppercase font-bold text-emerald-700 block">Ad Revenue</span>
+          <span className="text-xs font-black text-emerald-700 tabular-nums block mt-1">{totalAdRevenue}</span>
+        </div>
       </div>
 
-      {/* 3. Tab Views */}
-      <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-        {activeTab === 'reports' && (
-          <div className="space-y-10">
-            <AdminReportsSection events={events} />
-          </div>
-        )}
+      {/* TAB 0: EXECUTIVE ADMIN REPORT & ANALYTICS */}
+      {activeTab === 'reports' && (
+        <AdminReportsSection events={events} />
+      )}
 
-        {activeTab === 'moderation' && (
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      {/* TAB 1: EVENT MODERATION WORKFLOW */}
+      {activeTab === 'moderation' && (
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-black text-slate-900">Event Approval Workflow</h2>
-                <p className="text-sm text-slate-500 font-medium">Verify credentials and ticket provider settings before publication.</p>
+                <h2 className="text-base font-bold text-slate-900">Event Approval &amp; Lifecycle Queue</h2>
+                <p className="text-xs text-slate-500">
+                  Review submitted events, request organizer changes, feature on homepage, or mark status.
+                </p>
               </div>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input 
-                  type="text"
-                  placeholder="Search events or organizers..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:ring-2 focus:ring-emerald-500 w-full sm:w-64"
-                />
-              </div>
+              <span className="text-xs font-bold text-slate-500">{events.length} listings registered</span>
             </div>
 
             <div className="divide-y divide-slate-100">
-              {filteredEvents.map((evt) => (
-                <div key={evt.id} className="p-6 hover:bg-slate-50/50 transition-colors flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-                  <div className="flex items-start gap-4 min-w-0 flex-1">
-                    <img src={evt.image} className="w-20 h-20 rounded-2xl object-cover shrink-0 border border-slate-200" alt="" />
+              {events.map((evt) => (
+                <div key={evt.id} className="p-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 hover:bg-slate-50/50">
+                  
+                  {/* Left: Event Details */}
+                  <div className="flex items-start gap-4 min-w-0">
+                    <img
+                      src={evt.image}
+                      alt={evt.title}
+                      className="w-16 h-16 rounded-xl object-cover shrink-0 border"
+                    />
                     <div className="space-y-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 
-                          className="font-black text-slate-900 hover:text-emerald-700 cursor-pointer text-lg truncate" 
-                          onClick={() => onSelectEvent(evt)}
-                        >
+                        <h4 className="font-bold text-sm text-slate-900 hover:text-emerald-700 cursor-pointer" onClick={() => onSelectEvent(evt)}>
                           {evt.title}
                         </h4>
-                        <span className={cn(
-                          "text-[10px] font-black px-2 py-1 rounded-full uppercase",
-                          evt.status === 'Published' ? "bg-emerald-100 text-emerald-800" :
-                          evt.status === 'Pending Approval' ? "bg-amber-100 text-amber-800" :
-                          "bg-slate-100 text-slate-700"
-                        )}>
+                        <span
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            evt.status === 'Published'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : evt.status === 'Pending Approval'
+                              ? 'bg-amber-100 text-amber-800'
+                              : evt.status === 'Cancelled'
+                              ? 'bg-red-100 text-red-800'
+                              : evt.status === 'Postponed'
+                              ? 'bg-orange-100 text-orange-800'
+                              : 'bg-slate-100 text-slate-700'
+                          }`}
+                        >
                           {evt.status}
                         </span>
+                        {evt.isFeatured && (
+                          <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> Featured
+                          </span>
+                        )}
                       </div>
-                      <div className="text-xs text-slate-500 font-bold flex items-center gap-3 flex-wrap">
-                        <span className="text-slate-900">{evt.organizer}</span>
-                        <span className="text-slate-300">•</span>
-                        <span>{evt.displayDate}</span>
-                        <span className="text-slate-300">•</span>
-                        <span>{evt.venue}</span>
-                        <span className="text-slate-300">•</span>
-                        <span className="text-emerald-700">RF {evt.price.toLocaleString()}</span>
+
+                      <div className="text-xs text-slate-500 flex items-center gap-2 flex-wrap">
+                        <span className="font-medium text-slate-800">{evt.organizer}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{evt.displayDate} ({evt.time})</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{evt.venue}, {evt.neighborhood}</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="font-bold text-slate-900 tabular-nums">{evt.priceDisplay}</span>
+                        <span aria-hidden="true">·</span>
+                        <span
+                          className="inline-flex items-center gap-1 font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md text-[11px]"
+                          title={`${evt.views.toLocaleString()} page visits`}
+                        >
+                          <Eye className="w-3.5 h-3.5 text-slate-500" />
+                          <span>{evt.views.toLocaleString()} Views</span>
+                        </span>
                       </div>
-                      <div className="flex items-center gap-4 pt-2">
-                        <div className="flex items-center gap-1.5">
-                          <Eye className="w-3.5 h-3.5 text-slate-400" />
-                          <span className="text-[10px] font-black text-slate-600 tabular-nums">{evt.views.toLocaleString()} Views</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Ticket className="w-3.5 h-3.5 text-slate-400" />
-                          <span className="text-[10px] font-black text-slate-600 tabular-nums">{evt.ticketsSold.toLocaleString()} Sold</span>
-                        </div>
+
+                      <div className="text-[11px] text-slate-400 truncate max-w-xl">
+                        Ticketing Link: <a href={evt.externalTicketUrl} target="_blank" rel="noreferrer" className="text-emerald-700 hover:underline">{evt.externalTicketUrl}</a>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 shrink-0 self-end lg:self-center">
+                  {/* Right: Moderation Actions (Constitution & Prompt Section 15) */}
+                  <div className="flex flex-wrap items-center gap-1.5 shrink-0 self-end lg:self-center">
+                    
+                    {/* Approve */}
                     {evt.status !== 'Published' && (
                       <button
-                        onClick={() => handleModerationAction(evt.id, 'Published', 'Approved Event')}
-                        className="px-5 py-2.5 bg-emerald-600 text-white text-xs font-black rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2 shadow-lg shadow-emerald-100"
+                        type="button"
+                        onClick={() => handleModerationAction(evt.id, 'Published', 'Approved Event', 'All organizer criteria verified.')}
+                        className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors flex items-center gap-1"
                       >
-                        <CheckCircle className="w-4 h-4" />
-                        Approve
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        <span>Approve</span>
                       </button>
                     )}
+
+                    {/* Feature on Homepage Toggle */}
                     <button
+                      type="button"
                       onClick={() => onToggleFeatureEvent(evt.id)}
-                      className={cn(
-                        "px-4 py-2.5 rounded-xl border text-xs font-black flex items-center gap-2 transition-all",
-                        evt.isFeatured ? "bg-amber-50 border-amber-200 text-amber-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"
-                      )}
+                      className={`px-3 py-1.5 rounded-lg border text-xs font-bold transition-colors flex items-center gap-1 ${
+                        evt.isFeatured
+                          ? 'bg-amber-50 border-amber-300 text-amber-800'
+                          : 'border-slate-200 text-slate-700 hover:bg-slate-100'
+                      }`}
+                      title="Toggle Featured status on Homepage"
                     >
-                      <Star className={cn("w-4 h-4", evt.isFeatured ? "fill-amber-500 text-amber-500" : "")} />
-                      {evt.isFeatured ? 'Featured' : 'Feature'}
+                      <Star className={`w-3.5 h-3.5 ${evt.isFeatured ? 'fill-amber-500 text-amber-500' : ''}`} />
+                      <span>{evt.isFeatured ? 'Featured' : 'Feature'}</span>
                     </button>
+
+                    {/* Request Changes */}
                     <button
+                      type="button"
                       onClick={() => {
-                        const note = prompt('Request changes:');
-                        if (note) handleModerationAction(evt.id, 'Draft', 'Requested Changes', note);
+                        const note = prompt('Enter change request note for organizer:');
+                        if (note) {
+                          handleModerationAction(evt.id, 'Draft', 'Requested Changes', note);
+                        }
                       }}
-                      className="px-4 py-2.5 border border-slate-200 text-slate-600 text-xs font-black rounded-xl hover:bg-slate-50"
+                      className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold"
+                      title="Request changes from organizer"
                     >
                       Req Changes
                     </button>
-                    <div className="h-8 w-px bg-slate-200 mx-1" />
+
+                    {/* Mark Postponed */}
+                    {evt.status !== 'Postponed' && (
+                      <button
+                        type="button"
+                        onClick={() => handleModerationAction(evt.id, 'Postponed', 'Marked Event as Postponed')}
+                        className="px-2.5 py-1.5 rounded-lg border border-orange-200 text-orange-700 hover:bg-orange-50 text-xs font-medium"
+                      >
+                        Postpone
+                      </button>
+                    )}
+
+                    {/* Mark Cancelled */}
+                    {evt.status !== 'Cancelled' && (
+                      <button
+                        type="button"
+                        onClick={() => handleModerationAction(evt.id, 'Cancelled', 'Marked Event as Cancelled')}
+                        className="px-2.5 py-1.5 rounded-lg border border-red-200 text-red-700 hover:bg-red-50 text-xs font-medium"
+                      >
+                        Cancel
+                      </button>
+                    )}
+
+                    {/* Unpublish */}
+                    {evt.status === 'Published' && (
+                      <button
+                        type="button"
+                        onClick={() => handleModerationAction(evt.id, 'Draft', 'Unpublished Event')}
+                        className="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-medium"
+                      >
+                        Unpublish
+                      </button>
+                    )}
+
+                    {/* Delete */}
                     <button
+                      type="button"
                       onClick={() => {
-                        if (confirm('Permanently delete?')) onDeleteEvent(evt.id);
+                        if (confirm(`Are you sure you want to permanently delete "${evt.title}"?`)) {
+                          onDeleteEvent(evt.id);
+                        }
                       }}
-                      className="p-2.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50"
+                      title="Delete event"
                     >
-                      <Trash2 className="w-5 h-5" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {activeTab === 'advertisements' && (
-          <div className="space-y-8">
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-                <div>
-                  <h2 className="text-xl font-black text-slate-900">Ad & Promotion Ecosystem</h2>
-                  <p className="text-sm text-slate-500 font-medium">Govern sponsored content and homepage banner inventory.</p>
-                </div>
-                <button className="px-6 py-3 bg-slate-900 text-white rounded-2xl text-xs font-black hover:bg-emerald-600 transition-all flex items-center gap-2">
-                  <Plus className="w-4 h-4" />
-                  Launch New Campaign
-                </button>
+      {/* TAB 2: ADVERTISEMENT SYSTEM */}
+      {activeTab === 'advertisements' && (
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h2 className="text-base font-bold text-slate-900">Commercial Advertisement Campaigns</h2>
+                <p className="text-xs text-slate-500">
+                  Manage sponsored banners, category placements, impressions, and click-through attribution.
+                </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {ads.map((ad) => (
-                  <div key={ad.id} className="group p-6 rounded-3xl border border-slate-200 bg-slate-50/30 hover:border-emerald-200 transition-all">
-                    <div className="relative h-48 rounded-2xl overflow-hidden mb-6">
-                      <img src={ad.image} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" alt="" />
-                      <div className="absolute top-4 right-4 bg-black/80 text-white text-[9px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">
-                        {ad.status}
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h4 className="font-black text-lg text-slate-900">{ad.title}</h4>
-                          <span className="text-xs font-bold text-slate-500">{ad.advertiser} • {ad.format}</span>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
-                        <div>
-                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Budget</span>
-                          <span className="font-black text-slate-900 text-sm">{ad.budget}</span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Impressions</span>
-                          <span className="font-black text-slate-900 text-sm tabular-nums">{ad.impressions.toLocaleString()}</span>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">CTR</span>
-                          <span className="font-black text-emerald-600 text-sm tabular-nums">{((ad.clicks / ad.impressions) * 100).toFixed(1)}%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const title = prompt('Enter campaign headline:');
+                  if (title) {
+                    const newAd: AdvertisementItem = {
+                      id: `ad-${Date.now()}`,
+                      title,
+                      advertiser: 'Corporate Client',
+                      format: 'Homepage Banner',
+                      placement: 'Hero Secondary Scrim',
+                      destinationUrl: 'https://visitrwanda.com',
+                      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+                      status: 'Active',
+                      budget: 'RF 350,000',
+                      impressions: 0,
+                      clicks: 0,
+                      startDate: '2026-09-24',
+                      endDate: '2026-10-31',
+                    };
+                    setAds([newAd, ...ads]);
+                    alert('New advertisement campaign launched!');
+                  }
+                }}
+                className="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition-colors flex items-center gap-1.5"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Create New Campaign</span>
+              </button>
             </div>
-          </div>
-        )}
 
-        {activeTab === 'audit-logs' && (
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-8 border-b border-slate-100">
-              <h2 className="text-xl font-black text-slate-900">Governance Audit Logs</h2>
-              <p className="text-sm text-slate-500 font-medium">Immutable trace of all administrative and moderation actions.</p>
-            </div>
-            <div className="divide-y divide-slate-100">
-              {auditLogs.map((log) => (
-                <div key={log.id} className="p-6 hover:bg-slate-50 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-black text-slate-900">{log.action}</span>
-                      <span className="text-slate-300">•</span>
-                      <span className="text-xs font-bold text-emerald-700">{log.targetTitle}</span>
-                    </div>
-                    {log.notes && (
-                      <p className="text-xs text-slate-500 italic font-medium">"{log.notes}"</p>
-                    )}
+            {/* Ads Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {ads.map((ad) => (
+                <div key={ad.id} className="p-4 rounded-2xl border border-slate-200 space-y-3 bg-slate-50/50">
+                  <div className="relative h-32 rounded-xl overflow-hidden bg-slate-900">
+                    <img src={ad.image} alt={ad.title} className="w-full h-full object-cover" />
+                    <span className="absolute top-2 right-2 bg-slate-900/90 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                      Sponsored
+                    </span>
                   </div>
-                  <div className="text-right shrink-0">
-                    <span className="text-[10px] font-black text-slate-900 block uppercase tracking-widest">{log.user}</span>
-                    <span className="text-[10px] font-bold text-slate-400">{log.timestamp}</span>
+
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h4 className="font-bold text-sm text-slate-900">{ad.title}</h4>
+                      <span className="text-xs text-slate-500">{ad.advertiser} · {ad.format}</span>
+                    </div>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
+                      {ad.status}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 p-2 rounded-xl bg-white border border-slate-200 text-center text-xs">
+                    <div>
+                      <span className="text-[10px] text-slate-400 block font-semibold">Budget</span>
+                      <span className="font-bold text-slate-900">{ad.budget}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-400 block font-semibold">Impressions</span>
+                      <span className="font-bold text-slate-900 tabular-nums">{ad.impressions.toLocaleString()}</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-400 block font-semibold">Clicks</span>
+                      <span className="font-bold text-emerald-700 tabular-nums">{ad.clicks.toLocaleString()}</span>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {/* TAB 3: AUDIT LOGS */}
+      {activeTab === 'audit-logs' && (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-slate-900">Security &amp; Moderation Audit Logs</h2>
+              <p className="text-xs text-slate-500">
+                Immutable chronological log of all administrator and moderation actions on KigaliPulse.
+              </p>
+            </div>
+            <span className="text-xs font-semibold text-slate-500">{auditLogs.length} audit entries</span>
+          </div>
+
+          <div className="divide-y divide-slate-100 text-xs">
+            {auditLogs.map((log) => (
+              <div key={log.id} className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 hover:bg-slate-50">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-900">{log.action}</span>
+                    <span className="text-slate-400">on</span>
+                    <span className="font-semibold text-emerald-700">{log.targetTitle}</span>
+                  </div>
+                  {log.notes && (
+                    <p className="text-slate-500 italic text-[11px]">{log.notes}</p>
+                  )}
+                </div>
+
+                <div className="text-right text-slate-400 shrink-0 text-[11px]">
+                  <span className="font-medium text-slate-600 block">{log.user} ({log.role})</span>
+                  <span>{log.timestamp}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

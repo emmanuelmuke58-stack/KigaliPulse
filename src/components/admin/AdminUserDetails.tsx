@@ -56,10 +56,10 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
   );
 
   // Status badges
-  let statusBadge = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-  if (user.status === 'Pending') statusBadge = 'bg-amber-50 text-amber-700 border-amber-200';
-  if (user.status === 'Suspended') statusBadge = 'bg-rose-50 text-rose-700 border-rose-200';
-  if (user.status === 'Inactive') statusBadge = 'bg-slate-100 text-slate-600 border-slate-200';
+  let statusBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+  if (user.status === 'Pending') statusBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+  if (user.status === 'Suspended') statusBadge = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+  if (user.status === 'Inactive') statusBadge = 'bg-slate-700/50 text-slate-400 border-slate-700';
 
   return (
     <div className="space-y-6">
@@ -68,7 +68,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-base font-bold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Users</span>
@@ -78,9 +78,9 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <button
             type="button"
             onClick={() => onEditUser(user)}
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
           >
-            <Edit2 className="w-3.5 h-3.5 text-slate-500" />
+            <Edit2 className="w-3.5 h-3.5 text-slate-400" />
             <span>Edit User</span>
           </button>
 
@@ -88,7 +88,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             <button
               type="button"
               onClick={() => onToggleStatus(user.id, 'Active')}
-              className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-base font-bold text-emerald-700 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-xs font-semibold text-emerald-400 transition-all flex items-center gap-1.5"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Activate Account</span>
@@ -97,7 +97,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             <button
               type="button"
               onClick={() => onToggleStatus(user.id, 'Suspended')}
-              className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-base font-bold text-amber-700 transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-semibold text-amber-400 transition-all flex items-center gap-1.5"
             >
               <Ban className="w-3.5 h-3.5" />
               <span>Suspend Account</span>
@@ -107,7 +107,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <button
             type="button"
             onClick={() => onResetPassword(user)}
-            className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-base font-bold text-emerald-700 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-xs font-semibold text-blue-400 transition-all flex items-center gap-1.5"
           >
             <Key className="w-3.5 h-3.5" />
             <span>Reset Password</span>
@@ -116,7 +116,7 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           <button
             type="button"
             onClick={() => onDeleteUser(user.id)}
-            className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-base font-bold text-rose-700 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-xs font-semibold text-rose-400 transition-all flex items-center gap-1.5"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Delete User</span>
@@ -125,62 +125,62 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
       </div>
 
       {/* 2. User Hero Profile Card */}
-      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs">
+      <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <img
             src={user.avatar}
             alt={user.name}
             referrerPolicy="no-referrer"
-            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-emerald-500/40 shadow-md"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-emerald-500/40 shadow-xl"
           />
 
           <div className="flex-1 space-y-2">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 {user.name}
               </h1>
-              <span className={`px-2.5 py-0.5 rounded-full text-base font-bold border ${statusBadge}`}>
+              <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${statusBadge}`}>
                 {user.status}
               </span>
-              <span className="px-2.5 py-0.5 rounded-md bg-purple-50 text-purple-700 text-base font-bold border border-purple-200">
+              <span className="px-2.5 py-0.5 rounded-md bg-purple-500/10 text-purple-400 text-xs font-bold border border-purple-500/20">
                 {user.role}
               </span>
             </div>
 
-            <p className="text-base sm:text-base text-slate-600 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
               {user.bio || 'Platform contributor registered on KigaliPulse.'}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 text-base text-slate-600 pt-2 font-medium">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-2">
               <div className="flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-slate-400" />
+                <Mail className="w-3.5 h-3.5 text-slate-500" />
                 <span>{user.email}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-slate-400" />
+                <Phone className="w-3.5 h-3.5 text-slate-500" />
                 <span>{user.phone}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Building className="w-3.5 h-3.5 text-slate-400" />
+                <Building className="w-3.5 h-3.5 text-slate-500" />
                 <span>{user.organization}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                <Calendar className="w-3.5 h-3.5 text-slate-500" />
                 <span>Joined {user.dateCreated}</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sub-tabs Navigation */}
-        <div className="flex items-center gap-2 mt-8 pt-4 border-t border-slate-100 text-base overflow-x-auto">
+        {/* Sub-tabs Navigation: Overview | Activity | Transactions | Security */}
+        <div className="flex items-center gap-2 mt-8 pt-4 border-t border-slate-800 text-xs overflow-x-auto">
           <button
             type="button"
             onClick={() => setActiveTab('overview')}
             className={`px-4 py-2 rounded-xl font-bold transition-all cursor-pointer ${
               activeTab === 'overview'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-emerald-600 text-slate-950 shadow-md shadow-emerald-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
             Overview
@@ -190,8 +190,8 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             onClick={() => setActiveTab('activity')}
             className={`px-4 py-2 rounded-xl font-bold transition-all cursor-pointer ${
               activeTab === 'activity'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-emerald-600 text-slate-950 shadow-md shadow-emerald-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
             Activity Logs ({userLogs.length})
@@ -201,8 +201,8 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             onClick={() => setActiveTab('transactions')}
             className={`px-4 py-2 rounded-xl font-bold transition-all cursor-pointer ${
               activeTab === 'transactions'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-emerald-600 text-slate-950 shadow-md shadow-emerald-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
             Transactions ({userTransactions.length})
@@ -212,8 +212,8 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
             onClick={() => setActiveTab('security')}
             className={`px-4 py-2 rounded-xl font-bold transition-all cursor-pointer ${
               activeTab === 'security'
-                ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                ? 'bg-emerald-600 text-slate-950 shadow-md shadow-emerald-600/20'
+                : 'text-slate-400 hover:text-white hover:bg-slate-800'
             }`}
           >
             Security &amp; Sessions
@@ -226,38 +226,38 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900">Identity &amp; Organizational Profile</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-base">
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="text-slate-500 font-semibold block mb-0.5">Full Name</span>
-                  <span className="font-bold text-slate-900 text-base">{user.name}</span>
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+              <h3 className="font-bold text-base text-white">Identity &amp; Organizational Profile</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                  <span className="text-slate-400 block mb-0.5">Full Name</span>
+                  <span className="font-bold text-white text-sm">{user.name}</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="text-slate-500 font-semibold block mb-0.5">Official Role</span>
-                  <span className="font-bold text-emerald-700 text-base">{user.role}</span>
+                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                  <span className="text-slate-400 block mb-0.5">Official Role</span>
+                  <span className="font-bold text-emerald-400 text-sm">{user.role}</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="text-slate-500 font-semibold block mb-0.5">Department / Division</span>
-                  <span className="font-bold text-slate-900 text-base">{user.department || 'Operations'}</span>
+                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                  <span className="text-slate-400 block mb-0.5">Department / Division</span>
+                  <span className="font-bold text-white text-sm">{user.department || 'Operations'}</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="text-slate-500 font-semibold block mb-0.5">Assigned Organization</span>
-                  <span className="font-bold text-slate-900 text-base">{user.organization}</span>
+                <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+                  <span className="text-slate-400 block mb-0.5">Assigned Organization</span>
+                  <span className="font-bold text-white text-sm">{user.organization}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-3 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900">Permissions Summary</h3>
-              <p className="text-base text-slate-600">
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+              <h3 className="font-bold text-base text-white">Permissions Summary</h3>
+              <p className="text-xs text-slate-400">
                 Granted based on enterprise role specification:
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-base pt-1">
-                {['View Data', 'Create Records', 'Edit Content', 'Approve Submissions', 'Export Reports', 'Delete Records'].map((perm) => (
-                  <div key={perm} className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span className="text-slate-800 font-medium">{perm}</span>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs pt-1">
+                {['View Data', 'Create Records', 'Edit Content', 'Approve Submissions', 'Export Reports', 'Delete Records'].map((perm, idx) => (
+                  <div key={perm} className="flex items-center gap-2 p-2 rounded-xl bg-slate-950 border border-slate-800/80">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-slate-200">{perm}</span>
                   </div>
                 ))}
               </div>
@@ -265,24 +265,24 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
           </div>
 
           <div className="space-y-6">
-            <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
-              <h3 className="font-bold text-base text-slate-900">Access Metadata</h3>
-              <div className="space-y-3 text-base">
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Account ID</span>
-                  <span className="font-mono text-slate-800 font-bold">{user.id}</span>
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+              <h3 className="font-bold text-base text-white">Access Metadata</h3>
+              <div className="space-y-3 text-xs">
+                <div className="flex justify-between py-2 border-b border-slate-800/80">
+                  <span className="text-slate-400">Account ID</span>
+                  <span className="font-mono text-slate-200">{user.id}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Registration Date</span>
-                  <span className="text-slate-800 font-medium">{user.dateCreated}</span>
+                <div className="flex justify-between py-2 border-b border-slate-800/80">
+                  <span className="text-slate-400">Registration Date</span>
+                  <span className="text-slate-200">{user.dateCreated}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-slate-100">
-                  <span className="text-slate-500 font-medium">Last Active Session</span>
-                  <span className="text-emerald-700 font-bold">{user.lastLogin}</span>
+                <div className="flex justify-between py-2 border-b border-slate-800/80">
+                  <span className="text-slate-400">Last Active Session</span>
+                  <span className="text-emerald-400 font-semibold">{user.lastLogin}</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-slate-500 font-medium">Two-Factor Authentication</span>
-                  <span className={user.twoFactorEnabled ? 'text-emerald-700 font-bold' : 'text-slate-500'}>
+                  <span className="text-slate-400">Two-Factor Authentication</span>
+                  <span className={user.twoFactorEnabled ? 'text-emerald-400 font-bold' : 'text-slate-400'}>
                     {user.twoFactorEnabled ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
@@ -294,35 +294,35 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
 
       {/* TAB B: ACTIVITY HISTORY */}
       {activeTab === 'activity' && (
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
-          <h3 className="font-bold text-base text-slate-900">Administrative Activity Audit</h3>
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <h3 className="font-bold text-base text-white">Administrative Activity Audit</h3>
           {userLogs.length === 0 ? (
-            <div className="text-center py-10 text-slate-500">
-              <History className="w-8 h-8 mx-auto text-slate-400 mb-2" />
-              <p className="font-bold text-slate-900 text-base">No Activity Recorded Yet</p>
-              <p className="text-base text-slate-500 mt-1">This user has not performed administrative actions recently.</p>
+            <div className="text-center py-10 text-slate-400">
+              <History className="w-8 h-8 mx-auto text-slate-600 mb-2" />
+              <p className="font-bold text-white text-sm">No Activity Recorded Yet</p>
+              <p className="text-xs text-slate-500 mt-1">This user has not performed administrative actions recently.</p>
             </div>
           ) : (
             <div className="space-y-3">
               {userLogs.map((log) => (
                 <div
                   key={log.id}
-                  className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 text-base"
+                  className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-start justify-between gap-3 text-xs"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900">{log.action}</span>
-                      <span className="px-2 py-0.5 rounded bg-slate-100 text-[14px] text-slate-700 font-semibold border border-slate-200">
+                      <span className="font-bold text-white">{log.action}</span>
+                      <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-semibold">
                         {log.module}
                       </span>
                     </div>
-                    <p className="text-slate-600 leading-snug">{log.description}</p>
-                    <div className="text-[15px] text-slate-500 flex items-center gap-3">
+                    <p className="text-slate-400 leading-snug">{log.description}</p>
+                    <div className="text-[11px] text-slate-500 flex items-center gap-3">
                       <span>IP: {log.ipAddress}</span>
                       <span>Device: {log.device}</span>
                     </div>
                   </div>
-                  <span className="text-slate-500 tabular-nums shrink-0 font-medium">{log.dateTime}</span>
+                  <span className="text-slate-400 tabular-nums shrink-0">{log.dateTime}</span>
                 </div>
               ))}
             </div>
@@ -332,39 +332,39 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
 
       {/* TAB C: TRANSACTIONS */}
       {activeTab === 'transactions' && (
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
-          <h3 className="font-bold text-base text-slate-900">Associated Orders &amp; Financial Transactions</h3>
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <h3 className="font-bold text-base text-white">Associated Orders &amp; Financial Transactions</h3>
           {userTransactions.length === 0 ? (
-            <div className="text-center py-10 text-slate-500">
-              <Receipt className="w-8 h-8 mx-auto text-slate-400 mb-2" />
-              <p className="font-bold text-slate-900 text-base">No Transactions Found</p>
-              <p className="text-base text-slate-500 mt-1">No ticket orders or financial payouts associated with this identity.</p>
+            <div className="text-center py-10 text-slate-400">
+              <Receipt className="w-8 h-8 mx-auto text-slate-600 mb-2" />
+              <p className="font-bold text-white text-sm">No Transactions Found</p>
+              <p className="text-xs text-slate-500 mt-1">No ticket orders or financial payouts associated with this identity.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-base">
+              <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-slate-200 text-slate-500 font-semibold">
-                    <th className="pb-3 pr-4 font-semibold">Date</th>
-                    <th className="pb-3 pr-4 font-semibold">ID</th>
-                    <th className="pb-3 pr-4 font-semibold">Type</th>
-                    <th className="pb-3 pr-4 font-semibold">Amount</th>
-                    <th className="pb-3 pr-4 font-semibold">Payment</th>
+                  <tr className="border-b border-slate-800 text-slate-400">
+                    <th className="pb-3 font-semibold">Date</th>
+                    <th className="pb-3 font-semibold">ID</th>
+                    <th className="pb-3 font-semibold">Type</th>
+                    <th className="pb-3 font-semibold">Amount</th>
+                    <th className="pb-3 font-semibold">Payment</th>
                     <th className="pb-3 font-semibold">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-800/60">
                   {userTransactions.map((tx) => (
-                    <tr key={tx.id} className="hover:bg-slate-50/80">
-                      <td className="py-3 pr-4 text-slate-600 tabular-nums font-medium">{tx.date}</td>
-                      <td className="py-3 pr-4 font-mono font-bold text-emerald-700">{tx.transactionId}</td>
-                      <td className="py-3 pr-4 text-slate-700">{tx.transactionType}</td>
-                      <td className="py-3 pr-4 font-bold text-slate-900 tabular-nums">
+                    <tr key={tx.id} className="hover:bg-slate-800/40">
+                      <td className="py-3 text-slate-300 tabular-nums">{tx.date}</td>
+                      <td className="py-3 font-mono font-bold text-emerald-400">{tx.transactionId}</td>
+                      <td className="py-3 text-slate-300">{tx.transactionType}</td>
+                      <td className="py-3 font-bold text-white tabular-nums">
                         {tx.amount.toLocaleString()} {tx.currency}
                       </td>
-                      <td className="py-3 pr-4 text-slate-600">{tx.paymentMethod}</td>
+                      <td className="py-3 text-slate-400">{tx.paymentMethod}</td>
                       <td className="py-3">
-                        <span className="px-2 py-0.5 rounded-full text-[14px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                           {tx.status}
                         </span>
                       </td>
@@ -380,67 +380,67 @@ export const AdminUserDetails: React.FC<AdminUserDetailsProps> = ({
       {/* TAB D: SECURITY & SESSIONS */}
       {activeTab === 'security' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
-            <h3 className="font-bold text-base text-slate-900">Active Device Sessions</h3>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <h3 className="font-bold text-base text-white">Active Device Sessions</h3>
             <div className="space-y-3">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-base">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400">
                     <Laptop className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-slate-900 flex items-center gap-2">
+                    <div className="font-bold text-white flex items-center gap-2">
                       <span>MacBook Pro 16" (Kigali, RW)</span>
-                      <span className="text-[14px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+                      <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded">
                         Current Session
                       </span>
                     </div>
-                    <div className="text-[15px] text-slate-500">Chrome 129 · IP: 197.243.18.94</div>
+                    <div className="text-[11px] text-slate-400">Chrome 129 · IP: 197.243.18.94</div>
                   </div>
                 </div>
-                <span className="text-emerald-700 font-bold">Active</span>
+                <span className="text-emerald-400 font-bold">Active</span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-base">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-slate-100 text-slate-600">
+                  <div className="p-2 rounded-lg bg-slate-800 text-slate-400">
                     <Smartphone className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-slate-900">iPhone 15 Pro (Kigali, RW)</div>
-                    <div className="text-[15px] text-slate-500">Safari Mobile · IP: 105.178.60.188</div>
+                    <div className="font-bold text-white">iPhone 15 Pro (Kigali, RW)</div>
+                    <div className="text-[11px] text-slate-400">Safari Mobile · IP: 105.178.60.188</div>
                   </div>
                 </div>
-                <span className="text-slate-500 font-medium">Yesterday</span>
+                <span className="text-slate-400">Yesterday</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-4 shadow-xs">
-            <h3 className="font-bold text-base text-slate-900">Security Controls</h3>
-            <div className="space-y-3 text-base">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+            <h3 className="font-bold text-base text-white">Security Controls</h3>
+            <div className="space-y-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-slate-900">Force Password Reset</div>
-                  <div className="text-[15px] text-slate-500">Requires user to set a new credential upon next login</div>
+                  <div className="font-bold text-white">Force Password Reset</div>
+                  <div className="text-[11px] text-slate-400">Requires user to set a new credential upon next login</div>
                 </div>
                 <button
                   type="button"
                   onClick={() => onResetPassword(user)}
-                  className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 font-bold text-white shrink-0 cursor-pointer shadow-2xs"
+                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 font-bold text-white"
                 >
                   Send Reset Link
                 </button>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-4">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-slate-900">Revoke All Active Sessions</div>
-                  <div className="text-[15px] text-slate-500">Immediately logs out user across all mobile &amp; web devices</div>
+                  <div className="font-bold text-white">Revoke All Active Sessions</div>
+                  <div className="text-[11px] text-slate-400">Immediately logs out user across all mobile &amp; web devices</div>
                 </div>
                 <button
                   type="button"
-                  className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 font-bold text-white shrink-0 cursor-pointer shadow-2xs"
+                  className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 font-bold text-white"
                 >
                   Revoke Sessions
                 </button>

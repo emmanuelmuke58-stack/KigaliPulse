@@ -9,11 +9,6 @@ import {
   ToastMessage,
 } from '../../types/admin';
 import {
-  EventItem,
-  EventStatus,
-  AuditLogItem,
-} from '../../types';
-import {
   INITIAL_ADMIN_USERS,
   INITIAL_ADMIN_BUSINESSES,
   INITIAL_ADMIN_TRANSACTIONS,
@@ -36,33 +31,13 @@ import { AdminNotifications } from './AdminNotifications';
 import { AdminActivityLogs } from './AdminActivityLogs';
 import { AdminConfirmModal } from './AdminConfirmModal';
 import { AdminToast } from './AdminToast';
-import { AdminDashboard } from '../AdminDashboard';
 import { Search, X, Users, Receipt, Building2, History } from 'lucide-react';
 
 interface AdminSystemProps {
   onExitToPublicSite: () => void;
-  events: EventItem[];
-  onUpdateEventStatus: (
-    eventId: string,
-    newStatus: EventStatus,
-    actionName: string,
-    notes?: string
-  ) => void;
-  onToggleFeatureEvent: (eventId: string) => void;
-  onDeleteEvent: (eventId: string) => void;
-  auditLogs: AuditLogItem[];
-  onSelectEvent: (event: EventItem) => void;
 }
 
-export const AdminSystem: React.FC<AdminSystemProps> = ({ 
-  onExitToPublicSite,
-  events,
-  onUpdateEventStatus,
-  onToggleFeatureEvent,
-  onDeleteEvent,
-  auditLogs: platformAuditLogs,
-  onSelectEvent
-}) => {
+export const AdminSystem: React.FC<AdminSystemProps> = ({ onExitToPublicSite }) => {
   // 1. Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('kigali_admin_auth') === 'true';
@@ -83,38 +58,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
   const [businesses, setBusinesses] = useState<EnterpriseBusiness[]>(INITIAL_ADMIN_BUSINESSES);
   const [transactions, setTransactions] = useState<EnterpriseTransaction[]>(INITIAL_ADMIN_TRANSACTIONS);
   const [activityLogs, setActivityLogs] = useState<EnterpriseActivityLog[]>(INITIAL_ADMIN_ACTIVITY_LOGS);
-  const [notifications, setNotifications] = useState<EnterpriseNotification[]>(() => {
-    try {
-      const saved = localStorage.getItem('kigali_admin_notifications');
-      if (saved) return JSON.parse(saved);
-    } catch (e) {
-      console.error(e);
-    }
-    return INITIAL_ADMIN_NOTIFICATIONS;
-  });
-
-  // Sync notifications to localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem('kigali_admin_notifications', JSON.stringify(notifications));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [notifications]);
-
-  // Listen for storage events (e.g. new visitor submission from another component/turn)
-  useEffect(() => {
-    const syncFromStorage = () => {
-      try {
-        const saved = localStorage.getItem('kigali_admin_notifications');
-        if (saved) setNotifications(JSON.parse(saved));
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    window.addEventListener('storage', syncFromStorage);
-    return () => window.removeEventListener('storage', syncFromStorage);
-  }, []);
+  const [notifications, setNotifications] = useState<EnterpriseNotification[]>(INITIAL_ADMIN_NOTIFICATIONS);
 
   // 5. Global Search Modal State
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -412,7 +356,7 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
     : [];
 
   return (
-    <div className="min-h-screen bg-slate-100/70 text-slate-900 font-sans flex flex-col lg:flex-row antialiased">
+    <div className="min-h-screen bg-slate-950 text-white font-sans flex flex-col lg:flex-row antialiased">
       {/* 1. Desktop & Mobile Sidebar */}
       <AdminSidebar
         activeTab={activeTab}
@@ -452,18 +396,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
 
         {/* Main Body View */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
-          {/* EVENT MANAGEMENT DASHBOARD (New Requested Feature) */}
-          {activeTab === 'event-management' && (
-            <AdminDashboard
-              events={events}
-              onUpdateEventStatus={onUpdateEventStatus}
-              onToggleFeatureEvent={onToggleFeatureEvent}
-              onDeleteEvent={onDeleteEvent}
-              auditLogs={platformAuditLogs}
-              onSelectEvent={onSelectEvent}
-            />
-          )}
-
           {/* USER DETAILS DRILLDOWN VIEW */}
           {selectedUserForDetails ? (
             <AdminUserDetails
@@ -485,7 +417,6 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                   transactions={transactions}
                   activityLogs={activityLogs}
                   onNavigateTab={(tab) => setActiveTab(tab)}
-                  events={events}
                 />
               )}
 
@@ -581,22 +512,22 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
 
       {/* GLOBAL SEARCH DIALOG (⌘K) */}
       {isSearchModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-5 shadow-2xl space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
-              <Search className="w-5 h-5 text-emerald-600 shrink-0" />
+        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 bg-slate-950/70 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-5 shadow-2xl space-y-4">
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+              <Search className="w-5 h-5 text-emerald-400 shrink-0" />
               <input
                 type="text"
                 autoFocus
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search anything across the enterprise system (users, orders, venues, logs)..."
-                className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400 outline-none"
+                className="w-full bg-transparent text-sm text-white placeholder:text-slate-500 outline-none"
               />
               <button
                 type="button"
                 onClick={() => setIsSearchModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700"
+                className="p-1 rounded-lg text-slate-400 hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -613,8 +544,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                   {/* Users results */}
                   {searchResultsUsers.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                        <Users className="w-3.5 h-3.5 text-sky-600" />
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <Users className="w-3.5 h-3.5 text-sky-400" />
                         <span>Users ({searchResultsUsers.length})</span>
                       </div>
                       {searchResultsUsers.map((u) => (
@@ -625,14 +556,14 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                             setActiveTab('users');
                             setIsSearchModalOpen(false);
                           }}
-                          className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-100 cursor-pointer flex items-center justify-between transition-colors"
+                          className="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 cursor-pointer flex items-center justify-between transition-colors"
                         >
                           <div className="flex items-center gap-2.5">
-                            <img src={u.avatar} alt={u.name} className="w-6 h-6 rounded-md object-cover border border-slate-200" />
-                            <span className="font-bold text-slate-900">{u.name}</span>
-                            <span className="text-slate-500">{u.email}</span>
+                            <img src={u.avatar} alt={u.name} className="w-6 h-6 rounded-md object-cover" />
+                            <span className="font-bold text-white">{u.name}</span>
+                            <span className="text-slate-400">{u.email}</span>
                           </div>
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-800 text-slate-300">
                             {u.role}
                           </span>
                         </div>
@@ -643,8 +574,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                   {/* Transactions results */}
                   {searchResultsTransactions.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                        <Receipt className="w-3.5 h-3.5 text-emerald-600" />
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <Receipt className="w-3.5 h-3.5 text-emerald-400" />
                         <span>Transactions ({searchResultsTransactions.length})</span>
                       </div>
                       {searchResultsTransactions.map((tx) => (
@@ -654,14 +585,14 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                             setActiveTab('transactions');
                             setIsSearchModalOpen(false);
                           }}
-                          className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-100 cursor-pointer flex items-center justify-between transition-colors"
+                          className="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 cursor-pointer flex items-center justify-between transition-colors"
                         >
                           <div className="flex items-center gap-2.5">
-                            <span className="font-mono font-bold text-emerald-700">{tx.transactionId}</span>
-                            <span className="text-slate-900 font-semibold">{tx.userName}</span>
-                            <span className="text-slate-500">{tx.businessName}</span>
+                            <span className="font-mono font-bold text-emerald-400">{tx.transactionId}</span>
+                            <span className="text-white font-medium">{tx.userName}</span>
+                            <span className="text-slate-400">{tx.businessName}</span>
                           </div>
-                          <span className="font-bold text-slate-900 tabular-nums">
+                          <span className="font-bold text-white tabular-nums">
                             {tx.amount.toLocaleString()} {tx.currency}
                           </span>
                         </div>
@@ -672,8 +603,8 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                   {/* Businesses results */}
                   {searchResultsBusinesses.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                        <Building2 className="w-3.5 h-3.5 text-purple-600" />
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <Building2 className="w-3.5 h-3.5 text-purple-400" />
                         <span>Venues &amp; Businesses ({searchResultsBusinesses.length})</span>
                       </div>
                       {searchResultsBusinesses.map((b) => (
@@ -683,13 +614,13 @@ export const AdminSystem: React.FC<AdminSystemProps> = ({
                             setActiveTab('businesses');
                             setIsSearchModalOpen(false);
                           }}
-                          className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-100 cursor-pointer flex items-center justify-between transition-colors"
+                          className="p-2.5 rounded-xl bg-slate-950 hover:bg-slate-800/80 cursor-pointer flex items-center justify-between transition-colors"
                         >
                           <div>
-                            <span className="font-bold text-slate-900">{b.name}</span>
-                            <span className="text-slate-500 ml-2">{b.location}</span>
+                            <span className="font-bold text-white">{b.name}</span>
+                            <span className="text-slate-400 ml-2">{b.location}</span>
                           </div>
-                          <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded text-[10px] border border-emerald-200">{b.status}</span>
+                          <span className="text-emerald-400 font-bold">{b.status}</span>
                         </div>
                       ))}
                     </div>

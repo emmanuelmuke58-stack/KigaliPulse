@@ -1,4 +1,4 @@
-export type AdminRole = 'SuperAdmin' | 'Business Admin' | 'Standard User' | 'Moderator' | 'Venue Manager' | 'Event Organizer' | 'Admin';
+export type AdminRole = 'Super Admin' | 'Admin' | 'Moderator' | 'Event Organizer' | 'Venue Manager' | 'Standard User';
 
 export type UserStatus = 'Active' | 'Pending' | 'Suspended' | 'Inactive';
 
@@ -54,75 +54,6 @@ export interface EnterpriseBusiness {
   totalRevenue: number;
   status: 'Active' | 'Under Review' | 'Suspended';
   registeredDate: string;
-}
-
-export type BusinessEventStatus = 'Draft' | 'Published' | 'Completed' | 'Cancelled';
-
-export type SubmissionStatus =
-  | 'Draft'
-  | 'Pending Approval'
-  | 'Approved'
-  | 'Changes Requested'
-  | 'Rejected'
-  | 'Published';
-
-export interface EventSubmission {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  location: string;
-  organizerName: string;
-  organizerEmail: string;
-  organizerPhone: string;
-  feeType: 'Free' | 'Paid';
-  entryFee: number;
-  currency: string;
-  maxCapacity: number;
-  image: string;
-  imageFileName?: string;
-  imageFileSize?: string;
-  submittedAt: string;
-  status: SubmissionStatus;
-  adminReviewNotes?: string;
-  reviewedAt?: string;
-  reviewedBy?: string;
-}
-
-export interface BusinessEventAttendee {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  ticketType: string;
-  registrationDate: string;
-  amountPaid: number;
-  currency: string;
-  paymentStatus: 'Paid' | 'Free' | 'Pending';
-}
-
-export interface BusinessEvent {
-  id: string;
-  businessId: string;
-  businessName: string;
-  name: string;
-  description: string;
-  category: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  location: string;
-  image: string;
-  feeType: 'Free' | 'Paid';
-  entryFee: number;
-  currency: string;
-  maxCapacity: number;
-  status: BusinessEventStatus;
-  attendees: BusinessEventAttendee[];
-  createdAt: string;
 }
 
 export interface EnterpriseActivityLog {

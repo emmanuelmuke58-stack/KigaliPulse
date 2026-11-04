@@ -13,10 +13,6 @@ import {
   Globe,
   Clock,
   Sparkles,
-  Plus,
-  Edit2,
-  Trash2,
-  Tag,
   Save,
 } from 'lucide-react';
 import {
@@ -33,11 +29,6 @@ import {
   DEFAULT_SYSTEM_SETTINGS,
   ROLE_PERMISSIONS_MATRIX,
 } from '../../data/adminMockData';
-import { CATEGORIES as INITIAL_CATEGORIES } from '../../data/mockData';
-import { CategoryItem, EventCategory } from '../../types';
-
-import { useFontSize } from '../../contexts/FontSizeContext';
-import { FontSizeSettings } from '../FontSizeSettings';
 
 interface AdminSettingsProps {
   currentUser: EnterpriseUser;
@@ -50,13 +41,9 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
   onUpdateCurrentUser,
   onTriggerToast,
 }) => {
-  const { fontSize, preset, setFontSize, setPreset, resetToDefault, savePreferences } = useFontSize();
-
-  if (!currentUser) return null;
-
   // Active sub-section tab
   const [activeSection, setActiveSection] = useState<
-    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system' | 'font' | 'categories'
+    'general' | 'account' | 'security' | 'notifications' | 'roles' | 'system'
   >('general');
 
   // Form states
@@ -66,18 +53,6 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
     DEFAULT_NOTIFICATION_SETTINGS
   );
   const [system, setSystem] = useState<SystemSettingsState>(DEFAULT_SYSTEM_SETTINGS);
-
-  // Category Management state
-  const [categories, setCategories] = useState<CategoryItem[]>(INITIAL_CATEGORIES);
-  const [isAddingCategory, setIsAddingCategory] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<CategoryItem | null>(null);
-  const [newCategory, setNewCategory] = useState<Partial<CategoryItem>>({
-    name: '',
-    icon: '📍',
-    description: '',
-    color: 'emerald',
-    eventCount: 0,
-  });
 
   // Account form state
   const [accountForm, setAccountForm] = useState({
@@ -94,8 +69,6 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
     newPassword: '',
     confirmPassword: '',
   });
-
-  const isAuthorized = ['Admin', 'SuperAdmin'].includes(currentUser.role);
 
   // Save handler
   const handleSave = (sectionName: string) => {
@@ -127,58 +100,29 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
     onTriggerToast('success', 'Password Updated', 'Your administrative password was changed.');
   };
 
-  const handleAddCategory = () => {
-    if (!newCategory.name) return;
-    const id = newCategory.name.toLowerCase().replace(/\s+/g, '-') as EventCategory;
-    const category: CategoryItem = {
-      ...(newCategory as CategoryItem),
-      id,
-    };
-    setCategories([...categories, category]);
-    setNewCategory({ name: '', icon: '📍', description: '', color: 'emerald', eventCount: 0 });
-    setIsAddingCategory(false);
-    onTriggerToast('success', 'Category Created', `"${category.name}" has been added to the platform.`);
-  };
-
-  const handleUpdateCategory = () => {
-    if (!editingCategory) return;
-    setCategories(categories.map(c => c.id === editingCategory.id ? editingCategory : c));
-    setEditingCategory(null);
-    onTriggerToast('success', 'Category Updated', `Changes to "${editingCategory.name}" were saved.`);
-  };
-
-  const handleDeleteCategory = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this category? This will affect existing events.')) {
-      setCategories(categories.filter(c => c.id !== id));
-      onTriggerToast('warning', 'Category Deleted', 'The category has been removed from the system.');
-    }
-  };
-
   return (
     <div className="space-y-6">
       {/* 1. Header */}
       <div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-          <Settings className="w-6 h-6 text-emerald-600" />
+        <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+          <Settings className="w-6 h-6 text-emerald-400" />
           <span>Enterprise System Settings</span>
         </h2>
-        <p className="text-base sm:text-base text-slate-600 mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">
           Configure multi-tenant security policies, notifications, branding, and role-based permissions.
         </p>
       </div>
 
       {/* 2. Secondary Settings Navigation Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200 text-base">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-800 text-xs">
         {[
           { id: 'general', label: 'General', icon: Sliders },
           { id: 'account', label: 'Account Profile', icon: User },
-          { id: 'categories', label: 'Categories', icon: Tag, roles: ['Admin', 'SuperAdmin'] },
           { id: 'security', label: 'Security & 2FA', icon: Lock },
           { id: 'notifications', label: 'Notification Rules', icon: Bell },
-          { id: 'font', label: 'Font Size', icon: Sparkles },
           { id: 'roles', label: 'Roles & Permissions', icon: Shield },
           { id: 'system', label: 'System & Maintenance', icon: Database },
-        ].filter(tab => !tab.roles || tab.roles.includes(currentUser.role)).map((tab) => {
+        ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeSection === tab.id;
           return (
@@ -188,8 +132,8 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               onClick={() => setActiveSection(tab.id as any)}
               className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  ? 'bg-emerald-600 text-slate-950 shadow-md shadow-emerald-600/20'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -201,196 +145,54 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
       {/* 3. SECTION CONTENT */}
 
-      {/* SECTION: CATEGORY MANAGEMENT */}
-      {activeSection === 'categories' && isAuthorized && (
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="text-lg font-bold text-slate-900">Platform Category Management</h3>
-              <p className="text-base text-slate-600">Create and manage event taxonomies used across the ecosystem.</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setIsAddingCategory(true)}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-white transition-all flex items-center gap-2 shadow-sm cursor-pointer"
-            >
-              <Plus className="w-4 h-4" />
-              <span>New Category</span>
-            </button>
-          </div>
-
-          {/* Add/Edit Modal (Simplified Inline UI for this brief) */}
-          {(isAddingCategory || editingCategory) && (
-            <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl p-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
-              <div className="flex items-center justify-between">
-                <h4 className="font-bold text-slate-900">{isAddingCategory ? 'Add New Category' : 'Edit Category'}</h4>
-                <button 
-                  onClick={() => { setIsAddingCategory(false); setEditingCategory(null); }}
-                  className="text-slate-400 hover:text-slate-600 font-bold"
-                >
-                  Cancel
-                </button>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1">Name</label>
-                  <input
-                    type="text"
-                    value={isAddingCategory ? newCategory.name : editingCategory?.name}
-                    onChange={(e) => isAddingCategory 
-                      ? setNewCategory({...newCategory, name: e.target.value})
-                      : setEditingCategory({...editingCategory!, name: e.target.value})}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none"
-                    placeholder="e.g. Comedy Nights"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1">Icon (Emoji)</label>
-                  <input
-                    type="text"
-                    value={isAddingCategory ? newCategory.icon : editingCategory?.icon}
-                    onChange={(e) => isAddingCategory 
-                      ? setNewCategory({...newCategory, icon: e.target.value})
-                      : setEditingCategory({...editingCategory!, icon: e.target.value})}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none text-center"
-                    maxLength={2}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-1">Color Palette</label>
-                  <select
-                    value={isAddingCategory ? newCategory.color : editingCategory?.color}
-                    onChange={(e) => isAddingCategory 
-                      ? setNewCategory({...newCategory, color: e.target.value})
-                      : setEditingCategory({...editingCategory!, color: e.target.value})}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none"
-                  >
-                    <option value="emerald">Emerald Green</option>
-                    <option value="purple">Royal Purple</option>
-                    <option value="blue">Ocean Blue</option>
-                    <option value="rose">Soft Rose</option>
-                    <option value="amber">Warm Amber</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-1">Description</label>
-                <textarea
-                  value={isAddingCategory ? newCategory.description : editingCategory?.description}
-                  onChange={(e) => isAddingCategory 
-                    ? setNewCategory({...newCategory, description: e.target.value})
-                    : setEditingCategory({...editingCategory!, description: e.target.value})}
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm outline-none min-h-[80px]"
-                  placeholder="Describe what kind of events belong here..."
-                />
-              </div>
-              <div className="flex justify-end">
-                <button
-                  onClick={isAddingCategory ? handleAddCategory : handleUpdateCategory}
-                  className="px-6 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-colors"
-                >
-                  {isAddingCategory ? 'Create Category' : 'Save Changes'}
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categories.map((cat) => (
-              <div 
-                key={cat.id}
-                className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between group hover:border-emerald-300 transition-all hover:shadow-lg hover:shadow-slate-100"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-xl shadow-inner">
-                      {cat.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900">{cat.name}</h4>
-                      <span className="text-[10px] uppercase font-black tracking-widest text-slate-400">
-                        {cat.eventCount} active events
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button 
-                      onClick={() => setEditingCategory(cat)}
-                      className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
-                    >
-                      <Edit2 className="w-3.5 h-3.5" />
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteCategory(cat.id)}
-                      className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-500 transition-colors"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-                <p className="text-xs text-slate-500 mt-3 line-clamp-2 leading-relaxed">
-                  {cat.description}
-                </p>
-                <div className="mt-4 pt-3 border-t border-slate-50 flex items-center justify-between">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-${cat.color}-50 text-${cat.color}-700`}>
-                    {cat.color}
-                  </span>
-                  <span className="text-[10px] text-slate-300 font-mono">ID: {cat.id}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* SECTION 1: GENERAL */}
       {activeSection === 'general' && (
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl">
           <div>
-            <h3 className="text-lg font-bold text-slate-900">General Application Settings</h3>
-            <p className="text-base text-slate-600">Configure core platform naming, branding, and regional localization.</p>
+            <h3 className="text-lg font-bold text-white">General Application Settings</h3>
+            <p className="text-xs text-slate-400">Configure core platform naming, branding, and regional localization.</p>
           </div>
 
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Application Name</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Application Name</label>
                 <input
                   type="text"
                   value={general.appName}
                   onChange={(e) => setGeneral({ ...general, appName: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Company / Operating Entity</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Company / Operating Entity</label>
                 <input
                   type="text"
                   value={general.companyName}
                   onChange={(e) => setGeneral({ ...general, companyName: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Support Email</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Support Email</label>
                 <input
                   type="email"
                   value={general.supportEmail}
                   onChange={(e) => setGeneral({ ...general, supportEmail: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Time Zone</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Time Zone</label>
                 <select
                   value={general.timeZone}
                   onChange={(e) => setGeneral({ ...general, timeZone: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 >
                   <option value="Africa/Kigali (GMT+02:00)">Africa/Kigali (GMT+02:00) Central Africa Time</option>
                   <option value="Africa/Nairobi (GMT+03:00)">Africa/Nairobi (GMT+03:00) East Africa Time</option>
@@ -401,11 +203,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Default Currency</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Default Currency</label>
                 <select
                   value={general.defaultCurrency}
                   onChange={(e) => setGeneral({ ...general, defaultCurrency: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 >
                   <option value="RWF (Rwandan Franc)">RWF (Rwandan Franc)</option>
                   <option value="USD (United States Dollar)">USD (United States Dollar)</option>
@@ -413,11 +215,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Date Format</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Date Format</label>
                 <select
                   value={general.dateFormat}
                   onChange={(e) => setGeneral({ ...general, dateFormat: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 >
                   <option value="DD/MM/YYYY (24h)">DD/MM/YYYY (24h)</option>
                   <option value="YYYY-MM-DD (ISO)">YYYY-MM-DD (ISO)</option>
@@ -426,11 +228,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Language</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Language</label>
                 <select
                   value={general.language}
                   onChange={(e) => setGeneral({ ...general, language: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3.5 py-2.5 text-base text-slate-700 outline-none cursor-pointer"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 >
                   <option value="English (UK / Rwanda)">English (UK / Rwanda)</option>
                   <option value="Kinyarwanda">Kinyarwanda</option>
@@ -440,11 +242,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex justify-end">
+          <div className="pt-4 border-t border-slate-800 flex justify-end">
             <button
               type="button"
               onClick={() => handleSave('General')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20"
             >
               <Save className="w-4 h-4" />
               <span>Save General Settings</span>
@@ -455,10 +257,10 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
       {/* SECTION 2: ACCOUNT */}
       {activeSection === 'account' && (
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl">
           <div>
-            <h3 className="text-lg font-bold text-slate-900">Administrator Account Details</h3>
-            <p className="text-base text-slate-600">Manage your active identity credentials, contact channels, and avatar.</p>
+            <h3 className="text-lg font-bold text-white">Administrator Account Details</h3>
+            <p className="text-xs text-slate-400">Manage your active identity credentials, contact channels, and avatar.</p>
           </div>
 
           <div className="flex items-center gap-5">
@@ -466,15 +268,15 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
               src={accountForm.avatar}
               alt={accountForm.name}
               referrerPolicy="no-referrer"
-              className="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500/40 shadow-sm"
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500/40"
             />
             <div>
-              <div className="text-base font-bold text-slate-900">Administrator Profile Photo</div>
-              <p className="text-[15px] text-slate-500 mt-0.5">JPG, PNG or GIF up to 5MB</p>
+              <div className="text-xs font-semibold text-white">Administrator Profile Photo</div>
+              <p className="text-[11px] text-slate-400 mt-0.5">JPG, PNG or GIF up to 5MB</p>
               <button
                 type="button"
                 onClick={() => onTriggerToast('info', 'Photo Upload', 'Photo updated with default avatar.')}
-                className="mt-2 text-base font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
+                className="mt-2 text-xs font-bold text-emerald-400 hover:text-emerald-300"
               >
                 Change Photo
               </button>
@@ -484,54 +286,54 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
           <div className="space-y-4 pt-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
                 <input
                   type="text"
                   value={accountForm.name}
                   onChange={(e) => setAccountForm({ ...accountForm, name: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Official Email</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Official Email</label>
                 <input
                   type="email"
                   value={accountForm.email}
                   onChange={(e) => setAccountForm({ ...accountForm, email: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Phone Number</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
                 <input
                   type="text"
                   value={accountForm.phone}
                   onChange={(e) => setAccountForm({ ...accountForm, phone: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Department</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Department</label>
                 <input
                   type="text"
                   value={accountForm.department}
                   onChange={(e) => setAccountForm({ ...accountForm, department: e.target.value })}
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl px-3.5 py-2.5 text-base text-slate-900 outline-none transition-all"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex justify-end">
+          <div className="pt-4 border-t border-slate-800 flex justify-end">
             <button
               type="button"
               onClick={() => handleSave('Account')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20"
             >
               <Save className="w-4 h-4" />
               <span>Update Profile</span>
@@ -544,49 +346,49 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
       {activeSection === 'security' && (
         <div className="space-y-6 max-w-4xl">
           {/* Change Password */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
-            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Key className="w-4 h-4 text-emerald-600" />
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Key className="w-4 h-4 text-emerald-400" />
               <span>Change Account Password</span>
             </h3>
 
             <form onSubmit={handlePasswordSave} className="space-y-3 max-w-md">
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Current Password</label>
+                <label className="block text-xs text-slate-400 mb-1">Current Password</label>
                 <input
                   type="password"
                   value={passwordState.currentPassword}
                   onChange={(e) => setPasswordState({ ...passwordState, currentPassword: e.target.value })}
                   placeholder="••••••••••••"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">New Password</label>
+                <label className="block text-xs text-slate-400 mb-1">New Password</label>
                 <input
                   type="password"
                   value={passwordState.newPassword}
                   onChange={(e) => setPasswordState({ ...passwordState, newPassword: e.target.value })}
                   placeholder="At least 8 characters"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Confirm New Password</label>
+                <label className="block text-xs text-slate-400 mb-1">Confirm New Password</label>
                 <input
                   type="password"
                   value={passwordState.confirmPassword}
                   onChange={(e) => setPasswordState({ ...passwordState, confirmPassword: e.target.value })}
                   placeholder="Repeat new password"
-                  className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-900 outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
               <button
                 type="submit"
-                className="mt-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-base font-bold text-white shadow-sm cursor-pointer"
+                className="mt-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-slate-950"
               >
                 Update Password
               </button>
@@ -594,17 +396,17 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
           </div>
 
           {/* 2FA & Session Controls */}
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xs">
-            <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Shield className="w-4 h-4 text-emerald-600" />
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-4">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <Shield className="w-4 h-4 text-emerald-400" />
               <span>Multi-Factor Authentication &amp; Sessions</span>
             </h3>
 
-            <div className="space-y-4 text-base">
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+            <div className="space-y-4 text-xs">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <div>
-                  <div className="font-bold text-slate-900">Require Two-Factor Authentication (2FA)</div>
-                  <div className="text-slate-500 text-[15px]">Enforce hardware token or authenticator app for staff</div>
+                  <div className="font-bold text-white">Require Two-Factor Authentication (2FA)</div>
+                  <div className="text-slate-400 text-[11px]">Enforce hardware token or authenticator app for staff</div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -613,14 +415,14 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                     onChange={(e) => setSecurity({ ...security, requireTwoFactor: e.target.checked })}
                     className="sr-only peer"
                   />
-                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600" />
+                  <div className="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600" />
                 </label>
               </div>
 
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <div>
-                  <div className="font-bold text-slate-900">Login Security Alerts</div>
-                  <div className="text-slate-500 text-[15px]">Receive instant notification on new device / IP logins</div>
+                  <div className="font-bold text-white">Login Security Alerts</div>
+                  <div className="text-slate-400 text-[11px]">Receive instant notification on new device / IP logins</div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -629,19 +431,19 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                     onChange={(e) => setSecurity({ ...security, loginNotifications: e.target.checked })}
                     className="sr-only peer"
                   />
-                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600" />
+                  <div className="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600" />
                 </label>
               </div>
 
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <div>
-                  <div className="font-bold text-slate-900">Administrative Session Timeout</div>
-                  <div className="text-slate-500 text-[15px]">Automatic lock after inactivity</div>
+                  <div className="font-bold text-white">Administrative Session Timeout</div>
+                  <div className="text-slate-400 text-[11px]">Automatic lock after inactivity</div>
                 </div>
                 <select
                   value={security.sessionTimeoutMinutes}
                   onChange={(e) => setSecurity({ ...security, sessionTimeoutMinutes: Number(e.target.value) })}
-                  className="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-slate-700 outline-none cursor-pointer"
+                  className="bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1 text-slate-300"
                 >
                   <option value={15}>15 Minutes</option>
                   <option value={30}>30 Minutes</option>
@@ -656,13 +458,13 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
       {/* SECTION 4: NOTIFICATIONS */}
       {activeSection === 'notifications' && (
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl">
           <div>
-            <h3 className="text-lg font-bold text-slate-900">Notification Preferences</h3>
-            <p className="text-base text-slate-600">Toggle administrative alerts across platform communication channels.</p>
+            <h3 className="text-lg font-bold text-white">Notification Preferences</h3>
+            <p className="text-xs text-slate-400">Toggle administrative alerts across platform communication channels.</p>
           </div>
 
-          <div className="space-y-3 text-base">
+          <div className="space-y-3 text-xs">
             {[
               {
                 id: 'emailAlerts',
@@ -697,11 +499,11 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
             ].map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200"
+                className="flex items-center justify-between p-3.5 rounded-xl bg-slate-950 border border-slate-800"
               >
                 <div>
-                  <div className="font-bold text-slate-900">{item.title}</div>
-                  <div className="text-slate-500 text-[15px] mt-0.5">{item.desc}</div>
+                  <div className="font-bold text-white">{item.title}</div>
+                  <div className="text-slate-400 text-[11px] mt-0.5">{item.desc}</div>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
@@ -712,17 +514,17 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                     }
                     className="sr-only peer"
                   />
-                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600" />
+                  <div className="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600" />
                 </label>
               </div>
             ))}
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex justify-end">
+          <div className="pt-4 border-t border-slate-800 flex justify-end">
             <button
               type="button"
               onClick={() => handleSave('Notifications')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20"
             >
               <Save className="w-4 h-4" />
               <span>Save Notification Rules</span>
@@ -731,31 +533,26 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
         </div>
       )}
 
-      {/* SECTION: FONT SIZE MANAGEMENT */}
-      {activeSection === 'font' && (
-        <FontSizeSettings onTriggerToast={onTriggerToast} />
-      )}
-
       {/* SECTION 5: ROLES & PERMISSIONS MATRIX */}
       {activeSection === 'roles' && (
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-lg font-bold text-slate-900">Roles &amp; Permissions Matrix</h3>
-              <p className="text-base text-slate-600">Configured access-control privileges across all enterprise modules.</p>
+              <h3 className="text-lg font-bold text-white">Roles &amp; Permissions Matrix</h3>
+              <p className="text-xs text-slate-400">Configured access-control privileges across all enterprise modules.</p>
             </div>
             <button
               type="button"
               onClick={() => onTriggerToast('info', 'Roles Config', 'Role permission changes synchronized.')}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all shadow-sm cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all"
             >
               Sync Matrix
             </button>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-base">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
                 <tr>
                   <th className="p-4 font-semibold">Role Name</th>
                   <th className="py-4 pr-4 font-semibold">Assigned Users</th>
@@ -767,43 +564,43 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                   <th className="py-4 pr-4 font-semibold text-center">Approve</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-800/60">
                 {ROLE_PERMISSIONS_MATRIX.map((item) => (
-                  <tr key={item.role} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={item.role} className="hover:bg-slate-800/40">
                     <td className="p-4">
-                      <div className="font-bold text-slate-900">{item.role}</div>
-                      <div className="text-[15px] text-slate-500 max-w-xs">{item.description}</div>
+                      <div className="font-bold text-white">{item.role}</div>
+                      <div className="text-[11px] text-slate-400 max-w-xs">{item.description}</div>
                     </td>
-                    <td className="py-4 pr-4 font-bold text-emerald-700 tabular-nums">
+                    <td className="py-4 pr-4 font-bold text-emerald-400 tabular-nums">
                       {item.userCount} accounts
                     </td>
                     <td className="py-4 pr-4 text-center">
-                      <span className={item.permissions.view ? 'text-emerald-700 font-bold' : 'text-slate-300'}>
+                      <span className={item.permissions.view ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                         {item.permissions.view ? '✓' : '—'}
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-center">
-                      <span className={item.permissions.create ? 'text-emerald-700 font-bold' : 'text-slate-300'}>
+                      <span className={item.permissions.create ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                         {item.permissions.create ? '✓' : '—'}
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-center">
-                      <span className={item.permissions.edit ? 'text-emerald-700 font-bold' : 'text-slate-300'}>
+                      <span className={item.permissions.edit ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                         {item.permissions.edit ? '✓' : '—'}
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-center">
-                      <span className={item.permissions.delete ? 'text-emerald-700 font-bold' : 'text-slate-300'}>
+                      <span className={item.permissions.delete ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                         {item.permissions.delete ? '✓' : '—'}
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-center">
-                      <span className={item.permissions.export ? 'text-emerald-700 font-bold' : 'text-slate-300'}>
+                      <span className={item.permissions.export ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                         {item.permissions.export ? '✓' : '—'}
                       </span>
                     </td>
                     <td className="py-4 pr-4 text-center">
-                      <span className={item.permissions.approve ? 'text-emerald-700 font-bold' : 'text-slate-300'}>
+                      <span className={item.permissions.approve ? 'text-emerald-400 font-bold' : 'text-slate-600'}>
                         {item.permissions.approve ? '✓' : '—'}
                       </span>
                     </td>
@@ -817,17 +614,17 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
 
       {/* SECTION 6: SYSTEM & MAINTENANCE */}
       {activeSection === 'system' && (
-        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl shadow-xs">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 max-w-4xl">
           <div>
-            <h3 className="text-lg font-bold text-slate-900">System Infrastructure &amp; Maintenance</h3>
-            <p className="text-base text-slate-600">Emergency controls, database backups, and maintenance mode toggles.</p>
+            <h3 className="text-lg font-bold text-white">System Infrastructure &amp; Maintenance</h3>
+            <p className="text-xs text-slate-400">Emergency controls, database backups, and maintenance mode toggles.</p>
           </div>
 
-          <div className="space-y-4 text-base">
-            <div className="flex items-center justify-between p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900">
+          <div className="space-y-4 text-xs">
+            <div className="flex items-center justify-between p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200">
               <div>
-                <div className="font-bold text-slate-900">Platform Maintenance Mode</div>
-                <div className="text-[15px] text-amber-800 mt-0.5">
+                <div className="font-bold text-white">Platform Maintenance Mode</div>
+                <div className="text-[11px] text-amber-300/80 mt-0.5">
                   Temporarily display maintenance screen to public users while keeping admin access live
                 </div>
               </div>
@@ -838,14 +635,14 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                   onChange={(e) => setSystem({ ...system, maintenanceMode: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-600" />
+                <div className="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-500" />
               </label>
             </div>
 
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
               <div>
-                <div className="font-bold text-slate-900">Relational Database Backup</div>
-                <div className="text-[15px] text-slate-500 mt-0.5">
+                <div className="font-bold text-white">Relational Database Backup</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">
                   Last verified snapshot: {system.lastBackupDate}
                 </div>
               </div>
@@ -854,19 +651,19 @@ export const AdminSettings: React.FC<AdminSettingsProps> = ({
                 onClick={() =>
                   onTriggerToast('success', 'Backup Initiated', 'PostgreSQL cloud snapshot triggered successfully.')
                 }
-                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition-colors flex items-center gap-1.5"
               >
-                <RefreshCw className="w-3.5 h-3.5 text-emerald-600" />
+                <RefreshCw className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Create Backup Now</span>
               </button>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex justify-end">
+          <div className="pt-4 border-t border-slate-800 flex justify-end">
             <button
               type="button"
               onClick={() => handleSave('System')}
-              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20"
             >
               <Save className="w-4 h-4" />
               <span>Save System Settings</span>

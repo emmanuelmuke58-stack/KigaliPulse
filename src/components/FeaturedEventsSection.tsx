@@ -18,28 +18,21 @@ export const FeaturedEventsSection: React.FC<FeaturedEventsSectionProps> = ({
   onSelectEvent,
   onViewAll,
 }) => {
-  const featured = events
-    .filter((e) => e.isFeatured && e.status === 'Published')
-    .sort((a, b) => {
-      const dateA = a.date || '';
-      const dateB = b.date || '';
-      if (dateA !== dateB) return dateA.localeCompare(dateB);
-      return (a.time || '').localeCompare(b.time || '');
-    });
+  const featured = events.filter((e) => e.isFeatured && e.status === 'Published');
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 text-base font-extrabold uppercase tracking-wider text-emerald-700 mb-1.5">
-            <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
+            <Sparkles className="w-3.5 h-3.5" />
             <span>Curated Highlights</span>
           </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             Featured Events in Kigali
           </h2>
-          <p className="text-slate-600 text-base sm:text-base mt-1.5 font-medium">
+          <p className="text-slate-500 text-xs sm:text-sm mt-1">
             Hand-picked headline concerts, flagship tech summits, and cultural gatherings.
           </p>
         </div>
@@ -47,7 +40,7 @@ export const FeaturedEventsSection: React.FC<FeaturedEventsSectionProps> = ({
         <button
           type="button"
           onClick={onViewAll}
-          className="inline-flex items-center gap-2 text-base sm:text-base font-bold text-emerald-700 hover:text-emerald-800 transition-colors group cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors group"
         >
           <span>View All Events</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -55,7 +48,7 @@ export const FeaturedEventsSection: React.FC<FeaturedEventsSectionProps> = ({
       </div>
 
       {/* Grid of Featured Events */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {featured.map((event) => (
           <EventCard
             key={event.id}

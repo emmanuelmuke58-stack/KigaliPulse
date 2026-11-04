@@ -70,26 +70,26 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm p-0 sm:p-6 md:p-12 flex justify-center items-start"
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 backdrop-blur-sm p-4 sm:p-6 md:p-12 flex justify-center items-start"
     >
-      <div className="bg-white sm:rounded-3xl max-w-2xl w-full h-full sm:h-auto sm:max-h-[85vh] shadow-2xl border-t sm:border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom sm:zoom-in-95 duration-200 flex flex-col">
+      <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         
         {/* Search Input Bar */}
-        <div className="p-4 border-b border-slate-200 flex items-center gap-3 pt-[calc(1rem+env(safe-area-inset-top))] sm:pt-4">
+        <div className="p-4 border-b border-slate-200 flex items-center gap-3">
           <Search className="w-5 h-5 text-emerald-600 shrink-0" />
           <input
             type="text"
             autoFocus
-            placeholder="Search events, venues, organizers..."
+            placeholder="Search events, venues, organizers, categories (e.g. Jazz, Arena, Tech)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full text-base sm:text-base font-medium focus:outline-none placeholder:text-slate-400 text-slate-900"
+            className="w-full text-sm sm:text-base font-medium focus:outline-none placeholder:text-slate-400 text-slate-900"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="min-h-[44px] px-2 text-base text-slate-400 hover:text-slate-600 font-bold"
+              className="text-xs text-slate-400 hover:text-slate-600 font-bold px-1.5"
             >
               Clear
             </button>
@@ -98,40 +98,45 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Close search"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-colors"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-800"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Search Suggestions Body */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 text-base pb-[calc(2rem+env(safe-area-inset-bottom))]">
+        <div className="max-h-[70vh] overflow-y-auto p-4 sm:p-6 space-y-6 text-xs">
           
           {/* Section: Events */}
           {results.events.length > 0 && (
-            <div className="space-y-3">
-              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 text-[14px]">
+            <div className="space-y-2">
+              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 text-[10px]">
                 <Calendar className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Events</span>
               </div>
               <div className="space-y-1">
-                {results.events.slice(0, 5).map((evt) => (
+                {results.events.slice(0, 4).map((evt) => (
                   <div
                     key={evt.id}
                     onClick={() => {
                       onClose();
                       onSelectEvent(evt);
                     }}
-                    className="p-3 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer flex items-center justify-between gap-3 group active:scale-[0.99]"
+                    className="p-2.5 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer flex items-center justify-between gap-3 group"
                   >
                     <div className="min-w-0">
                       <h4 className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
                         {evt.title}
                       </h4>
-                      <div className="flex items-center gap-1.5 text-[15px] text-slate-500 flex-wrap">
+                      <div className="flex items-center gap-1.5 text-[11px] text-slate-500 flex-wrap">
                         <span>{evt.displayDate}</span>
                         <span aria-hidden="true">·</span>
                         <span>{evt.venue}</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="inline-flex items-center gap-1 font-semibold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded text-[10px]">
+                          <Eye className="w-3 h-3 text-slate-500" />
+                          <span>{evt.views.toLocaleString()} Views</span>
+                        </span>
                       </div>
                     </div>
                     <span className="font-bold text-slate-900 tabular-nums shrink-0">{evt.priceDisplay}</span>
@@ -143,10 +148,10 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
 
           {/* Section: Venues */}
           {results.venues.length > 0 && (
-            <div className="space-y-3 border-t pt-5">
-              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 text-[14px]">
+            <div className="space-y-2 border-t pt-4">
+              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 text-[10px]">
                 <Building className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Venues</span>
+                <span>Venues in Kigali</span>
               </div>
               <div className="space-y-1">
                 {results.venues.slice(0, 3).map((v) => (
@@ -156,13 +161,13 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                       onClose();
                       onSelectVenue(v);
                     }}
-                    className="p-3 rounded-xl hover:bg-slate-50 cursor-pointer flex items-center justify-between group active:scale-[0.99]"
+                    className="p-2 rounded-xl hover:bg-slate-50 cursor-pointer flex items-center justify-between group"
                   >
                     <div>
                       <h4 className="font-bold text-slate-900 group-hover:text-emerald-700">{v.name}</h4>
-                      <span className="text-[15px] text-slate-500">{v.type} · {v.neighborhood}</span>
+                      <span className="text-[11px] text-slate-500">{v.type} · {v.neighborhood}</span>
                     </div>
-                    <span className="text-emerald-700 font-semibold text-[15px]">{v.upcomingCount} events</span>
+                    <span className="text-emerald-700 font-semibold text-[11px]">{v.upcomingCount} events</span>
                   </div>
                 ))}
               </div>
@@ -171,10 +176,10 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
 
           {/* Section: Organizers */}
           {results.organizers.length > 0 && (
-            <div className="space-y-3 border-t pt-5">
-              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 text-[14px]">
+            <div className="space-y-2 border-t pt-4">
+              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 text-[10px]">
                 <User className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Organizers</span>
+                <span>Organizers &amp; Brands</span>
               </div>
               <div className="space-y-1">
                 {results.organizers.slice(0, 3).map((org) => (
@@ -184,25 +189,25 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                       onClose();
                       onSelectOrganizer(org);
                     }}
-                    className="p-3 rounded-xl hover:bg-slate-50 cursor-pointer flex items-center justify-between group active:scale-[0.99]"
+                    className="p-2 rounded-xl hover:bg-slate-50 cursor-pointer flex items-center justify-between group"
                   >
                     <div>
                       <h4 className="font-bold text-slate-900 group-hover:text-emerald-700">{org.name}</h4>
-                      <span className="text-[15px] text-slate-500">{org.category}</span>
+                      <span className="text-[11px] text-slate-500">{org.category}</span>
                     </div>
-                    <span className="text-slate-500 text-[15px]">{org.eventsCount} events</span>
+                    <span className="text-slate-500 text-[11px]">{org.eventsCount} events</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Quick Actions */}
-          <div className="border-t pt-5 space-y-3">
-            <span className="font-bold uppercase tracking-wider text-slate-400 text-[14px] block">
-              Quick Filter
+          {/* Section: Categories & Locations Quick Pills */}
+          <div className="border-t pt-4 space-y-3">
+            <span className="font-bold uppercase tracking-wider text-slate-400 text-[10px] block">
+              Popular Categories &amp; Areas
             </span>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {results.categories.slice(0, 4).map((c) => (
                 <button
                   key={c.id}
@@ -211,13 +216,28 @@ export const GlobalSearchModal: React.FC<GlobalSearchModalProps> = ({
                     onClose();
                     onSelectCategory(c.id);
                   }}
-                  className="min-h-[44px] px-4 py-1 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-xl text-slate-700 font-medium transition-colors"
+                  className="px-2.5 py-1 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-700 font-medium transition-colors"
                 >
                   {c.icon} {c.name}
                 </button>
               ))}
+              {results.locations.slice(0, 4).map((l) => (
+                <button
+                  key={l.name}
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onSelectLocation(l.name);
+                  }}
+                  className="px-2.5 py-1 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-700 font-medium transition-colors flex items-center gap-1"
+                >
+                  <MapPin className="w-3 h-3 text-emerald-600" />
+                  <span>{l.name}</span>
+                </button>
+              ))}
             </div>
           </div>
+
         </div>
 
       </div>

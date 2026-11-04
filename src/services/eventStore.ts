@@ -28,25 +28,13 @@ export function getStoredEvents(): EventItem[] {
     // Merge any missing fields or new seed events if necessary
     const existingIds = new Set(parsed.map((e) => e.id));
     const missingSeedEvents = INITIAL_EVENTS.filter((e) => !existingIds.has(e.id));
-    
-    // Ensure all events have new fields (migration)
-    const updatedParsed = parsed.map(e => ({
-      ...e,
-      capacity: e.capacity ?? 0,
-      ticketsSold: e.ticketsSold ?? 0,
-      revenue: e.revenue ?? 0,
-      attendeeCount: e.attendeeCount ?? 0,
-      ticketCategories: e.ticketCategories ?? [],
-      salesHistory: e.salesHistory ?? [],
-    }));
-
     if (missingSeedEvents.length > 0) {
-      const merged = [...updatedParsed, ...missingSeedEvents];
+      const merged = [...parsed, ...missingSeedEvents];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
       return merged;
     }
 
-    return updatedParsed;
+    return parsed;
   } catch (err) {
     console.error('Failed to load events from storage:', err);
     return INITIAL_EVENTS;

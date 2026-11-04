@@ -165,12 +165,6 @@ export const CreateEventWizard: React.FC<CreateEventWizardProps> = ({
       saves: 0,
       clicks: 0,
       createdAt: '2026-09-24',
-      capacity: 0,
-      ticketsSold: 0,
-      revenue: 0,
-      attendeeCount: 0,
-      ticketCategories: [],
-      salesHistory: [],
     };
   };
 

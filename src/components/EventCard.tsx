@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bookmark, MapPin, Calendar, Clock, Eye, ChevronRight } from 'lucide-react';
+import { Bookmark, MapPin, Calendar, Clock, ArrowUpRight, Eye } from 'lucide-react';
 import { EventItem } from '../types';
 
 interface EventCardProps {
@@ -7,7 +7,6 @@ interface EventCardProps {
   isSaved: boolean;
   onToggleSave: (e: React.MouseEvent, eventId: string) => void;
   onSelectEvent: (event: EventItem) => void;
-  onBuyTicket?: (event: EventItem) => void;
   layout?: 'standard' | 'compact' | 'horizontal';
 }
 
@@ -19,15 +18,10 @@ export const EventCard: React.FC<EventCardProps> = ({
   layout = 'standard',
 }) => {
   const isCancelled = event.status === 'Cancelled';
+  const isPostponed = event.status === 'Postponed';
   const isSoldOut = event.status === 'Sold Out';
 
-  // Helper to format date for the badge
-  const formatDateBadge = (dateStr: string) => {
-    const d = new Date(dateStr);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return `${months[d.getMonth()]} ${d.getDate()} ${d.getFullYear()}`;
-  };
-
+  // Compact layout (used in tight listings or sidebars)
   if (layout === 'compact') {
     return (
       <article
@@ -38,180 +32,241 @@ export const EventCard: React.FC<EventCardProps> = ({
           <img
             src={event.image}
             alt={event.title}
+            referrerPolicy="no-referrer"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform"
           />
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="font-bold text-[14px] text-slate-900 group-hover:text-emerald-700 truncate">
+          <div className="flex items-center justify-between gap-1 text-[11px] mb-0.5">
+            <span className="text-emerald-700 font-bold truncate">{event.displayDate}</span>
+            <span
+              className="inline-flex items-center gap-1 font-semibold text-slate-600 shrink-0 bg-slate-100 px-1.5 py-0.5 rounded text-[10px]"
+              title={`${event.views.toLocaleString()} page visits (views)`}
+            >
+              <Eye className="w-3 h-3 text-slate-500" />
+              <span>{event.views.toLocaleString()} Views</span>
+            </span>
+          </div>
+          <h4 className="font-bold text-xs text-slate-900 group-hover:text-emerald-700 truncate">
             {event.title}
           </h4>
-          <div className="flex items-center justify-between text-[12px] text-slate-500 mt-1 font-medium">
+          <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1">
             <span className="truncate">{event.venue}</span>
-            <span className="font-bold text-emerald-700 tabular-nums">{event.priceDisplay}</span>
+            <span className="font-bold text-slate-900 tabular-nums">{event.priceDisplay}</span>
           </div>
         </div>
       </article>
     );
   }
 
-  // Horizontal layout (used in list mode)
   if (layout === 'horizontal') {
     return (
       <article
         onClick={() => onSelectEvent(event)}
         className="group relative flex flex-col sm:flex-row bg-white rounded-2xl border border-slate-200/80 hover:border-emerald-600 transition-all duration-200 hover:shadow-md cursor-pointer overflow-hidden"
       >
-        <div className="relative w-full sm:w-64 h-48 sm:h-auto shrink-0 overflow-hidden bg-slate-100">
+        {/* Thumbnail Image */}
+        <div className="relative w-full sm:w-48 sm:h-auto h-40 shrink-0 overflow-hidden bg-slate-100">
           <img
             src={event.image}
             alt={event.title}
+            referrerPolicy="no-referrer"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          <div className="absolute top-4 left-4 flex flex-col gap-1.5 text-white">
-            <span className="text-[10px] font-black uppercase tracking-widest drop-shadow-md">
-              {event.category}
+          {event.isFeatured && (
+            <span className="absolute top-2.5 left-2.5 bg-slate-900/90 backdrop-blur-md text-emerald-400 text-[11px] font-semibold tracking-wider px-2.5 py-0.5 rounded-md">
+              Featured
             </span>
-            <span className="text-sm font-black tabular-nums drop-shadow-md">
-              {event.priceDisplay}
-            </span>
-          </div>
+          )}
         </div>
 
+        {/* Content */}
         <div className="flex-1 p-5 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between gap-2 mb-3">
-              <span className="bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-slate-100 text-[11px] font-black text-slate-900 flex items-center gap-1.5 shadow-sm">
-                <Calendar className="w-3.5 h-3.5 text-emerald-600" />
-                {formatDateBadge(event.date)}
+            {/* Unboxed Metadata Header */}
+            <div className="flex items-center justify-between gap-2 text-xs text-slate-500 font-medium mb-1.5 flex-wrap">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-emerald-700 font-semibold">{event.category}</span>
+                <span aria-hidden="true">·</span>
+                <span>{event.displayDate}</span>
+                <span aria-hidden="true">·</span>
+                <span>{event.time}</span>
+              </div>
+
+              {/* Views Count Badge alongside Date & Category */}
+              <div
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold shrink-0 border border-slate-200/60"
+                title={`${event.views.toLocaleString()} page visits (Views represent event page visits, not confirmed ticket purchases)`}
+              >
+                <Eye className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                <span className="tabular-nums font-bold text-slate-800">{event.views.toLocaleString()}</span>
+                <span className="text-[11px] text-slate-500 font-medium">Views</span>
+              </div>
+            </div>
+
+            <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1">
+              {event.title}
+            </h3>
+
+            <p className="mt-1 text-xs text-slate-600 line-clamp-2">
+              {event.description}
+            </p>
+
+            <div className="mt-3 flex items-center justify-between gap-2 text-xs text-slate-500">
+              <div className="flex items-center gap-2 truncate">
+                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span className="truncate">{event.venue}, {event.neighborhood}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card Footer */}
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-bold text-slate-900 tabular-nums">
+                {event.priceDisplay}
               </span>
+              {event.isFree && (
+                <span className="text-xs text-emerald-700 font-medium">(Free Entry)</span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={(e) => onToggleSave(e, event.id)}
-                className={`w-9 h-9 flex items-center justify-center rounded-xl border transition-all ${
-                  isSaved ? 'bg-amber-500 border-amber-500 text-white' : 'border-slate-200 text-slate-400 hover:bg-slate-50'
+                aria-label={isSaved ? 'Remove from saved events' : 'Save event'}
+                className={`min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg border transition-colors ${
+                  isSaved
+                    ? 'bg-amber-500 border-amber-500 text-white'
+                    : 'border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
               </button>
+
+              <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                Details <ArrowUpRight className="w-3.5 h-3.5" />
+              </span>
             </div>
-
-            <h3 className="text-xl font-black text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1 leading-tight">
-              {event.title}
-            </h3>
-
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-2 text-[14px] text-slate-600 font-bold">
-                <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="truncate">{event.venue}, {event.neighborhood}</span>
-              </div>
-              <div className="flex items-center gap-2 text-[14px] text-slate-500 font-bold">
-                <Clock className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>{event.time}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-slate-400 text-[14px] font-bold">
-                <Eye className="w-4 h-4" />
-                <span>{event.views?.toLocaleString() || 0}</span>
-              </div>
-            <button className="px-5 py-2 rounded-xl border-2 border-emerald-600 text-emerald-600 font-black text-[13px] flex items-center gap-2 hover:bg-emerald-600 hover:text-white transition-all uppercase tracking-tight">
-              <span>View Details</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </article>
     );
   }
 
-  // Standard vertical card (Matching the screenshot 100%)
   return (
     <article
       onClick={() => onSelectEvent(event)}
-      className="group relative flex flex-col bg-white rounded-[2.5rem] border border-slate-200/80 hover:border-emerald-600 transition-all duration-300 hover:shadow-xl cursor-pointer overflow-hidden h-full"
+      className="group relative flex flex-col bg-white rounded-2xl border border-slate-200/80 hover:border-emerald-600 transition-all duration-200 hover:shadow-lg cursor-pointer overflow-hidden"
     >
-      {/* Cover Image Area */}
-      <div className="relative h-60 w-full overflow-hidden bg-slate-100 p-2">
-        <div className="w-full h-full overflow-hidden rounded-[2rem]">
-          <img
-            src={event.image}
-            alt={event.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        </div>
+      {/* Visual Cover Asset */}
+      <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+        <img
+          src={event.image}
+          alt={event.title}
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
 
-        {/* Floating Date Badge - Clean Integrated Design */}
-        <div className="absolute top-6 right-6">
-          <div className="bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg border border-white/50 transition-transform group-hover:scale-105">
-            <Calendar className="w-3.5 h-3.5 text-emerald-600" />
-            <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight">
-              {formatDateBadge(event.date)}
-            </span>
+        {/* Top Badges / Scrim */}
+        <div className="absolute inset-x-0 top-0 p-3 flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            {event.isFeatured && (
+              <span className="bg-slate-900/90 backdrop-blur-md text-emerald-400 text-[11px] font-semibold tracking-wide px-2.5 py-0.5 rounded-md shadow-sm">
+                Featured
+              </span>
+            )}
+            {isCancelled && (
+              <span className="bg-red-600 text-white text-[11px] font-semibold px-2 py-0.5 rounded-md shadow-sm">
+                Cancelled
+              </span>
+            )}
+            {isPostponed && (
+              <span className="bg-amber-600 text-white text-[11px] font-semibold px-2 py-0.5 rounded-md shadow-sm">
+                Postponed
+              </span>
+            )}
+            {isSoldOut && (
+              <span className="bg-slate-900 text-white text-[11px] font-semibold px-2 py-0.5 rounded-md shadow-sm">
+                Sold Out
+              </span>
+            )}
           </div>
-        </div>
 
-        {/* Clean Metadata Overlay (Replaces Pills) */}
-        <div className="absolute bottom-6 left-6 flex flex-col gap-0.5 text-white">
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-90 drop-shadow-sm">
-            {event.category}
-          </span>
-          <span className="text-lg font-black tracking-tight drop-shadow-md">
-            {event.priceDisplay}
-          </span>
-        </div>
-
-        {/* Floating Save Button */}
-        <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             type="button"
             onClick={(e) => onToggleSave(e, event.id)}
-            className={`w-10 h-10 flex items-center justify-center rounded-2xl backdrop-blur-md transition-all shadow-lg ${
-              isSaved ? 'bg-amber-500 text-white' : 'bg-white/80 text-slate-600 hover:bg-white'
+            aria-label={isSaved ? 'Remove from saved events' : 'Save event'}
+            className={`min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full backdrop-blur-md transition-colors ${
+              isSaved
+                ? 'bg-amber-500 text-white shadow-md'
+                : 'bg-slate-900/60 text-white hover:bg-slate-900'
             }`}
           >
             <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
           </button>
         </div>
+
+        {/* Gradient Scrim with Category and Location */}
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end justify-between p-3">
+          <div className="text-[11px] font-medium text-white flex items-center gap-1.5 truncate">
+            <span className="font-semibold text-emerald-300">{event.category}</span>
+            <span aria-hidden="true" className="text-white/60">·</span>
+            <span className="text-slate-200">{event.neighborhood}</span>
+          </div>
+        </div>
       </div>
 
-      {/* Content Area */}
-      <div className="p-6 flex-1 flex flex-col justify-between">
+      {/* Main Content Area */}
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
         <div>
-          <h3 className="text-xl font-black text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1 leading-tight mb-4">
+          {/* Timing Info & Views Count Row */}
+          <div className="flex items-center justify-between gap-2 text-xs mb-1.5 flex-wrap">
+            <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+              <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>{event.displayDate}</span>
+              <span aria-hidden="true" className="text-slate-300">·</span>
+              <span className="text-slate-600 font-normal">{event.time}</span>
+            </div>
+
+            {/* Total Views Count Clearly Displayed */}
+            <div
+              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold shrink-0 border border-slate-200/60"
+              title={`${event.views.toLocaleString()} page visits (Views represent event page visits, not confirmed ticket purchases)`}
+            >
+              <Eye className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+              <span className="tabular-nums font-bold text-slate-800">{event.views.toLocaleString()}</span>
+              <span className="text-[11px] text-slate-500 font-medium">Views</span>
+            </div>
+          </div>
+
+          <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
             {event.title}
           </h3>
 
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 text-slate-600 font-bold text-[14px]">
-              <MapPin className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span className="truncate">{event.venue}, Kigali</span>
-            </div>
-            <div className="flex items-center gap-3 text-slate-500 font-bold text-[14px]">
-              <Clock className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>{event.time}</span>
-            </div>
+          <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-500">
+            <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <span className="truncate font-medium">{event.venue}</span>
           </div>
         </div>
 
-        {/* Footer Row */}
-        <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 text-slate-500 font-bold text-[12px]">
-              <Eye className="w-3.5 h-3.5 text-slate-400" />
-              <span>{event.views?.toLocaleString() || 0} Views</span>
-              <span className="mx-1 text-slate-200">·</span>
-              <span className="text-emerald-700 font-black tracking-tight">{event.priceDisplay}</span>
+        {/* Card Footer: Price & View CTA */}
+        <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+          <div>
+            <div className="text-[10px] uppercase font-bold text-slate-400">Price</div>
+            <div className="text-sm font-extrabold text-slate-900 tabular-nums">
+              {event.priceDisplay}
             </div>
           </div>
-          
-          <button className="px-5 py-2 rounded-2xl border-2 border-emerald-600 text-emerald-600 font-black text-[13px] flex items-center gap-2 hover:bg-emerald-600 hover:text-white transition-all uppercase tracking-tight">
-            <span>Details</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
+
+          <div className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 group-hover:translate-x-0.5 transition-transform">
+            <span>View Event</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </div>
         </div>
       </div>
     </article>
   );
 };
+

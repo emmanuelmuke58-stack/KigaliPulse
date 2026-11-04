@@ -31,7 +31,6 @@ import { DiscoverPage } from './components/DiscoverPage';
 import { VenueDirectory, VenueDetailModal } from './components/VenueDirectory';
 import { OrganizerDirectory, OrganizerProfileModal } from './components/OrganizerDirectory';
 import { CreateEventWizard } from './components/CreateEventWizard';
-import { VisitorCreateEvent } from './components/VisitorCreateEvent';
 import { OrganizerDashboard } from './components/OrganizerDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AdminSystem } from './components/admin/AdminSystem';
@@ -42,9 +41,6 @@ import { SavedEventsDrawer } from './components/SavedEventsDrawer';
 import { UserProfileModal, NotificationModal } from './components/UserProfileModal';
 import { InfoModals } from './components/InfoModals';
 import { Footer } from './components/Footer';
-import { OfflineIndicator } from './components/OfflineIndicator';
-import { EventSubmission } from './types/admin';
-import { INITIAL_EVENT_SUBMISSIONS, INITIAL_ADMIN_NOTIFICATIONS } from './data/adminMockData';
 
 export default function App() {
   // Navigation & View State
@@ -72,9 +68,6 @@ export default function App() {
 
   // Active quick filter on homepage
   const [activeQuickFilter, setActiveQuickFilter] = useState<string>('');
-
-  // Create Event mode: 'visitor' (public event submission for approval) | 'wizard' (pro organizer 6-step wizard)
-  const [createViewMode, setCreateViewMode] = useState<'visitor' | 'wizard'>('visitor');
 
   // Automatic event view tracker: opens detail modal, increments dynamic views count with session deduplication, and persists
   const handleSelectEvent = (event: EventItem) => {
@@ -193,67 +186,6 @@ export default function App() {
     setCurrentView('organizer-dashboard');
   };
 
-  // Visitor Event Submission Handler (Persists proposal & notifies Admin)
-  const handleVisitorEventSubmit = (submission: EventSubmission) => {
-    // 1. Save submission to persistent storage
-    try {
-      const existing = localStorage.getItem('kigali_event_submissions');
-      const list: EventSubmission[] = existing ? JSON.parse(existing) : INITIAL_EVENT_SUBMISSIONS;
-      const updated = [submission, ...list.filter((s) => s.id !== submission.id)];
-      localStorage.setItem('kigali_event_submissions', JSON.stringify(updated));
-    } catch (e) {
-      console.error(e);
-    }
-
-    // 2. Dispatch an Admin notification whenever a new event is submitted for approval
-    try {
-      const notifExisting = localStorage.getItem('kigali_admin_notifications');
-      const notifs = notifExisting ? JSON.parse(notifExisting) : INITIAL_ADMIN_NOTIFICATIONS;
-      const newAdminNotif = {
-        id: `notif-sub-${Date.now()}`,
-        title: 'New Event Submitted for Approval',
-        message: `"${submission.name}" was submitted by ${submission.organizerName} (${submission.organizerEmail}). Review required before publication.`,
-        category: 'Moderation' as const,
-        timestamp: 'Just now',
-        isRead: false,
-        priority: 'high' as const,
-        actionUrl: 'businesses',
-      };
-      localStorage.setItem('kigali_admin_notifications', JSON.stringify([newAdminNotif, ...notifs]));
-    } catch (e) {
-      console.error(e);
-    }
-
-    // 3. Add visitor audit log and user profile notification
-    const newLog: AuditLogItem = {
-      id: `log-sub-${Date.now()}`,
-      action: 'Submitted Event for Admin Approval',
-      targetType: 'Event',
-      targetTitle: submission.name,
-      targetId: submission.id,
-      user: submission.organizerName,
-      role: 'Visitor / Community Organizer',
-      timestamp: 'Just now',
-      notes: `Category: ${submission.category} · Entry Fee: ${submission.feeType === 'Free' ? 'Free' : `${submission.entryFee} ${submission.currency}`}`,
-    };
-    setAuditLogs((prev) => [newLog, ...prev]);
-
-    setCurrentUser((prev) => ({
-      ...prev,
-      notifications: [
-        {
-          id: `unotif-${Date.now()}`,
-          title: 'Event Proposal Submitted',
-          message: `Your event "${submission.name}" has been submitted and is waiting for admin approval.`,
-          time: 'Just now',
-          read: false,
-          type: 'update',
-        },
-        ...prev.notifications,
-      ],
-    }));
-  };
-
   // Super Admin: Update Event Status & Log Action
   const handleUpdateEventStatus = (
     eventId: string,
@@ -348,17 +280,7 @@ export default function App() {
 
   // Dedicated Enterprise Admin System Suite (Complete UI Design)
   if (currentView === 'admin-dashboard') {
-    return (
-      <AdminSystem 
-        onExitToPublicSite={() => setCurrentView('home')} 
-        events={events}
-        onUpdateEventStatus={handleUpdateEventStatus}
-        onToggleFeatureEvent={handleToggleFeatureEvent}
-        onDeleteEvent={handleDeleteEvent}
-        auditLogs={auditLogs}
-        onSelectEvent={handleSelectEvent}
-      />
-    );
+    return <AdminSystem onExitToPublicSite={() => setCurrentView('home')} />;
   }
 
   return (
@@ -376,8 +298,8 @@ export default function App() {
         onOpenSearchModal={() => setIsSearchModalOpen(true)}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
         unreadNotificationsCount={unreadCount}
-        events={events}
-        onSelectEvent={handleSelectEvent}
+        currentUser={currentUser}
+        onOpenUserProfile={() => setIsProfileModalOpen(true)}
       />
 
       {/* 2. Main View Routing */}
@@ -487,56 +409,12 @@ export default function App() {
           />
         )}
 
-        {/* VISITOR EVENT SUBMISSION & ORGANIZER CREATION */}
+        {/* CREATE EVENT 6-STEP WIZARD */}
         {currentView === 'create' && (
-          <div className="space-y-4">
-            {/* Top selector for Visitor Proposal vs Organizer Wizard */}
-            <div className="max-w-4xl mx-auto px-4 pt-6">
-              <div className="bg-white border border-slate-200 rounded-2xl p-1.5 flex items-center justify-between gap-2 shadow-2xs">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => setCreateViewMode('visitor')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      createViewMode === 'visitor'
-                        ? 'bg-emerald-600 text-white shadow-2xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                    }`}
-                  >
-                    Visitor Event Submission
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setCreateViewMode('wizard')}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      createViewMode === 'wizard'
-                        ? 'bg-emerald-600 text-white shadow-2xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                    }`}
-                  >
-                    Organizer 6-Step Wizard
-                  </button>
-                </div>
-                <span className="text-[11px] text-slate-500 hidden sm:inline font-medium pr-3">
-                  {createViewMode === 'visitor'
-                    ? 'Submit event proposal for admin review & approval'
-                    : 'Advanced ticketing, performer line-up & schedule setup'}
-                </span>
-              </div>
-            </div>
-
-            {createViewMode === 'visitor' ? (
-              <VisitorCreateEvent
-                onSubmitEvent={handleVisitorEventSubmit}
-                onCancel={() => setCurrentView('home')}
-              />
-            ) : (
-              <CreateEventWizard
-                onEventCreated={handleEventCreated}
-                onCancel={() => setCurrentView('home')}
-              />
-            )}
-          </div>
+          <CreateEventWizard
+            onEventCreated={handleEventCreated}
+            onCancel={() => setCurrentView('home')}
+          />
         )}
 
         {/* ORGANIZER DASHBOARD */}
@@ -704,7 +582,6 @@ export default function App() {
         onClose={() => setInfoModalType(null)}
       />
 
-      <OfflineIndicator />
     </div>
   );
 }

@@ -239,11 +239,11 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
       {/* 1. Header (Title, description, Add User, Export) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <Users className="w-6 h-6 text-emerald-600" />
+          <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <Users className="w-6 h-6 text-emerald-400" />
             <span>Users Management</span>
           </h2>
-          <p className="text-base sm:text-base text-slate-600 mt-1">
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
             Maintain identity records, role permissions, organization affiliations, and security states.
           </p>
         </div>
@@ -252,16 +252,16 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
           <button
             type="button"
             onClick={onExportUsers}
-            className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 hover:text-slate-900 transition-all flex items-center gap-2 cursor-pointer shadow-2xs"
+            className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all flex items-center gap-2 cursor-pointer shadow-xs"
           >
-            <Download className="w-4 h-4 text-slate-500" />
+            <Download className="w-4 h-4 text-slate-400" />
             <span>Export CSV</span>
           </button>
 
           <button
             type="button"
             onClick={handleOpenAdd}
-            className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-base font-bold text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-xs font-bold text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer"
           >
             <UserPlus className="w-4 h-4" />
             <span>Add User</span>
@@ -270,11 +270,11 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
       </div>
 
       {/* 2. Search & Filters Bar */}
-      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 space-y-3 shadow-xs">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Search box */}
           <div className="lg:col-span-2 relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+            <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
             <input
               type="text"
               value={searchTerm}
@@ -283,7 +283,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 setCurrentPage(1);
               }}
               placeholder="Search by name, email, phone, or organization..."
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-4 py-2 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder:text-slate-500 outline-none"
             />
           </div>
 
@@ -295,7 +295,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 setStatusFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-3 py-2 text-xs text-slate-300 outline-none cursor-pointer"
             >
               <option value="all">All Statuses</option>
               <option value="Active">Active</option>
@@ -313,10 +313,10 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 setRoleFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-3 py-2 text-xs text-slate-300 outline-none cursor-pointer"
             >
               <option value="all">All Roles</option>
-                    <option value="SuperAdmin">SuperAdmin</option>
+              <option value="Super Admin">Super Admin</option>
               <option value="Admin">Admin</option>
               <option value="Moderator">Moderator</option>
               <option value="Venue Manager">Venue Manager</option>
@@ -333,7 +333,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 setOrganizationFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-white border border-slate-300 focus:border-emerald-600 rounded-xl px-3 py-2 text-base text-slate-700 outline-none cursor-pointer truncate"
+              className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-3 py-2 text-xs text-slate-300 outline-none cursor-pointer truncate"
             >
               <option value="all">All Organizations</option>
               {uniqueOrganizations.map((org) => (
@@ -347,7 +347,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
 
         {/* Clear Filters & Active Filter Count */}
         {(searchTerm || statusFilter !== 'all' || roleFilter !== 'all' || organizationFilter !== 'all') && (
-          <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-base text-slate-600 font-medium">
+          <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-xs text-slate-400">
             <span>
               Showing {filteredUsers.length} matching user{filteredUsers.length === 1 ? '' : 's'}
             </span>
@@ -358,10 +358,12 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 setStatusFilter('all');
                 setRoleFilter('all');
                 setOrganizationFilter('all');
+                setCurrentPage(1);
               }}
-              className="text-base font-bold text-emerald-700 hover:text-emerald-800"
+              className="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1 cursor-pointer"
             >
-              Clear All Filters
+              <X className="w-3.5 h-3.5" />
+              <span>Clear All Filters</span>
             </button>
           </div>
         )}
@@ -369,9 +371,9 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
 
       {/* 3. Bulk Actions Toolbar (when rows selected) */}
       {selectedUserIds.length > 0 && (
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 px-5 flex items-center justify-between text-base text-emerald-900 animate-in fade-in shadow-xs">
+        <div className="bg-emerald-950/80 border border-emerald-500/30 rounded-2xl p-3 px-5 flex items-center justify-between text-xs text-white animate-in fade-in">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="font-bold">{selectedUserIds.length} user(s) selected</span>
           </div>
           <div className="flex items-center gap-2">
@@ -381,7 +383,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 selectedUserIds.forEach((id) => onToggleStatus(id, 'Active'));
                 setSelectedUserIds([]);
               }}
-              className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 font-bold text-white transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-slate-950 transition-colors"
             >
               Bulk Activate
             </button>
@@ -391,7 +393,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 selectedUserIds.forEach((id) => onToggleStatus(id, 'Suspended'));
                 setSelectedUserIds([]);
               }}
-              className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 font-bold text-white transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 font-bold text-white transition-colors"
             >
               Bulk Suspend
             </button>
@@ -401,7 +403,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 selectedUserIds.forEach((id) => onDeleteUser(id));
                 setSelectedUserIds([]);
               }}
-              className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 font-bold text-white transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 font-bold text-white transition-colors"
             >
               Bulk Delete
             </button>
@@ -410,10 +412,10 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
       )}
 
       {/* 4. Users Table */}
-      <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-xs">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-base">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
               <tr>
                 <th className="p-4 w-10">
                   <input
@@ -423,7 +425,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                       paginatedUsers.every((u) => selectedUserIds.includes(u.id))
                     }
                     onChange={handleSelectAll}
-                    className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                    className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                   />
                 </th>
                 <th className="py-4 pr-4 font-semibold">User</th>
@@ -437,19 +439,19 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 <th className="py-4 pr-4 font-semibold text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800/60">
               {paginatedUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="py-12 text-center text-slate-500">
-                    <Users className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                    <p className="font-bold text-base text-slate-900">No Users Found</p>
-                    <p className="text-base text-slate-500 mt-1">
+                  <td colSpan={10} className="py-12 text-center text-slate-400">
+                    <Users className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+                    <p className="font-bold text-sm text-white">No Users Found</p>
+                    <p className="text-xs text-slate-500 mt-1">
                       There are no users matching your current filters or search terms.
                     </p>
                     <button
                       type="button"
                       onClick={handleOpenAdd}
-                      className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base inline-flex items-center gap-1.5 shadow-md shadow-emerald-600/20"
+                      className="mt-4 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs inline-flex items-center gap-1.5"
                     >
                       <UserPlus className="w-4 h-4" />
                       <span>Add New User</span>
@@ -458,23 +460,23 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 </tr>
               ) : (
                 paginatedUsers.map((user) => {
-                  let statusBadge = 'bg-emerald-50 text-emerald-700 border-emerald-200';
-                  if (user.status === 'Pending') statusBadge = 'bg-amber-50 text-amber-700 border-amber-200';
-                  if (user.status === 'Suspended') statusBadge = 'bg-rose-50 text-rose-700 border-rose-200';
-                  if (user.status === 'Inactive') statusBadge = 'bg-slate-100 text-slate-600 border-slate-200';
+                  let statusBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                  if (user.status === 'Pending') statusBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                  if (user.status === 'Suspended') statusBadge = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+                  if (user.status === 'Inactive') statusBadge = 'bg-slate-700/50 text-slate-400 border-slate-700';
 
-                  let roleBadge = 'bg-slate-100 text-slate-700 border border-slate-200';
-                  if (user.role === 'SuperAdmin') roleBadge = 'bg-purple-50 text-purple-700 border border-purple-200';
-                  if (user.role === 'Admin') roleBadge = 'bg-sky-50 text-sky-700 border border-sky-200';
-                  if (user.role === 'Moderator') roleBadge = 'bg-teal-50 text-teal-700 border border-teal-200';
+                  let roleBadge = 'bg-slate-800 text-slate-300';
+                  if (user.role === 'Super Admin') roleBadge = 'bg-purple-500/20 text-purple-300 border border-purple-500/30';
+                  if (user.role === 'Admin') roleBadge = 'bg-sky-500/20 text-sky-300 border border-sky-500/30';
+                  if (user.role === 'Moderator') roleBadge = 'bg-blue-500/20 text-blue-300 border border-blue-500/30';
 
                   const isChecked = selectedUserIds.includes(user.id);
 
                   return (
                     <tr
                       key={user.id}
-                      className={`hover:bg-slate-50/80 transition-colors ${
-                        isChecked ? 'bg-emerald-50/40' : ''
+                      className={`hover:bg-slate-800/40 transition-colors ${
+                        isChecked ? 'bg-emerald-950/20' : ''
                       }`}
                     >
                       <td className="p-4">
@@ -482,7 +484,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                           type="checkbox"
                           checked={isChecked}
                           onChange={() => handleSelectOne(user.id)}
-                          className="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                          className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
                         />
                       </td>
 
@@ -495,46 +497,46 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                             src={user.avatar}
                             alt={user.name}
                             referrerPolicy="no-referrer"
-                            className="w-8 h-8 rounded-lg object-cover border border-slate-200 shadow-2xs"
+                            className="w-8 h-8 rounded-lg object-cover border border-slate-700"
                           />
                           <div>
-                            <div className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors truncate max-w-[140px]">
+                            <div className="font-bold text-white group-hover:text-emerald-400 transition-colors truncate max-w-[140px]">
                               {user.name}
                             </div>
-                            <div className="text-[14px] text-slate-400 font-mono">{user.id}</div>
+                            <div className="text-[10px] text-slate-500">{user.id}</div>
                           </div>
                         </div>
                       </td>
 
-                      <td className="py-4 pr-4 text-slate-600 font-medium truncate max-w-[160px]">
+                      <td className="py-4 pr-4 text-slate-300 truncate max-w-[160px]">
                         {user.email}
                       </td>
 
-                      <td className="py-4 pr-4 text-slate-500 tabular-nums">
+                      <td className="py-4 pr-4 text-slate-400 tabular-nums">
                         {user.phone}
                       </td>
 
                       <td className="py-4 pr-4">
-                        <span className={`px-2 py-0.5 rounded-md font-semibold text-[14px] ${roleBadge}`}>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold text-[10px] ${roleBadge}`}>
                           {user.role}
                         </span>
                       </td>
 
-                      <td className="py-4 pr-4 text-slate-700 font-medium truncate max-w-[150px]">
+                      <td className="py-4 pr-4 text-slate-300 truncate max-w-[150px]">
                         {user.organization}
                       </td>
 
                       <td className="py-4 pr-4">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[14px] font-bold border ${statusBadge}`}>
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${statusBadge}`}>
                           {user.status}
                         </span>
                       </td>
 
-                      <td className="py-4 pr-4 text-slate-500 tabular-nums">
+                      <td className="py-4 pr-4 text-slate-400 tabular-nums">
                         {user.lastLogin}
                       </td>
 
-                      <td className="py-4 pr-4 text-slate-500 tabular-nums">
+                      <td className="py-4 pr-4 text-slate-400 tabular-nums">
                         {user.dateCreated}
                       </td>
 
@@ -545,21 +547,21 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                           onClick={() =>
                             setOpenActionMenuId(openActionMenuId === user.id ? null : user.id)
                           }
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                         >
                           <MoreVertical className="w-4 h-4" />
                         </button>
 
                         {/* Dropdown popup */}
                         {openActionMenuId === user.id && (
-                          <div className="absolute right-4 mt-1 w-44 bg-white border border-slate-200 rounded-xl p-1 shadow-xl z-30 text-left animate-in fade-in zoom-in-95">
+                          <div className="absolute right-4 mt-1 w-44 bg-slate-950 border border-slate-800 rounded-xl p-1 shadow-2xl z-30 text-left animate-in fade-in zoom-in-95">
                             <button
                               type="button"
                               onClick={() => {
                                 setOpenActionMenuId(null);
                                 onViewUserDetails(user);
                               }}
-                              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
                             >
                               <Eye className="w-3.5 h-3.5 text-slate-400" />
                               <span>View Details</span>
@@ -568,7 +570,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                             <button
                               type="button"
                               onClick={() => handleOpenEdit(user)}
-                              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
                             >
                               <Edit2 className="w-3.5 h-3.5 text-slate-400" />
                               <span>Edit User</span>
@@ -581,9 +583,9 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                                   setOpenActionMenuId(null);
                                   onToggleStatus(user.id, 'Active');
                                 }}
-                                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-base font-semibold text-emerald-700 hover:bg-emerald-50 transition-colors"
+                                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-emerald-400 hover:bg-emerald-950/40 transition-colors"
                               >
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                <CheckCircle2 className="w-3.5 h-3.5" />
                                 <span>Activate</span>
                               </button>
                             ) : (
@@ -593,14 +595,14 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                                   setOpenActionMenuId(null);
                                   onToggleStatus(user.id, 'Suspended');
                                 }}
-                                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-base font-semibold text-amber-700 hover:bg-amber-50 transition-colors"
+                                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-amber-400 hover:bg-amber-950/40 transition-colors"
                               >
-                                <Ban className="w-3.5 h-3.5 text-amber-600" />
+                                <Ban className="w-3.5 h-3.5" />
                                 <span>Suspend</span>
                               </button>
                             )}
 
-                            <div className="my-1 border-t border-slate-100" />
+                            <div className="my-1 border-t border-slate-800" />
 
                             <button
                               type="button"
@@ -608,7 +610,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                                 setOpenActionMenuId(null);
                                 onDeleteUser(user.id);
                               }}
-                              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-base font-semibold text-rose-600 hover:bg-rose-50 transition-colors"
+                              className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs text-rose-400 hover:bg-rose-950/40 transition-colors"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                               <span>Delete User</span>
@@ -625,7 +627,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
         </div>
 
         {/* 5. Pagination Bar */}
-        <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-base text-slate-600 font-medium">
+        <div className="p-4 bg-slate-950/80 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span>Rows per page:</span>
             <select
@@ -634,7 +636,7 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 setRowsPerPage(Number(e.target.value));
                 setCurrentPage(1);
               }}
-              className="bg-white border border-slate-300 rounded-lg px-2 py-1 text-slate-700 outline-none shadow-2xs"
+              className="bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-slate-300 outline-none"
             >
               <option value={10}>10</option>
               <option value={25}>25</option>
@@ -651,18 +653,18 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
               type="button"
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              className="p-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40 transition-colors text-slate-700 shadow-2xs cursor-pointer"
+              className="p-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 disabled:opacity-40 transition-colors text-slate-300"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="font-semibold text-slate-900">
+            <span className="font-semibold text-white">
               Page {currentPage} of {totalPages}
             </span>
             <button
               type="button"
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              className="p-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 disabled:opacity-40 transition-colors text-slate-700 shadow-2xs cursor-pointer"
+              className="p-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 disabled:opacity-40 transition-colors text-slate-300"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -672,29 +674,29 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
 
       {/* MODAL 1: ADD USER MODAL */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white border border-slate-200 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                   <UserPlus className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Add New User</h3>
-                  <p className="text-base text-slate-500">Create an authenticated enterprise account</p>
+                  <h3 className="text-lg font-bold text-white">Add New User</h3>
+                  <p className="text-xs text-slate-400">Create an authenticated enterprise account</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsAddModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {formError && (
-              <div className="mt-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-base font-medium">
+              <div className="mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs">
                 {formError}
               </div>
             )}
@@ -702,112 +704,112 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
             <form onSubmit={handleAddSubmit} className="mt-5 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">First Name *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">First Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                     placeholder="e.g. Patrick"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Last Name *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Last Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                     placeholder="e.g. Gasana"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Email Address *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="patrick.g@organization.rw"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Phone Number</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Phone Number</label>
                   <input
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+250 788 000 000"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Role *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Role *</label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value as AdminRole })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-700 outline-none focus:border-emerald-600"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   >
                     <option value="Event Organizer">Event Organizer</option>
                     <option value="Venue Manager">Venue Manager</option>
                     <option value="Moderator">Moderator</option>
                     <option value="Admin">Admin</option>
-                          <option value="SuperAdmin">SuperAdmin</option>
+                    <option value="Super Admin">Super Admin</option>
                     <option value="Standard User">Standard User</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Organization *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Organization *</label>
                   <input
                     type="text"
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                     placeholder="e.g. BK Arena Operations"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Password *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Password *</label>
                   <input
                     type="password"
                     required
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     placeholder="••••••••"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Confirm Password *</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Confirm Password *</label>
                   <input
                     type="password"
                     required
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                     placeholder="••••••••"
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Status</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Status</label>
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value as UserStatus })}
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-700 outline-none focus:border-emerald-600"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                 >
                   <option value="Active">Active</option>
                   <option value="Pending">Pending</option>
@@ -815,17 +817,17 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                 </select>
               </div>
 
-              <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+              <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all shadow-md shadow-emerald-600/20"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all shadow-md shadow-emerald-600/20"
                 >
                   Create User
                 </button>
@@ -837,22 +839,22 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
 
       {/* MODAL 2: EDIT USER MODAL */}
       {editingUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
-          <div className="bg-white border border-slate-200 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400">
                   <Edit2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900">Edit User: {editingUser.name}</h3>
-                  <p className="text-base text-slate-500">Modify role permissions and identity details</p>
+                  <h3 className="text-lg font-bold text-white">Edit User: {editingUser.name}</h3>
+                  <p className="text-xs text-slate-400">Modify role permissions and identity details</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setEditingUser(null)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -861,55 +863,55 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
             <form onSubmit={handleEditSubmit} className="mt-5 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">First Name</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">First Name</label>
                   <input
                     type="text"
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Last Name</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Last Name</label>
                   <input
                     type="text"
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Email</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Email</label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Phone</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Phone</label>
                   <input
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Role</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Role</label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value as AdminRole })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-700 outline-none focus:border-emerald-600"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   >
-                          <option value="SuperAdmin">SuperAdmin</option>
+                    <option value="Super Admin">Super Admin</option>
                     <option value="Admin">Admin</option>
                     <option value="Moderator">Moderator</option>
                     <option value="Venue Manager">Venue Manager</option>
@@ -918,11 +920,11 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-base font-bold text-slate-700 mb-1">Status</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Status</label>
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData({ ...formData, status: e.target.value as UserStatus })}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-700 outline-none focus:border-emerald-600"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                   >
                     <option value="Active">Active</option>
                     <option value="Pending">Pending</option>
@@ -933,26 +935,26 @@ export const AdminUsersManagement: React.FC<AdminUsersManagementProps> = ({
               </div>
 
               <div>
-                <label className="block text-base font-bold text-slate-700 mb-1">Organization</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Organization</label>
                 <input
                   type="text"
                   value={formData.organization}
                   onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500"
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
                 />
               </div>
 
-              <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+              <div className="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
                 <button
                   type="button"
                   onClick={() => setEditingUser(null)}
-                  className="px-4 py-2 rounded-xl text-base font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all shadow-md shadow-emerald-600/20"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all shadow-md shadow-emerald-600/20"
                 >
                   Save Changes
                 </button>

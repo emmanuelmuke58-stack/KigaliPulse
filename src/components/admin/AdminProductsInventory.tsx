@@ -102,15 +102,15 @@ export const AdminProductsInventory: React.FC<AdminProductsInventoryProps> = ({
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
             {mode === 'products' ? (
-              <Ticket className="w-6 h-6 text-emerald-600" />
+              <Ticket className="w-6 h-6 text-emerald-400" />
             ) : (
-              <Warehouse className="w-6 h-6 text-emerald-600" />
+              <Warehouse className="w-6 h-6 text-emerald-400" />
             )}
             <span>{mode === 'products' ? 'Products & Ticketing Tiers' : 'Venue Capacity & Inventory Management'}</span>
           </h2>
-          <p className="text-base sm:text-base text-slate-600 mt-1">
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
             Real-time physical capacity allocation, ticket tier limits, and vendor booth inventories.
           </p>
         </div>
@@ -120,30 +120,30 @@ export const AdminProductsInventory: React.FC<AdminProductsInventoryProps> = ({
           onClick={() =>
             onTriggerToast('info', 'Tier Created', 'New ticketing inventory created.')
           }
-          className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-base text-white transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 self-start sm:self-auto cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-slate-950 transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>{mode === 'products' ? 'Create Ticket Tier' : 'Add Capacity Block'}</span>
         </button>
       </div>
 
-      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-xs">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4">
         <div className="relative max-w-md">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Filter by product name, venue, or tier..."
-            className="w-full bg-white border border-slate-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-500 rounded-xl pl-10 pr-3 py-2 text-base text-slate-900 placeholder:text-slate-400 outline-none transition-all"
+            className="w-full bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl pl-10 pr-3 py-2 text-xs text-white placeholder:text-slate-500 outline-none"
           />
         </div>
       </div>
 
-      <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-xs">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-base">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-slate-950/60 border-b border-slate-800 text-slate-400">
               <tr>
                 <th className="p-4 font-semibold">Tier / Product Name</th>
                 <th className="py-4 pr-4 font-semibold">Classification</th>
@@ -154,31 +154,31 @@ export const AdminProductsInventory: React.FC<AdminProductsInventoryProps> = ({
                 <th className="py-4 pr-4 font-semibold text-right">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800/60">
               {filtered.map((item) => {
                 const fillPct = Math.round((item.sold / item.capacity) * 100);
                 return (
-                  <tr key={item.id} className="hover:bg-slate-50/80 transition-colors">
-                    <td className="p-4 font-bold text-slate-900">{item.name}</td>
-                    <td className="py-4 pr-4">
-                      <span className="px-2 py-0.5 rounded bg-emerald-50 text-[14px] font-bold text-emerald-700 border border-emerald-200">
+                  <tr key={item.id} className="hover:bg-slate-800/40">
+                    <td className="p-4 font-bold text-white">{item.name}</td>
+                    <td className="py-4 pr-4 text-slate-300">
+                      <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-semibold text-emerald-400">
                         {item.type}
                       </span>
                     </td>
-                    <td className="py-4 pr-4 text-slate-700 font-medium">{item.venue}</td>
-                    <td className="py-4 pr-4 text-right font-black text-slate-900 tabular-nums">
-                      {item.price.toLocaleString()} <span className="text-[14px] text-slate-500 font-normal">{item.currency}</span>
+                    <td className="py-4 pr-4 text-slate-300">{item.venue}</td>
+                    <td className="py-4 pr-4 text-right font-extrabold text-white tabular-nums">
+                      {item.price.toLocaleString()} {item.currency}
                     </td>
-                    <td className="py-4 pr-4 text-center font-bold text-slate-800 tabular-nums">
+                    <td className="py-4 pr-4 text-center font-bold text-slate-200 tabular-nums">
                       {item.sold} / {item.capacity}
                     </td>
                     <td className="py-4 pr-4">
                       <div className="w-36">
-                        <div className="flex justify-between text-[14px] text-slate-500 font-semibold mb-1">
+                        <div className="flex justify-between text-[10px] text-slate-400 mb-1">
                           <span>{fillPct}%</span>
                           <span>{item.capacity - item.sold} left</span>
                         </div>
-                        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${
                               fillPct >= 95 ? 'bg-rose-500' : fillPct >= 70 ? 'bg-amber-500' : 'bg-emerald-500'
@@ -190,10 +190,10 @@ export const AdminProductsInventory: React.FC<AdminProductsInventoryProps> = ({
                     </td>
                     <td className="py-4 pr-4 text-right">
                       <span
-                        className={`px-2.5 py-0.5 rounded-full text-[14px] font-bold border ${
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                           item.status === 'Sold Out'
-                            ? 'bg-rose-50 text-rose-700 border-rose-200'
-                            : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                            : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
                         }`}
                       >
                         {item.status}

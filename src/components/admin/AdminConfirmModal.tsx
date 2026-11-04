@@ -63,7 +63,7 @@ export const AdminConfirmModal: React.FC<AdminConfirmModalProps> = ({
             <h3 id="confirm-modal-title" className="text-lg font-bold text-slate-900 leading-tight">
               {title}
             </h3>
-            <p className="mt-2 text-base sm:text-base text-slate-600 leading-relaxed">{message}</p>
+            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">{message}</p>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export const AdminConfirmModal: React.FC<AdminConfirmModalProps> = ({
             type="button"
             disabled={isLoading}
             onClick={onCancel}
-            className="px-4 py-2 text-base sm:text-base font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors disabled:opacity-50"
           >
             {cancelLabel}
           </button>
@@ -80,7 +80,7 @@ export const AdminConfirmModal: React.FC<AdminConfirmModalProps> = ({
             type="button"
             disabled={isLoading}
             onClick={onConfirm}
-            className={`px-5 py-2 text-base sm:text-base font-bold rounded-xl shadow-xs transition-all disabled:opacity-50 ${confirmBtnClass}`}
+            className={`px-5 py-2 text-xs sm:text-sm font-bold rounded-xl shadow-xs transition-all disabled:opacity-50 ${confirmBtnClass}`}
           >
             {isLoading ? 'Processing...' : confirmLabel}
           </button>

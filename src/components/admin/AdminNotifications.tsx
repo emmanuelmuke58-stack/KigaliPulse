@@ -42,16 +42,16 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
       {/* 1. Header & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <Bell className="w-6 h-6 text-emerald-600" />
+          <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+            <Bell className="w-6 h-6 text-emerald-400" />
             <span>Notification Center</span>
             {unreadCount > 0 && (
-              <span className="text-base font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+              <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">
                 {unreadCount} unread
               </span>
             )}
           </h2>
-          <p className="text-base sm:text-base text-slate-600 mt-1">
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
             Real-time platform alerts, financial anomalies, system events, and security advisories.
           </p>
         </div>
@@ -60,16 +60,16 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
           <button
             type="button"
             onClick={onMarkAllAsRead}
-            className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-base font-semibold text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1.5 self-start sm:self-auto cursor-pointer shadow-2xs"
+            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
           >
-            <Check className="w-4 h-4 text-emerald-600" />
+            <Check className="w-4 h-4 text-emerald-400" />
             <span>Mark All as Read</span>
           </button>
         )}
       </div>
 
       {/* 2. Category Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200 text-base">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-800 text-xs">
         {(['All', 'Unread', 'Transactions', 'System', 'Security'] as const).map((cat) => {
           const isActive = activeCategory === cat;
           return (
@@ -79,8 +79,8 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
               onClick={() => setActiveCategory(cat)}
               className={`px-3.5 py-2 rounded-xl font-bold transition-all cursor-pointer whitespace-nowrap ${
                 isActive
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  ? 'bg-emerald-600 text-slate-950 shadow-md shadow-emerald-600/20'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
               {cat}
@@ -92,25 +92,25 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
       {/* 3. Notification Items List */}
       <div className="space-y-3">
         {filteredNotifications.length === 0 ? (
-          <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center text-slate-500 shadow-xs">
-            <Bell className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-            <h3 className="font-bold text-slate-900 text-base">No Notifications</h3>
-            <p className="text-base text-slate-500 mt-1">You are all caught up on system notices.</p>
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-12 text-center text-slate-400">
+            <Bell className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+            <h3 className="font-bold text-white text-sm">No Notifications</h3>
+            <p className="text-xs text-slate-500 mt-1">You are all caught up on system notices.</p>
           </div>
         ) : (
           filteredNotifications.map((notif) => {
-            let icon = <Server className="w-5 h-5 text-sky-600" />;
-            let bgClass = 'bg-sky-50 border-sky-200';
+            let icon = <Server className="w-5 h-5 text-sky-400" />;
+            let bgClass = 'bg-sky-500/10 border-sky-500/20';
 
             if (notif.category === 'Transactions') {
-              icon = <Receipt className="w-5 h-5 text-emerald-600" />;
-              bgClass = 'bg-emerald-50 border-emerald-200';
+              icon = <Receipt className="w-5 h-5 text-emerald-400" />;
+              bgClass = 'bg-emerald-500/10 border-emerald-500/20';
             } else if (notif.category === 'Security') {
-              icon = <ShieldAlert className="w-5 h-5 text-rose-600" />;
-              bgClass = 'bg-rose-50 border-rose-200';
+              icon = <ShieldAlert className="w-5 h-5 text-rose-400" />;
+              bgClass = 'bg-rose-500/10 border-rose-500/20';
             } else if (notif.category === 'Moderation') {
-              icon = <AlertTriangle className="w-5 h-5 text-amber-600" />;
-              bgClass = 'bg-amber-50 border-amber-200';
+              icon = <AlertTriangle className="w-5 h-5 text-amber-400" />;
+              bgClass = 'bg-amber-500/10 border-amber-500/20';
             }
 
             return (
@@ -118,8 +118,8 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
                 key={notif.id}
                 className={`p-4 rounded-2xl border transition-all flex items-start gap-4 ${
                   notif.isRead
-                    ? 'bg-white border-slate-200/90 shadow-2xs'
-                    : 'bg-emerald-50/30 border-emerald-200 shadow-xs'
+                    ? 'bg-slate-900 border-slate-800 opacity-80'
+                    : 'bg-slate-900/90 border-slate-700/80 shadow-md'
                 }`}
               >
                 <div className={`p-2.5 rounded-xl border shrink-0 ${bgClass}`}>{icon}</div>
@@ -127,22 +127,22 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-base sm:text-base text-slate-900 truncate">
+                      <h4 className="font-bold text-xs sm:text-sm text-white truncate">
                         {notif.title}
                       </h4>
                       {!notif.isRead && (
-                        <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
                       )}
                     </div>
-                    <span className="text-[15px] text-slate-500 tabular-nums shrink-0 font-medium">
+                    <span className="text-[11px] text-slate-500 tabular-nums shrink-0">
                       {notif.timestamp}
                     </span>
                   </div>
 
-                  <p className="text-base text-slate-700 mt-1 leading-snug font-normal">{notif.message}</p>
+                  <p className="text-xs text-slate-300 mt-1 leading-snug">{notif.message}</p>
 
-                  <div className="mt-3 flex items-center justify-between text-base pt-2 border-t border-slate-100">
-                    <span className="text-[14px] font-bold text-slate-500 uppercase tracking-wider">
+                  <div className="mt-3 flex items-center justify-between text-xs pt-2 border-t border-slate-800/60">
+                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
                       {notif.category}
                     </span>
 
@@ -151,7 +151,7 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
                         <button
                           type="button"
                           onClick={() => onMarkAsRead(notif.id)}
-                          className="text-base font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
+                          className="text-xs font-semibold text-emerald-400 hover:text-emerald-300"
                         >
                           Mark Read
                         </button>
@@ -159,7 +159,7 @@ export const AdminNotifications: React.FC<AdminNotificationsProps> = ({
                       <button
                         type="button"
                         onClick={() => onDeleteNotification(notif.id)}
-                        className="text-slate-400 hover:text-rose-600 p-1 rounded transition-colors cursor-pointer"
+                        className="text-slate-500 hover:text-rose-400 p-1 rounded"
                         aria-label="Delete notification"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
