@@ -1,20 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { WifiOff } from 'lucide-react';
-import { useOnlineStatus } from './useOnlineStatus';
+import { motion, AnimatePresence } from 'motion/react';
 
 export const OfflineIndicator: React.FC = () => {
-  const isOnline = useOnlineStatus();
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator !== 'undefined' ? navigator.onLine : true
+  );
 
-  if (isOnline) return null;
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   return (
-    <div className="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-2 rounded-full bg-amber-500 px-4 py-2 text-base font-bold text-white shadow-xl shadow-amber-500/20 border border-amber-400/50 animate-in slide-in-from-bottom-4 duration-300">
-      <span className="relative flex h-2 w-2">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-        <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-      </span>
-      <WifiOff className="w-3.5 h-3.5" />
-      <span>Offline Mode — Viewing cached content</span>
-    </div>
+    <AnimatePresence>
+      {!isOnline && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          className="fixed bottom-24 left-4 right-4 z-[90] sm:left-auto sm:right-6 sm:w-80"
+        >
+          <div className="bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-slate-800">
+            <div className="bg-amber-500 p-2 rounded-xl">
+              <WifiOff className="w-5 h-5 text-slate-900" />
+            </div>
+            <div>
+              <p className="font-bold text-sm">You are offline</p>
+              <p className="text-xs text-slate-400">Viewing cached events and data.</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

@@ -17,6 +17,7 @@ import { EventItem, EventCategory } from '../types';
 import { CATEGORIES, KIGALI_NEIGHBORHOODS, ORGANIZERS } from '../data/mockData';
 import { EventCard } from './EventCard';
 import { CalendarView } from './CalendarView';
+import { AISuggestionCard } from './AISuggestionCard';
 
 interface DiscoverPageProps {
   events: EventItem[];
@@ -410,6 +411,9 @@ export const DiscoverPage: React.FC<DiscoverPageProps> = ({
         {/* RIGHT MAIN EVENT RESULTS AREA */}
         <div className="flex-1 w-full space-y-6">
           
+          {/* AI Suggestion Card */}
+          <AISuggestionCard />
+
           {/* Controls Bar: Search, View Toggles & Sorting */}
           <div className="bg-white rounded-2xl border border-slate-200/90 p-4 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
             

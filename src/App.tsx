@@ -22,6 +22,8 @@ import { getStoredEvents, saveStoredEvents, recordEventView } from './services/e
 // Component Imports
 import { Header } from './components/Header';
 import { MobileBottomNav } from './components/MobileBottomNav';
+import { PWAInstallButton } from './components/PWAInstallButton';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { HeroSection } from './components/HeroSection';
 import { FeaturedEventsSection } from './components/FeaturedEventsSection';
 import { HappeningSoonSection } from './components/HappeningSoonSection';
@@ -581,7 +583,7 @@ export default function App() {
         type={infoModalType}
         onClose={() => setInfoModalType(null)}
       />
-
+      <OfflineIndicator />
     </div>
   );
 }

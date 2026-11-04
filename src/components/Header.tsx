@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Bookmark, PlusCircle, User, Menu, X, Sparkles, Bell, BarChart3 } from 'lucide-react';
 import { UserProfile } from '../types';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   currentView: string;
@@ -125,6 +126,11 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
+          {/* PWA Install Button */}
+          <div className="hidden sm:block">
+            <PWAInstallButton />
+          </div>
+
           {/* Create Event CTA */}
           <button
             type="button"
@@ -211,6 +217,10 @@ export const Header: React.FC<HeaderProps> = ({
             >
               Admin Moderation
             </button>
+          </div>
+
+          <div className="pt-2">
+            <PWAInstallButton />
           </div>
 
           <button
