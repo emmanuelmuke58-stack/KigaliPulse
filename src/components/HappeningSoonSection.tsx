@@ -79,20 +79,16 @@ export const HappeningSoonSection: React.FC<HappeningSoonSectionProps> = ({
                 {/* Event Details */}
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center justify-between gap-1.5 text-base text-slate-500 font-medium">
-                    <div className="flex items-center gap-1.5 truncate">
-                      <span className="text-emerald-700 font-semibold">{event.category}</span>
-                      <span aria-hidden="true">·</span>
-                      <span>{event.time}</span>
+                    <div className="flex items-center gap-2 truncate">
+                      <span className="text-emerald-700 font-bold uppercase tracking-wider text-[11px]">{event.category}</span>
+                      <span aria-hidden="true" className="text-slate-300">·</span>
+                      <span className="text-slate-500">{event.time}</span>
+                      <span aria-hidden="true" className="text-slate-300">·</span>
+                      <span className="flex items-center gap-1 text-slate-400">
+                        <Eye className="w-3.5 h-3.5 shrink-0" />
+                        <span className="tabular-nums font-bold">{event.views.toLocaleString()}</span>
+                      </span>
                     </div>
-
-                    <span
-                      className="inline-flex items-center gap-1 text-[15px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md shrink-0 border border-slate-200/60"
-                      title={`${event.views.toLocaleString()} page visits (views)`}
-                    >
-                      <Eye className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                      <span className="tabular-nums font-bold text-slate-800">{event.views.toLocaleString()}</span>
-                      <span className="text-[14px] text-slate-500 font-normal">Views</span>
-                    </span>
                   </div>
 
                   <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors truncate">

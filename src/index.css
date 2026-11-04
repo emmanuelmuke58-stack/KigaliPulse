@@ -1,16 +1,17 @@
 @import "tailwindcss";
-@import url('https://fonts.cdnfonts.com/css/google-sans');
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Google Sans', 'Product Sans', 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Google Sans', 'Product Sans', var(--font-sans);
+  --font-sans: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', var(--font-sans);
   --color-rwanda-green: #007a3d;
   --color-rwanda-blue: #00a1de;
   --color-rwanda-yellow: #fad201;
 }
 
 *, button, input, select, textarea {
-  font-family: 'Google Sans', 'Product Sans', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 html {
@@ -22,8 +23,6 @@ html {
   overscroll-behavior-x: none;
 }
 
-
-
 body {
   overflow-x: hidden;
   max-width: 100vw;
@@ -32,7 +31,7 @@ body {
   touch-action: pan-y;
   overscroll-behavior-x: none;
   -webkit-overflow-scrolling: touch;
-  font-family: 'Google Sans', 'Product Sans', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
@@ -61,7 +60,7 @@ img, video, canvas, svg {
 }
 
 .font-display {
-  font-family: 'Google Sans', 'Product Sans', var(--font-sans);
+  font-family: 'Plus Jakarta Sans', var(--font-sans);
 }
 
 /* Custom smooth scrollbar */

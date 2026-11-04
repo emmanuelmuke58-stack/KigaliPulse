@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   X,
   Calendar,
@@ -42,6 +42,53 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
 }) => {
   const [copiedLink, setCopiedLink] = useState(false);
   const [showJsonLd, setShowJsonLd] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<{
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+    total: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!event) return;
+
+    const calculateTimeLeft = () => {
+      // Parse the start time. Default to 18:00 if not specified
+      const startTimeStr = event.time.split('–')[0]?.trim() || '18:00';
+      // Attempt to construct a valid ISO-like string
+      const eventStart = new Date(`${event.date}T${startTimeStr}`);
+      const now = new Date();
+      const difference = eventStart.getTime() - now.getTime();
+
+      // Only show if the event is in the future and starts within 48 hours
+      if (difference > 0 && difference <= 48 * 60 * 60 * 1000) {
+        return {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+          total: difference
+        };
+      }
+      return null;
+    };
+
+    // Initial calculation
+    setTimeLeft(calculateTimeLeft());
+
+    const timer = setInterval(() => {
+      const remaining = calculateTimeLeft();
+      setTimeLeft(remaining);
+      
+      // If event has started, clear timer
+      if (!remaining) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [event]);
 
   if (!event) return null;
 
@@ -228,6 +275,44 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
         {/* Primary Action Buttons & Ticketing Notice */}
         <div className="p-6 sm:p-8 space-y-6">
           
+          {/* Countdown Timer (Urgency) */}
+          {timeLeft && timeLeft.total > 0 && (
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200/60 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+              <div className="flex items-center gap-4 text-center md:text-left">
+                <div className="w-14 h-14 rounded-full bg-amber-500 flex items-center justify-center shadow-xl shadow-amber-500/30 shrink-0">
+                  <Sparkles className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-amber-900 font-black text-xl uppercase tracking-tight leading-none">Starting Soon!</h3>
+                  <p className="text-amber-700 font-bold text-base mt-1">Don't miss out — grab your tickets now.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2 sm:gap-4">
+                {[
+                  { label: 'Days', value: timeLeft.days },
+                  { label: 'Hrs', value: timeLeft.hours },
+                  { label: 'Min', value: timeLeft.minutes },
+                  { label: 'Sec', value: timeLeft.seconds },
+                ].map((unit, idx) => (
+                  <React.Fragment key={unit.label}>
+                    <div className="text-center min-w-[56px] sm:min-w-[64px]">
+                      <div className="bg-white rounded-xl px-2 py-2 border border-amber-200 shadow-sm">
+                        <span className="block text-2xl sm:text-3xl font-black text-slate-900 tabular-nums leading-none">
+                          {unit.value.toString().padStart(2, '0')}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-black text-amber-800 uppercase mt-2 block tracking-widest leading-none">{unit.label}</span>
+                    </div>
+                    {idx < 3 && (
+                      <span className="text-amber-300 font-black text-2xl sm:text-3xl mb-5">:</span>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          )}
+          
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             {/* Primary External Ticketing Button */}
             <a
@@ -290,7 +375,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                         <div className="flex items-center gap-2">
                           <span className="font-black text-slate-900 text-lg uppercase tracking-tight">{cat.name}</span>
                           {isSoldOut && (
-                            <span className="text-[10px] font-black bg-slate-200 text-slate-500 px-2 py-0.5 rounded-full uppercase">Sold Out</span>
+                            <span className="text-[10px] font-black text-rose-500 uppercase tracking-widest">/ Sold Out</span>
                           )}
                         </div>
                         {cat.description && (
@@ -488,7 +573,7 @@ export const EventDetailModal: React.FC<EventDetailModalProps> = ({
                 <div>
                   <div className="flex items-center gap-1.5">
                     <h4 className="font-bold text-base text-slate-900">{event.organizer}</h4>
-                    <span className="text-[14px] px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-semibold">
+                    <span className="text-[12px] text-emerald-600 font-bold uppercase tracking-wider">
                       Verified Host
                     </span>
                   </div>

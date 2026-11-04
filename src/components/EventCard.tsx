@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bookmark, MapPin, Calendar, Clock, Eye, Users, ChevronRight } from 'lucide-react';
+import { Bookmark, MapPin, Calendar, Clock, Eye, ChevronRight } from 'lucide-react';
 import { EventItem } from '../types';
 
 interface EventCardProps {
@@ -67,11 +67,11 @@ export const EventCard: React.FC<EventCardProps> = ({
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            <span className="px-3 py-1 bg-emerald-600 text-white text-[11px] font-black uppercase rounded-lg shadow-lg">
-              {event.category.split(' ')[0]}
+          <div className="absolute top-4 left-4 flex flex-col gap-1.5 text-white">
+            <span className="text-[10px] font-black uppercase tracking-widest drop-shadow-md">
+              {event.category}
             </span>
-            <span className="px-3 py-1 bg-slate-900/90 text-white text-[11px] font-black uppercase rounded-lg shadow-lg backdrop-blur-sm">
+            <span className="text-sm font-black tabular-nums drop-shadow-md">
               {event.priceDisplay}
             </span>
           </div>
@@ -112,16 +112,10 @@ export const EventCard: React.FC<EventCardProps> = ({
           </div>
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-emerald-600 text-[14px] font-black">
-                <Users className="w-4 h-4" />
-                <span>{event.saves * 2 + 50}+</span>
-              </div>
               <div className="flex items-center gap-2 text-slate-400 text-[14px] font-bold">
                 <Eye className="w-4 h-4" />
                 <span>{event.views?.toLocaleString() || 0}</span>
               </div>
-            </div>
             <button className="px-5 py-2 rounded-xl border-2 border-emerald-600 text-emerald-600 font-black text-[13px] flex items-center gap-2 hover:bg-emerald-600 hover:text-white transition-all uppercase tracking-tight">
               <span>View Details</span>
               <ChevronRight className="w-4 h-4" />
@@ -148,24 +142,24 @@ export const EventCard: React.FC<EventCardProps> = ({
           />
         </div>
 
-        {/* Floating Category Badge */}
-        <div className="absolute top-6 left-6 flex flex-col gap-2">
-          <span className="px-4 py-1.5 bg-emerald-600 text-white text-[12px] font-black uppercase rounded-full shadow-lg shadow-emerald-600/30">
-            {event.category.split(' ')[0]}
-          </span>
-          <span className="px-4 py-1.5 bg-slate-900/90 text-white text-[12px] font-black uppercase rounded-full shadow-lg backdrop-blur-sm">
-            {event.priceDisplay}
-          </span>
-        </div>
-
-        {/* Floating Date Badge */}
+        {/* Floating Date Badge - Clean Integrated Design */}
         <div className="absolute top-6 right-6">
-          <div className="bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl flex items-center gap-2 shadow-lg border border-white/50">
-            <Calendar className="w-4 h-4 text-emerald-600" />
-            <span className="text-[12px] font-black text-slate-900 uppercase">
+          <div className="bg-white/90 backdrop-blur-md px-3 py-2 rounded-xl flex items-center gap-2 shadow-lg border border-white/50 transition-transform group-hover:scale-105">
+            <Calendar className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight">
               {formatDateBadge(event.date)}
             </span>
           </div>
+        </div>
+
+        {/* Clean Metadata Overlay (Replaces Pills) */}
+        <div className="absolute bottom-6 left-6 flex flex-col gap-0.5 text-white">
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-90 drop-shadow-sm">
+            {event.category}
+          </span>
+          <span className="text-lg font-black tracking-tight drop-shadow-md">
+            {event.priceDisplay}
+          </span>
         </div>
 
         {/* Floating Save Button */}
@@ -204,10 +198,6 @@ export const EventCard: React.FC<EventCardProps> = ({
         {/* Footer Row */}
         <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
           <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2 text-emerald-600 font-black text-[13px] uppercase tracking-tighter">
-              <Users className="w-4 h-4" />
-              <span>{event.saves * 2 + 50}+ Attending</span>
-            </div>
             <div className="flex items-center gap-2 text-slate-500 font-bold text-[12px]">
               <Eye className="w-3.5 h-3.5 text-slate-400" />
               <span>{event.views?.toLocaleString() || 0} Views</span>

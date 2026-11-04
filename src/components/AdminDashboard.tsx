@@ -175,10 +175,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           { label: 'Pending Appr', value: stats.pendingCount, alert: stats.pendingCount > 0 },
           { label: 'Tickets Sold', value: stats.totalTicketsSold.toLocaleString() },
           { label: 'Total Revenue', value: `RF ${(stats.totalRevenue / 1000000).toFixed(1)}M` },
-          { label: 'Attendees', value: stats.totalAttendees.toLocaleString() },
           { label: 'Conversion', value: `${stats.avgConversion}%` },
           { label: 'Ad Revenue', value: 'RF 1.6M' },
           { label: 'Organizers', value: '84' },
+          { label: 'Active Ads', value: '12' },
         ].map((item, idx) => (
           <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-1 group hover:border-emerald-200 transition-colors">
             <span className={cn(

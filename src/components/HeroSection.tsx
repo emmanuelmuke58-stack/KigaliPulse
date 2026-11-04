@@ -36,10 +36,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Background Image with Layered Gradient Scrim */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=2000&q=80"
+          src="/src/assets/images/hero_kigali_nightlife_1793724555312.jpg"
           alt="Kigali Night Life and Skyline"
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover opacity-35 scale-105 transition-transform duration-1000"
+          className="w-full h-full object-cover opacity-45 scale-105 transition-transform duration-1000"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/40" />
       </div>
@@ -47,8 +47,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         
         {/* Subtle Region Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-base font-bold">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 text-[13px] font-bold uppercase tracking-wider">
           <span>Kigali Event Discovery &amp; City Guide</span>
         </div>
 

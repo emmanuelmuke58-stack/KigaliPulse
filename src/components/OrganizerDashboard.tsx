@@ -340,30 +340,7 @@ export const OrganizerDashboard: React.FC<OrganizerDashboardProps> = ({
               </div>
             </div>
 
-            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
-              <h3 className="font-black text-sm text-slate-900 mb-6 uppercase tracking-widest">Attendance Status</h3>
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                      <UsersIcon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-bold text-slate-900 block">Total Checked-in</span>
-                      <span className="text-xs text-slate-500">Actual attendance</span>
-                    </div>
-                  </div>
-                  <span className="text-lg font-black text-slate-900">{selectedEvent.attendeeCount}</span>
-                </div>
-                
-                <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-100 flex items-start gap-3">
-                  <Info className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <p className="text-[11px] text-emerald-800 leading-relaxed font-medium">
-                    Attendance is calculated from successful QR code scans at the venue gate.
-                  </p>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

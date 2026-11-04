@@ -28,14 +28,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenInfo }) => {
           
           {/* 1. Brand & Description */}
           <div className="space-y-6">
-            <div className="flex items-center gap-3 text-white group cursor-pointer" onClick={() => onNavigate('discover')}>
-              <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg shadow-emerald-900/20 group-hover:bg-emerald-500 transition-colors">
-                KP
-              </div>
-              <div className="flex flex-col">
-                <span className="font-display font-black text-2xl tracking-tight text-white leading-none">KigaliPulse</span>
-                <span className="text-[10px] tracking-[0.2em] text-emerald-500 uppercase font-black mt-1">Official Events Hub</span>
-              </div>
+            <div className="shrink-0">
+              <button
+                type="button"
+                onClick={() => onNavigate('discover')}
+                className="flex items-center gap-2 group focus:outline-none cursor-pointer"
+              >
+                <span className="font-display font-black text-2xl tracking-tighter text-white leading-none">
+                  Kigali<span className="text-emerald-500">Pulse</span>
+                </span>
+              </button>
+              <span className="text-[10px] tracking-[0.2em] text-emerald-500/60 uppercase font-black mt-2 block">Official Events Hub</span>
             </div>
             <p className="text-slate-400 leading-relaxed text-base max-w-xs">
               The premier event discovery and promotion ecosystem for Kigali. Connecting organizers with audiences across Rwanda's vibrant capital.

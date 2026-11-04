@@ -21,7 +21,7 @@ export const CategoryBrowseSection: React.FC<CategoryBrowseSectionProps> = ({
         <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
           Browse Kigali by Category
         </h2>
-        <p className="text-slate-500 text-base sm:text-base mt-1">
+        <p className="text-slate-500 text-base sm:text-lg mt-2 font-medium max-w-xl mx-auto">
           From sunset afro-fusion to tech hackathons, find your exact scene in the capital.
         </p>
       </div>
@@ -39,7 +39,7 @@ export const CategoryBrowseSection: React.FC<CategoryBrowseSectionProps> = ({
               <span className="text-2xl sm:text-3xl select-none group-hover:scale-110 transition-transform">
                 {cat.icon}
               </span>
-              <span className="text-[15px] font-semibold text-slate-400 group-hover:text-emerald-700 transition-colors">
+              <span className="text-[14px] font-bold text-slate-400 group-hover:text-emerald-700 transition-colors tabular-nums">
                 {cat.eventCount} Events
               </span>
             </div>

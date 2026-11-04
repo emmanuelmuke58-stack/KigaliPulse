@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Bookmark, Menu, X, Sparkles, Bell } from 'lucide-react';
 import { EventItem } from '../types';
 import { CompactHeaderEventSlider } from './CompactHeaderEventSlider';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   currentView: string;
@@ -29,13 +30,11 @@ export const Header: React.FC<HeaderProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: 'discover', label: 'Discover Events' },
-    { id: 'home', label: 'Home' },
+    { id: 'discover', label: 'Discover' },
     { id: 'categories', label: 'Categories' },
     { id: 'venues', label: 'Venues' },
     { id: 'organizers', label: 'Organizers' },
     { id: 'advertise', label: 'Advertise' },
-    { id: 'about', label: 'About' },
   ];
 
   const handleNavClick = (viewId: string) => {
@@ -48,37 +47,29 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
         {/* ZONE 1: Brand Wordmark (Single Text Element) */}
-        <div className="flex items-center gap-3">
+        <div className="shrink-0">
           <button
             type="button"
             onClick={() => handleNavClick('discover')}
-            className="flex items-center gap-2.5 text-left group focus:outline-none cursor-pointer"
+            className="flex items-center gap-2 group focus:outline-none cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 font-display font-extrabold text-lg flex items-center justify-center shadow-sm group-hover:bg-emerald-700 group-hover:text-white transition-colors">
-              KP
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-black text-xl tracking-tight text-slate-900 leading-none">
-                KigaliPulse
-              </span>
-              <span className="text-[10px] tracking-widest text-slate-400 uppercase font-semibold mt-0.5">
-                Rwanda
-              </span>
-            </div>
+            <span className="font-display font-black text-2xl tracking-tighter text-slate-900 leading-none">
+              Kigali<span className="text-emerald-600">Pulse</span>
+            </span>
           </button>
         </div>
 
         {/* ZONE 2: Clean Typography Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <nav className="hidden lg:flex items-center gap-8 text-[13px] font-bold text-slate-500 uppercase tracking-widest">
           {navLinks.map((link) => (
             <button
               key={link.id}
               type="button"
               onClick={() => handleNavClick(link.id)}
-              className={`transition-colors whitespace-nowrap py-1 relative ${
+              className={`transition-colors whitespace-nowrap py-1 border-b-2 ${
                 currentView === link.id
-                  ? 'text-slate-900 font-bold border-b-2 border-emerald-600'
-                  : 'hover:text-slate-900'
+                  ? 'text-slate-900 border-emerald-600'
+                  : 'border-transparent hover:text-slate-900 hover:border-slate-200'
               }`}
             >
               {link.label}
@@ -88,6 +79,11 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* ZONE 3: Primary Actions */}
         <div className="flex items-center gap-1.5 sm:gap-2.5">
+          {/* In-App PWA Install Prompt */}
+          <div className="hidden sm:block">
+            <PWAInstallButton />
+          </div>
+
           {/* Quick Search Trigger */}
           <button
             type="button"
@@ -169,11 +165,12 @@ export const Header: React.FC<HeaderProps> = ({
             ))}
           </div>
 
-          <div className="pt-2 flex items-center justify-between gap-2">
+          <div className="pt-2 flex flex-col gap-2">
+            <PWAInstallButton />
             <button
               type="button"
               onClick={() => handleNavClick('organizer-dashboard')}
-              className="flex-1 py-2.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
+              className="w-full py-2.5 text-center text-xs font-bold text-slate-700 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors"
             >
               Organizer Hub
             </button>
